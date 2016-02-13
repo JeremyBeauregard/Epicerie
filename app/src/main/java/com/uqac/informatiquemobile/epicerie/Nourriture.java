@@ -8,7 +8,7 @@ public abstract class Nourriture {
     private String _nom;
 
     // Constructeur
-    public void Nourriture(String nom) {
+    public Nourriture(String nom) {
         setNom(nom);
     }
 
@@ -16,7 +16,7 @@ public abstract class Nourriture {
     // Accesseurs
     public String getNom() {return _nom;}
     private void setNom(String value) {_nom=value;}
-    public abstract Float getPrix();
+    public abstract float getPrix();
 
 
 

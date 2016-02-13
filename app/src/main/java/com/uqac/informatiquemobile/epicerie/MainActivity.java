@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        test();
+
     }
 
     @Override
@@ -48,5 +52,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void test() {
+
+        // Crée des ingrédients pour le fun
+        Ingredient tranchePain = new Ingredient("Tranche de pain", 0.05f);
+        Ingredient banane = new Ingredient("Banane", 0.25f);
+
+        Recette sandwichBanane = new Recette("Sandwich aux bananes");
+        sandwichBanane.addItem(tranchePain, 2);
+        sandwichBanane.addItem(banane, 1);
+
+
+        // Récupère le textView pour afficher le résultat à l'écran
+        TextView tv = (TextView)findViewById(R.id.textView);
+        tv.setText(sandwichBanane.getNom() + ": " + sandwichBanane.getPrix() + "$");
+
     }
 }
