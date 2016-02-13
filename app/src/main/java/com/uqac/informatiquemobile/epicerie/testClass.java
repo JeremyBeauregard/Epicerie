@@ -7,10 +7,8 @@ public class testClass {
 
     // Changement fait à la classe...
 
-    // Changement depuis le répertoire original
-
     // Autre changement...
 
-    // Encore
+    // Encore un changement
 
 }
