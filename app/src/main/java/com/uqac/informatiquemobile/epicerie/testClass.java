@@ -7,4 +7,6 @@ public class testClass {
 
     // Changement fait à la classe...
 
+    // Autre changement...
+
 }
