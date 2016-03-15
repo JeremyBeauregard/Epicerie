@@ -1,4 +1,4 @@
-package com.uqac.informatiquemobile.epicerie;
+package com.uqac.informatiquemobile.epicerie.metier;
 
 /**
  * Created by Jeremy on 2016-02-13.

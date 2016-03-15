@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
+import com.uqac.informatiquemobile.epicerie.metier.Recette;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

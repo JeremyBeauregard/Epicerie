@@ -1,4 +1,4 @@
-package com.uqac.informatiquemobile.epicerie;
+package com.uqac.informatiquemobile.epicerie.metier;
 
 import java.util.*;
 import java.util.Map.*;
