@@ -1,17 +1,20 @@
-package com.uqac.informatiquemobile.epicerie;
+package com.uqac.informatiquemobile.epicerie.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
+import com.uqac.informatiquemobile.epicerie.R;
+import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,12 +29,20 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Ajouter un ingredient
             }
         });
 
-        test();
+        DataBaseManager dbm = new DataBaseManager(getApplicationContext());
+        dbm.FixtureIngredients();
+
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        ingredients = dbm.getAll("ingredient");
+        for (Ingredient i :ingredients) {
+            System.out.println(i.getNom()+" : "+i.getPrix()+"\n");
+        }
+
+        //test();
 
     }
 
