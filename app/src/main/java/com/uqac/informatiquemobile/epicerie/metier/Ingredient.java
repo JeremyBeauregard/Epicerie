@@ -6,11 +6,11 @@ package com.uqac.informatiquemobile.epicerie.metier;
 public class Ingredient extends Nourriture {
 
     // Variables locales
-    float _prixUnitaire;
+    int _prixUnitaire;
     Unite unite;
 
     // Constructeur
-    public Ingredient(String nom, float prixUnitaire) {
+    public Ingredient(String nom, int prixUnitaire) {
         super(nom);
         setPrix(prixUnitaire);
     }
@@ -24,7 +24,7 @@ public class Ingredient extends Nourriture {
 
 
     // Accesseurs
-    @Override public float getPrix() {return _prixUnitaire;}
-    private void setPrix(float value) {_prixUnitaire=value;}
+    @Override public int getPrix() {return _prixUnitaire;}
+    private void setPrix(int value) {_prixUnitaire=value;}
 
 }

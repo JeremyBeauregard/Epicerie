@@ -16,7 +16,7 @@ public abstract class Nourriture {
     // Accesseurs
     public String getNom() {return _nom;}
     private void setNom(String value) {_nom=value;}
-    public abstract float getPrix();
+    public abstract int getPrix();
 
 
 

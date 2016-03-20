@@ -60,6 +60,23 @@ public class DataBaseManager {
 
         db.close();
     }
+    public void viderIngredient(){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.execSQL("delete from ingredient");
+        db.close();
+    }
+
+
+    public void addIngredient(String nom, int prix){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues row = new ContentValues();
+
+        row.put("nom", nom);
+        row.put("prix", prix);
+        db.insert("ingredient", null, row);
+
+        db.close();
+    }
 
 
 }

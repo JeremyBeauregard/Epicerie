@@ -1,5 +1,6 @@
 package com.uqac.informatiquemobile.epicerie.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -7,12 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
-import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
 import java.util.ArrayList;
 
@@ -29,20 +29,54 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Ajouter un ingredient
+
+                Intent i = new Intent(getApplicationContext(), AddIngredientActivity.class);
+                startActivityForResult(i, 123);
             }
         });
 
+
         DataBaseManager dbm = new DataBaseManager(getApplicationContext());
+        dbm.viderIngredient();
         dbm.FixtureIngredients();
 
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
-        ingredients = dbm.getAll("ingredient");
+        ArrayList<Ingredient> ingredients= dbm.getAll("ingredient");
         for (Ingredient i :ingredients) {
             System.out.println(i.getNom()+" : "+i.getPrix()+"\n");
         }
 
-        //test();
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 123){
+
+            String jsonIngredient;
+
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                jsonIngredient = extras.getString("ingredient");
+            } else {
+                jsonIngredient = null;
+            }
+            Ingredient ingredientCree = new Gson().fromJson(jsonIngredient, Ingredient.class);
+
+
+            DataBaseManager dbm = new DataBaseManager(getApplicationContext());
+            dbm.addIngredient(ingredientCree.getNom(), ingredientCree.getPrix());
+
+
+            ArrayList<Ingredient> ingredients= dbm.getAll("ingredient");
+            for (Ingredient i :ingredients) {
+                System.out.println(i.getNom()+" : "+i.getPrix()+"\n");
+            }
+
+
+        }
 
     }
 
@@ -68,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void test() {
+/*    private void test() {
 
         // Crée des ingrédients pour le fun
         Ingredient tranchePain = new Ingredient("Tranche de pain", 0.05f);
@@ -83,5 +117,5 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = (TextView)findViewById(R.id.textView);
         tv.setText(sandwichBanane.getNom() + ": " + sandwichBanane.getPrix() + "$");
 
-    }
+    }*/
 }

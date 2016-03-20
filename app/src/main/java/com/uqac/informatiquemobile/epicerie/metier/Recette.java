@@ -18,9 +18,9 @@ public class Recette extends Nourriture {
     }
 
     // Retourne le prix de la recette
-    @Override public float getPrix() {
+    @Override public int getPrix() {
 
-        float prix=0;
+        int prix=0;
 
         // Parcourt la composition pour trouver la quantité et le prix de chaque item
         for(Entry<Nourriture, Float> entry : composition.entrySet()) {
