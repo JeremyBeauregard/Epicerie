@@ -15,7 +15,7 @@ public class Ingredient extends Nourriture {
         setPrix(prixUnitaire);
     }
 
-    public Ingredient(String nom, float prixUnitaire, Unite u) {
+    public Ingredient(String nom, int prixUnitaire, Unite u) {
         super(nom);
         this.unite = u;
         setPrix(prixUnitaire);
