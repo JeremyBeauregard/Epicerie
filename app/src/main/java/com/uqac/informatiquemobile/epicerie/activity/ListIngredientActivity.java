@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
@@ -17,6 +19,10 @@ import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import java.util.ArrayList;
 
 public class ListIngredientActivity extends AppCompatActivity {
+
+    private ListView listViewIngredients;
+    private ArrayList<String> listIngredients;
+    private ArrayAdapter<String> adapterListViewIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +46,22 @@ public class ListIngredientActivity extends AppCompatActivity {
         dbm.viderIngredient();
         dbm.FixtureIngredients();
 
+        listViewIngredients = (ListView) findViewById(R.id.listIngredients);
+        listIngredients = new ArrayList<>();
+
         ArrayList<Ingredient> ingredients= dbm.getAll("ingredient");
         for (Ingredient i :ingredients) {
             System.out.println(i.getNom()+" : "+i.getPrix()+"\n");
+            listIngredients.add(i.getNom());
         }
+
+        adapterListViewIngredients = new ArrayAdapter<String>(ListIngredientActivity.this, android.R.layout.simple_list_item_1, listIngredients);
+        listViewIngredients.setAdapter(adapterListViewIngredients);
+
+
+
+
+
 
 
     }
@@ -68,6 +86,9 @@ public class ListIngredientActivity extends AppCompatActivity {
 
             DataBaseManager dbm = new DataBaseManager(getApplicationContext());
             dbm.addIngredient(ingredientCree.getNom(), ingredientCree.getPrix());
+            listIngredients.add(ingredientCree.getNom());
+            adapterListViewIngredients.notifyDataSetChanged();
+
 
 
             ArrayList<Ingredient> ingredients= dbm.getAll("ingredient");
