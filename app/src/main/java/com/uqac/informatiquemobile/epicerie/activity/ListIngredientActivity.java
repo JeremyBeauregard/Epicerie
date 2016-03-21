@@ -16,7 +16,7 @@ import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class ListIngredientActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
