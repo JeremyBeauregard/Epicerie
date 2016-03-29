@@ -44,6 +44,9 @@ public class AddIngredientActivity extends Activity {
                     Intent intent = new Intent();
                     intent.putExtras(data);
 
+
+                    System.out.println(Integer.parseInt(editTextPrixIngredient.getText().toString()));
+
                     setResult(666, intent);
 
                     finish();

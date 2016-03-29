@@ -27,6 +27,7 @@ public class ListIngredientActivity extends AppCompatActivity {
 
     private ListView listViewIngredients;
     private ArrayList<String> listIngredients;
+    ArrayList<Ingredient> ingredients;
     private ArrayAdapter<String> adapterListViewIngredients;
 
     private TextView textViewValeurIngredients;
@@ -57,9 +58,9 @@ public class ListIngredientActivity extends AppCompatActivity {
         listViewIngredients = (ListView) findViewById(R.id.listIngredients);
         listIngredients = new ArrayList<>();
 
-        final ArrayList<Ingredient> ingredients= dbm.getAllIngredient();
+        ingredients= dbm.getAllIngredient();
         for (Ingredient i :ingredients) {
-            System.out.println(i.getNom()+" : "+i.getPrix()+i.getQuantite()+" : "+"\n");
+            //System.out.println(i.getNom()+" : "+i.getPrix()+i.getQuantite()+" : "+"\n");
             listIngredients.add(i.getNom()+" : "+i.getQuantite());
         }
 
@@ -85,7 +86,14 @@ public class ListIngredientActivity extends AppCompatActivity {
                 }
 
 
-                //
+                int val = 0;
+                ingredients= dbm.getAllIngredient();
+                for (Ingredient in:ingredients) {
+                    System.out.println(in.getPrixTotal());
+                    val = val +in.getPrixTotal();
+                }
+
+                textViewValeurIngredients.setText(String.valueOf((double) val / 100));
 
                 return true;
             }
@@ -102,14 +110,29 @@ public class ListIngredientActivity extends AppCompatActivity {
 
                 ((TextView) view).setText(t+" : "+(i.getQuantite()+1));
 
+                int val = 0;
+                ingredients= dbm.getAllIngredient();
+                for (Ingredient in:ingredients) {
+                    System.out.println(in.getPrixTotal());
+                    val = val +in.getPrixTotal();
+                }
+
+                textViewValeurIngredients.setText(String.valueOf((double) val / 100));
+
 
             }
         });
 
 
 
-        textViewValeurIngredients = (TextView)findViewById(R.id.textViewValeur;
-        textViewValeurIngredients.setText();
+        textViewValeurIngredients = (TextView)findViewById(R.id.textViewValeur);
+        int val = 0;
+        for (Ingredient i:ingredients) {
+            System.out.println(i.getPrixTotal());
+            val = val +i.getPrixTotal();
+        }
+
+        textViewValeurIngredients.setText(String.valueOf((double)val/100));
 
 
 
@@ -134,7 +157,9 @@ public class ListIngredientActivity extends AppCompatActivity {
                     jsonIngredient = null;
                 }
                 Ingredient ingredientCree = new Gson().fromJson(jsonIngredient, Ingredient.class);
-
+                Gson g = new Gson();
+                System.out.println("INGREDIENT :"+g.fromJson(jsonIngredient, Ingredient.class).getPrix());
+                System.out.println("INGREDIENT : "+ingredientCree.getNom()+ingredientCree.getPrix()+ingredientCree.getQuantite());
 
                 DataBaseManager dbm = new DataBaseManager(getApplicationContext());
                 dbm.addIngredient(ingredientCree.getNom(), ingredientCree.getPrix());
@@ -144,12 +169,7 @@ public class ListIngredientActivity extends AppCompatActivity {
 
 
                 ArrayList<Ingredient> ingredients= dbm.getAllIngredient();
-                for (Ingredient i :ingredients) {
-                    System.out.println(i.getNom()+" : "+i.getPrix()+"\n");
                 }
-
-
-            }
         }
 
     }

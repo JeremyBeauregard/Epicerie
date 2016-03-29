@@ -31,7 +31,8 @@ public class Ingredient extends Nourriture {
 
 
     // Accesseurs
-    @Override public int getPrix() {return _prixUnitaire*quantite;}
+    @Override public int getPrix() {return _prixUnitaire;}
+    public int getPrixTotal() {return _prixUnitaire*quantite;}
     private void setPrix(int value) {_prixUnitaire=value;}
     public int getQuantite(){return this.quantite;}
 

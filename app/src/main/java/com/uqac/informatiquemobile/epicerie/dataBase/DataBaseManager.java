@@ -30,6 +30,7 @@ public class DataBaseManager {
         Cursor cursor = db.rawQuery("select * from ingredient order by nom;", null);
         while(cursor.moveToNext()){
             retour.add(new Ingredient(cursor.getString(1), cursor.getInt(2), cursor.getInt(3)));
+            System.out.println(cursor.getString(1)+ cursor.getInt(2)+cursor.getInt(3));
         }
         cursor.close();
         db.close();
@@ -39,7 +40,7 @@ public class DataBaseManager {
     public Ingredient getIngredientByNm(String nom){
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient where nom=\""+nom+"\";", null);
-        Log.d("QUERY", "getIngredientByNm: select * from ingredient where nom=\""+nom+"\";");
+        Log.d("QUERY", "getIngredientByNm: select * from ingredient where nom=\"" + nom + "\";");
         cursor.moveToFirst();
         if(cursor.getCount()==0){return null;}
         Ingredient retour=new Ingredient(cursor.getString(1), cursor.getInt(2), cursor.getInt(3));
