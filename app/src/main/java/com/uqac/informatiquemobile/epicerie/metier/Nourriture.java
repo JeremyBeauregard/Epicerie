@@ -5,7 +5,7 @@ package com.uqac.informatiquemobile.epicerie.metier;
  */
 public abstract class Nourriture {
 
-    private String _nom;
+    private String nom;
 
     // Constructeur
     public Nourriture(String nom) {
@@ -14,8 +14,8 @@ public abstract class Nourriture {
 
 
     // Accesseurs
-    public String getNom() {return _nom;}
-    private void setNom(String value) {_nom=value;}
+    public String getNom() {return nom;}
+    private void setNom(String value) {nom=value;}
     public abstract int getPrix();
 
 

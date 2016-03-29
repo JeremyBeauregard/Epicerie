@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
+import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by paull on 20/03/2016.
@@ -22,25 +24,50 @@ public class DataBaseManager {
     }
 
 
-    public ArrayList<Ingredient> getAll(String table){
+    public ArrayList<Ingredient> getAllIngredient(){
         ArrayList<Ingredient> retour = new ArrayList<>();
 
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from "+table+" order by nom;", null);
-        //ContentValues values = new ContentValues();
-
-
+        Cursor cursor = db.rawQuery("select * from ingredient order by nom;", null);
         while(cursor.moveToNext()){
             retour.add(new Ingredient(cursor.getString(1), cursor.getInt(2)));
         }
-
-
         cursor.close();
         db.close();
         return retour;
-
-
     }
+
+    public ArrayList<Recette> getRecette(int id){
+        ArrayList<Recette> retour = new ArrayList<>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String[] columns = new String[]{"0","1"};
+        Cursor cursor = db.query("recette",columns,"id = ?",new String[]{String.valueOf(id),null,null,null});
+        db.query()
+
+        HashMap<Integer, String> mapRecettes = new HashMap<>();
+
+        while(cursor.moveToNext()){
+            mapRecettes.put(cursor.getInt(0), cursor.getString(1));
+        }
+
+
+
+
+
+
+
+
+
+        /*while(cursor.moveToNext()){
+            retour.add(new Ingredient(cursor.getString(1), cursor.getInt(2)));
+        }
+        cursor.close();
+        db.close();
+        return retour;*/
+    }
+
+
+
 
     public void FixtureIngredients(){
         SQLiteDatabase db = helper.getWritableDatabase();
