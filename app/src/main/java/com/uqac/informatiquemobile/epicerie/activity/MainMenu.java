@@ -28,12 +28,20 @@ public class MainMenu extends AppCompatActivity {
 
         buttonRecettes.setEnabled(false);
         buttonCalendrier.setEnabled(false);
-        buttonCourses.setEnabled(false);
+        //buttonCourses.setEnabled(false);
 
         buttonProvisions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), ListIngredientActivity.class);
+                startActivity(i);
+            }
+        });
+
+        buttonCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ListeCourses.class);
                 startActivity(i);
             }
         });

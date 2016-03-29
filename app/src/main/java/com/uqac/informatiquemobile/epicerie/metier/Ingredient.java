@@ -34,4 +34,8 @@ public class Ingredient extends Nourriture {
     private void setPrix(int value) {_prixUnitaire=value;}
     public int getQuantite(){return this.quantite;}
 
+    @Override
+    public String toString() {
+        return this.getNom()+" | Q : "+this.getQuantite()+" | PU : "+this.getPrix();
+    }
 }

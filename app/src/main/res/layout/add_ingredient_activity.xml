@@ -25,4 +25,5 @@
         android:text="Ajouter l&apos;ingredient"
         android:id="@+id/boutonAjouter"
         android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

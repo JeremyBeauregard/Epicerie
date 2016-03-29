@@ -30,8 +30,9 @@
             android:name=".activity.AddIngredientActivity"
             android:label="Ajouter un ingredient"
             android:theme="@style/AppTheme.NoActionBar"
-
             ></activity>
+        
+        <activity android:name=".activity.ListeCourses"></activity>
 
     </application>
 
