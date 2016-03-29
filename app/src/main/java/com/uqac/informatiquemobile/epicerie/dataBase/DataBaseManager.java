@@ -59,7 +59,7 @@ public class DataBaseManager {
 
 
     /**
-     * Methode qui permet d'ajouter un ingredient dans la base de donnee.
+     * Methode qui permet d'ajouter un ingredient dans la base de donnees.
      * @param nom Nom de l'ingredient a ajouter.
      * @param prix Prix de l'ingredient a ajouter.
      */

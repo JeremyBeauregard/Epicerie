@@ -1,7 +1,7 @@
 package com.uqac.informatiquemobile.epicerie.metier;
 
 /**
- * Created by Jeremy on 2016-02-13.
+ * Classe qui definit une sorte d'ingredient selon son prix son unite et sa quantite.
  */
 public class Ingredient extends Nourriture {
 
@@ -10,7 +10,7 @@ public class Ingredient extends Nourriture {
     Unite unite;
     int quantite;
 
-    // Constructeur
+    // Constructeurs
     public Ingredient(String nom, int prixUnitaire) {
         super(nom);
         setPrix(prixUnitaire);
@@ -20,8 +20,6 @@ public class Ingredient extends Nourriture {
         setPrix(prixUnitaire);
         this.quantite = quantite;
     }
-
-
     public Ingredient(String nom, int prixUnitaire, Unite u) {
         super(nom);
         this.unite = u;
