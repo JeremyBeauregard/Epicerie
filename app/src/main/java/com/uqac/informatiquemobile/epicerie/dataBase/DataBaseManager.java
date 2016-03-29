@@ -22,7 +22,10 @@ public class DataBaseManager {
         helper = new SimpleSQLiteOpenHelper(context);
     }
 
-
+    /**
+     * Methode qui permet de recuperer tous les ingredients de la base de donnees.
+     * @return ArrayList d'ingredients.
+     */
     public ArrayList<Ingredient> getAllIngredient(){
         ArrayList<Ingredient> retour = new ArrayList<>();
 
@@ -37,6 +40,11 @@ public class DataBaseManager {
         return retour;
     }
 
+    /**
+     * Methode qui permet de recuperer un ingredient dans la base de donnees grace a son nom.
+     * @param nom nom de l'ingredient a recuperer.
+     * @return Ingredient recupere.
+     */
     public Ingredient getIngredientByNm(String nom){
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient where nom=\""+nom+"\";", null);
@@ -50,7 +58,11 @@ public class DataBaseManager {
     }
 
 
-
+    /**
+     * Methode qui permet d'ajouter un ingredient dans la base de donnee.
+     * @param nom Nom de l'ingredient a ajouter.
+     * @param prix Prix de l'ingredient a ajouter.
+     */
     public void addIngredient(String nom, int prix){
 
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -87,6 +99,10 @@ public class DataBaseManager {
         db.close();
     }
 
+    /**
+     * Methode qui permet de supprimer un ingredient.
+     * @param nom Nom de l'ingredient a supprimer.
+     */
     public void supprimerIngredient(String nom){
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient where nom = \""+nom+"\"", null);
@@ -151,6 +167,7 @@ public class DataBaseManager {
 */
 
 
+/*
 
     public void FixtureIngredients(){
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -175,6 +192,7 @@ public class DataBaseManager {
         db.execSQL("delete from ingredient");
         db.close();
     }
+*/
 
 
 }
