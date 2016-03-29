@@ -139,7 +139,12 @@ public class ListIngredientActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Recuperation de l'ingredient cree.
+     * @param requestCode
+     * @param resultCode
+     * @param data Gson de l'ingredient cree.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

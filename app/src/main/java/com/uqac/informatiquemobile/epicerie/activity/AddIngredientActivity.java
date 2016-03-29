@@ -13,7 +13,7 @@ import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 
 /**
- * Created by paull on 20/03/2016.
+ * Activite qui permet d'ajouter un ingredient au frigo.
  */
 public class AddIngredientActivity extends Activity {
 
@@ -38,7 +38,7 @@ public class AddIngredientActivity extends Activity {
                 } else if (editTextPrixIngredient.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "Veuillez entrer le prix de l'ingredient", Toast.LENGTH_SHORT).show();
                 } else {
-                    Ingredient retour = new Ingredient(editTextNomIngredient.getText().toString(), Integer.parseInt(editTextPrixIngredient.getText().toString()),0);
+                    Ingredient retour = new Ingredient(editTextNomIngredient.getText().toString(), Integer.parseInt(editTextPrixIngredient.getText().toString()),1);
                     Bundle data = new Bundle();
                     data.putString("ingredient", new Gson().toJson(retour));
                     Intent intent = new Intent();
