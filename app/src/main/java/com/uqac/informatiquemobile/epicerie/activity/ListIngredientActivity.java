@@ -8,8 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
@@ -20,12 +23,17 @@ import java.util.ArrayList;
 
 public class ListIngredientActivity extends AppCompatActivity {
 
+    private DataBaseManager dbm;
+
     private ListView listViewIngredients;
     private ArrayList<String> listIngredients;
     private ArrayAdapter<String> adapterListViewIngredients;
 
+    private TextView textViewValeurIngredients;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_ingredients_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -42,24 +50,66 @@ public class ListIngredientActivity extends AppCompatActivity {
         });
 
 
-        DataBaseManager dbm = new DataBaseManager(getApplicationContext());
-        dbm.viderIngredient();
-        dbm.FixtureIngredients();
+        dbm = new DataBaseManager(getApplicationContext());
+        //dbm.viderIngredient();
+        //dbm.FixtureIngredients();
 
         listViewIngredients = (ListView) findViewById(R.id.listIngredients);
         listIngredients = new ArrayList<>();
 
-        ArrayList<Ingredient> ingredients= dbm.getAll("ingredient");
+        final ArrayList<Ingredient> ingredients= dbm.getAllIngredient();
         for (Ingredient i :ingredients) {
-            System.out.println(i.getNom()+" : "+i.getPrix()+"\n");
-            listIngredients.add(i.getNom());
+            System.out.println(i.getNom()+" : "+i.getPrix()+i.getQuantite()+" : "+"\n");
+            listIngredients.add(i.getNom()+" : "+i.getQuantite());
         }
 
         adapterListViewIngredients = new ArrayAdapter<String>(ListIngredientActivity.this, android.R.layout.simple_list_item_1, listIngredients);
         listViewIngredients.setAdapter(adapterListViewIngredients);
 
 
+        listViewIngredients.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String t = ((TextView) view).getText().toString().split(" ")[0];
+                dbm.supprimerIngredient(t);
+                Toast.makeText(getApplicationContext(), "Delete : " + t, Toast.LENGTH_SHORT).show();
 
+                Ingredient i = dbm.getIngredientByNm(t);
+                if (i != null) {
+                    int qtte = i.getQuantite();
+                    System.out.println(qtte);
+                    ((TextView) view).setText(t + " : " + qtte);
+                } else {
+                    listIngredients.remove(position);
+                    adapterListViewIngredients.notifyDataSetChanged();
+                }
+
+
+                //
+
+                return true;
+            }
+        });
+
+        listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String t = ((TextView) view).getText().toString().split(" ")[0];
+                Ingredient i = dbm.getIngredientByNm(t);
+
+                dbm.addIngredient(i.getNom(), i.getPrix());
+                Toast.makeText(getApplicationContext(), "Ajout : " + i.getNom()+i.getQuantite(), Toast.LENGTH_SHORT).show();
+
+                ((TextView) view).setText(t+" : "+(i.getQuantite()+1));
+
+
+            }
+        });
+
+
+
+        textViewValeurIngredients = (TextView)findViewById(R.id.textViewValeur;
+        textViewValeurIngredients.setText();
 
 
 
@@ -71,32 +121,35 @@ public class ListIngredientActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 123){
+        if (data!=null){
+            if(requestCode == 123){
 
-            String jsonIngredient;
+                String jsonIngredient;
 
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                jsonIngredient = extras.getString("ingredient");
-            } else {
-                jsonIngredient = null;
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    jsonIngredient = extras.getString("ingredient");
+                    Toast.makeText(getApplicationContext(), jsonIngredient, Toast.LENGTH_SHORT ).show();
+                } else {
+                    jsonIngredient = null;
+                }
+                Ingredient ingredientCree = new Gson().fromJson(jsonIngredient, Ingredient.class);
+
+
+                DataBaseManager dbm = new DataBaseManager(getApplicationContext());
+                dbm.addIngredient(ingredientCree.getNom(), ingredientCree.getPrix());
+                listIngredients.add(ingredientCree.getNom() + " : " + ingredientCree.getQuantite());
+                adapterListViewIngredients.notifyDataSetChanged();
+
+
+
+                ArrayList<Ingredient> ingredients= dbm.getAllIngredient();
+                for (Ingredient i :ingredients) {
+                    System.out.println(i.getNom()+" : "+i.getPrix()+"\n");
+                }
+
+
             }
-            Ingredient ingredientCree = new Gson().fromJson(jsonIngredient, Ingredient.class);
-
-
-            DataBaseManager dbm = new DataBaseManager(getApplicationContext());
-            dbm.addIngredient(ingredientCree.getNom(), ingredientCree.getPrix());
-            listIngredients.add(ingredientCree.getNom());
-            adapterListViewIngredients.notifyDataSetChanged();
-
-
-
-            ArrayList<Ingredient> ingredients= dbm.getAll("ingredient");
-            for (Ingredient i :ingredients) {
-                System.out.println(i.getNom()+" : "+i.getPrix()+"\n");
-            }
-
-
         }
 
     }
