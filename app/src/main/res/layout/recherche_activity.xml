@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="192dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextTermeRecherche"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_toLeftOf="@+id/buttonLancerRecherche"
+        android:layout_toStartOf="@+id/buttonLancerRecherche"
+        android:hint="Nom de la recette" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rechercher"
+        android:id="@+id/buttonLancerRecherche"
+        android:layout_alignBottom="@+id/editTextTermeRecherche"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewResultatsRecette"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/editTextTermeRecherche" />
+
+</RelativeLayout>
