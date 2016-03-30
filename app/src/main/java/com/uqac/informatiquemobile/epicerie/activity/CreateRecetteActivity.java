@@ -50,7 +50,7 @@ public class CreateRecetteActivity extends Activity {
         ingredients = new HashMap<>();
         titres = new ArrayList(ingredients.keySet());
 
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, (List)titres);
+        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.resultat_recherche_layout, (List)titres);
         listViewIngredients.setAdapter(adapter);
 
         boutonAjouterRecette = (Button)findViewById(R.id.buttonCreate);
