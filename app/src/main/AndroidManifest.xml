@@ -33,6 +33,8 @@
             ></activity>
         
         <activity android:name=".activity.ListeCourses"></activity>
+        <activity android:name=".activity.CreateRecetteActivity"></activity>
+        <activity android:name=".activity.AddIngredientActivity"></activity>
 
     </application>
 

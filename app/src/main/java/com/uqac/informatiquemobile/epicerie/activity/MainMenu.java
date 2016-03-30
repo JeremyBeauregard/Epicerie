@@ -49,7 +49,7 @@ public class MainMenu extends AppCompatActivity {
         buttonRecettes.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent i =new Intent(getApplicationContext(),ListRecettesActivity.class);
+                Intent i =new Intent(getApplicationContext(),CreateRecetteActivity.class);
                 startActivity(i);
 
             }

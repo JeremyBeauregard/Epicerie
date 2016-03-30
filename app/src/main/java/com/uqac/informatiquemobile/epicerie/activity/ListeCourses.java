@@ -1,6 +1,7 @@
 package com.uqac.informatiquemobile.epicerie.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,7 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
@@ -25,8 +28,14 @@ public class ListeCourses extends Activity {
     private DataBaseManager dbm;
     private ListView listViewIngredients;
     private Button ajouterAuFrigo;
+    private Button ajouterIngredient;
+    private HashMap<String, Ingredient> ingredients;
+    private ArrayList<String> titres;
+    private ArrayAdapter<String> adapter;
+    private int total = 0;
+    TextView textViewPrix;
 
-    ArrayList<Ingredient> selectedIngredients = new ArrayList<>();
+    private ArrayList<Ingredient> selectedIngredients = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +46,21 @@ public class ListeCourses extends Activity {
 
         //////////////////////////////////////////////////
 
-        final HashMap<String, Ingredient> ingredients = new HashMap<>();
-        ingredients.put("Baguette", new Ingredient("Baguette", 50, 2));
-        ingredients.put("Tomate", new Ingredient("Tomate", 25, 4));
-        ingredients.put("Patate",new Ingredient("Patate", 10, 10));
+        ingredients = new HashMap<>();
+        ingredients.put("Baguette", new Ingredient("Baguette", 50, 3));
+        ingredients.put("Tomate", new Ingredient("Tomate", 25, 3));
+        ingredients.put("Patate",new Ingredient("Patate", 10, 3));
 
         //////////////////////////////////////////////////
 
+        textViewPrix = (TextView)findViewById(R.id.textViewPrix);
+        textViewPrix.setText("Prix : 0");
+
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
         listViewIngredients.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        final ArrayList<String> titres = new ArrayList(ingredients.keySet());
+        titres = new ArrayList(ingredients.keySet());
 
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.courses_row_layout, (List)titres);
+        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.courses_row_layout, (List)titres);
         listViewIngredients.setAdapter(adapter);
 
         listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,16 +73,16 @@ public class ListeCourses extends Activity {
                 //Toast.makeText(getApplicationContext(), selectedIngredient.toString(), Toast.LENGTH_SHORT).show();
                 if (selectedIngredients.contains(selectedIngredient)) {
                     selectedIngredients.remove(selectedIngredient);
+                    total-=selectedIngredient.getPrixTotal();
                 } else {
                     selectedIngredients.add(selectedIngredient);
+                    total+=selectedIngredient.getPrixTotal();
                 }
-
+                textViewPrix.setText("Prix : "+(double)total/100);
             }
         });
 
-
-
-        Button ajouterAuFrigo = (Button)findViewById(R.id.buttonAjouterAuFrigo);
+        ajouterAuFrigo = (Button)findViewById(R.id.buttonAjouterAuFrigo);
         ajouterAuFrigo.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -95,7 +106,7 @@ public class ListeCourses extends Activity {
 
                 adapter.notifyDataSetChanged();
 
-                
+
 
 
 
@@ -103,8 +114,57 @@ public class ListeCourses extends Activity {
         });
 
 
+        ajouterIngredient = (Button)findViewById(R.id.buttonAjouterIngredient);
+        ajouterIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), AddIngredientActivity.class);
+                startActivityForResult(i, 123);
+            }
+        });
+
+
+
+
+
 
 
 
     }
+
+    /**
+     * Recuperation de l'ingredient à ajouter.
+     * @param requestCode
+     * @param resultCode
+     * @param data Gson de l'ingredient à ajouter.
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data!=null){
+            if(requestCode == 123){
+
+                String jsonIngredient;
+
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    jsonIngredient = extras.getString("ingredient");
+                    Toast.makeText(getApplicationContext(), jsonIngredient, Toast.LENGTH_SHORT).show();
+                } else {
+                    jsonIngredient = null;
+                }
+                Ingredient ingredientAjout = new Gson().fromJson(jsonIngredient, Ingredient.class);
+                Gson g = new Gson();
+
+                titres.add(ingredientAjout.getNom() + " : " + ingredientAjout.getQuantite());
+                ingredients.put(ingredientAjout.getNom(), ingredientAjout);
+                adapter.notifyDataSetChanged();
+
+            }
+        }
+
+    }
+
+
 }

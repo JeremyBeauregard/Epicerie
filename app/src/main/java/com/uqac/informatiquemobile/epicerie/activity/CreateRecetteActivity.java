@@ -1,6 +1,7 @@
 package com.uqac.informatiquemobile.epicerie.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,7 @@ public class CreateRecetteActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_ingredient_activity);
+        setContentView(R.layout.create_recette);
 
 
         editTextNomRecette = (EditText)findViewById(R.id.editTextName);
@@ -49,6 +50,14 @@ public class CreateRecetteActivity extends Activity {
 
                     finish();
                 }
+            }
+        });
+
+        boutonAjouterIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), AddIngredientActivity.class);
+                startActivityForResult(i, 123);
             }
         });
 

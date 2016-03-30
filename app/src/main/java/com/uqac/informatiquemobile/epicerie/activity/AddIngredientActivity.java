@@ -10,9 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
@@ -45,7 +43,6 @@ public class AddIngredientActivity extends Activity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i = new Intent(getApplicationContext(), CreateIngredientActivity.class);
                 startActivity(i);
             }
@@ -53,15 +50,12 @@ public class AddIngredientActivity extends Activity {
 
 
         dbm = new DataBaseManager(getApplicationContext());
-        //dbm.viderIngredient();
-        //dbm.FixtureIngredients();
 
         listViewIngredients = (ListView) findViewById(R.id.listIngredients);
         listIngredients = new ArrayList<>();
 
         ingredients= dbm.getAllIngredient();
         for (Ingredient i :ingredients) {
-            //System.out.println(i.getNom()+" : "+i.getPrix()+i.getQuantite()+" : "+"\n");
             listIngredients.add(i.getNom()+" : "+i.getQuantite());
         }
 
@@ -69,58 +63,11 @@ public class AddIngredientActivity extends Activity {
         listViewIngredients.setAdapter(adapterListViewIngredients);
 
 
-        listViewIngredients.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String t = ((TextView) view).getText().toString().split(" ")[0];
-                dbm.supprimerIngredient(t);
-                Toast.makeText(getApplicationContext(), "Delete : " + t, Toast.LENGTH_SHORT).show();
-
-                Ingredient i = dbm.getIngredientByNm(t);
-                if (i != null) {
-                    int qtte = i.getQuantite();
-                    System.out.println(qtte);
-                    ((TextView) view).setText(t + " : " + qtte);
-                } else {
-                    listIngredients.remove(position);
-                    adapterListViewIngredients.notifyDataSetChanged();
-                }
-
-
-                int val = 0;
-                ingredients= dbm.getAllIngredient();
-                for (Ingredient in:ingredients) {
-                    System.out.println(in.getPrixTotal());
-                    val = val +in.getPrixTotal();
-                }
-
-                textViewValeurIngredients.setText(String.valueOf((double) val / 100));
-
-                return true;
-            }
-        });
 
         listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String t = ((TextView) view).getText().toString().split(" ")[0];
-                Ingredient i = dbm.getIngredientByNm(t);
-
-                dbm.addIngredient(i.getNom(), i.getPrix());
-                Toast.makeText(getApplicationContext(), "Ajout : " + i.getNom()+i.getQuantite(), Toast.LENGTH_SHORT).show();
-
-                ((TextView) view).setText(t+" : "+(i.getQuantite()+1));
-
-                int val = 0;
-                ingredients= dbm.getAllIngredient();
-                for (Ingredient in:ingredients) {
-                    System.out.println(in.getPrixTotal());
-                    val = val +in.getPrixTotal();
-                }
-
-                textViewValeurIngredients.setText(String.valueOf((double) val / 100));
-
-
+                //TODO
             }
         });
 
@@ -136,8 +83,6 @@ public class AddIngredientActivity extends Activity {
         textViewValeurIngredients.setText(String.valueOf((double)val/100));
 
 
-
-
     }
 
     @Override
@@ -145,5 +90,14 @@ public class AddIngredientActivity extends Activity {
         super.onResume();
 
         ArrayList<Ingredient> ingredients= dbm.getAllIngredient();
+
+        listIngredients.removeAll(listIngredients);
+
+        for (Ingredient i :ingredients) {
+            listIngredients.add(i.getNom());
+        }
+
+        adapterListViewIngredients.notifyDataSetChanged();
+
     }
 }
