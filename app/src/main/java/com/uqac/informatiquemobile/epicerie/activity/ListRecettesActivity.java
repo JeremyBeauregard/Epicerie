@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
+import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
 import java.util.ArrayList;
@@ -50,11 +51,7 @@ public class ListRecettesActivity extends Activity {
         listViewRecettes = (ListView) findViewById(R.id.listRecettes);
         listRecettes = new ArrayList<>();
 
-        recettes= dbm.getAllRecettes();
-        for (Recette i :recettes) {
 
-            listRecettes.add(i.getNom());
-        }
 
         buttonRechercherRecetteEnLigne = (Button)findViewById(R.id.buttonRechercherRecette);
         buttonRechercherRecetteEnLigne.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +66,24 @@ public class ListRecettesActivity extends Activity {
         listViewRecettes.setAdapter(adapterListViewRecettes);
 
 
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+
+
+        listRecettes.removeAll(listRecettes);
+
+        recettes= dbm.getAllRecettes();
+        for (Recette i :recettes) {
+
+            listRecettes.add(i.getNom());
+        }
+
+        adapterListViewRecettes.notifyDataSetChanged();
 
     }
 }

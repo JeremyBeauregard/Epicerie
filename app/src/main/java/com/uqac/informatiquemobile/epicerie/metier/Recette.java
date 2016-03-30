@@ -11,11 +11,27 @@ public class Recette extends Nourriture {
     // Variables locales
     private HashMap<Nourriture, Float> composition;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
+
 
     // Constructeur
     public Recette(String nom, HashMap<Nourriture, Float> composition) {
         super(nom);
         this.composition = composition;
+    }
+    public Recette(String nom, HashMap<Nourriture, Float> composition, int id){
+        super(nom);
+        this.composition = composition;
+        this.id=id;
+
     }
 
     public HashMap<Nourriture, Float> getComposition(){
