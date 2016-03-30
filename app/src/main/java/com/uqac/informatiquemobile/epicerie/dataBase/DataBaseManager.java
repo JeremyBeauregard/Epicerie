@@ -8,8 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
+import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
+import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by paull on 20/03/2016.
@@ -47,11 +51,22 @@ public class DataBaseManager {
      */
     public Ingredient getIngredientByNm(String nom){
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from ingredient where nom=\""+nom+"\";", null);
+        Cursor cursor = db.rawQuery("select * from ingredient where nom=\"" + nom + "\";", null);
         Log.d("QUERY", "getIngredientByNm: select * from ingredient where nom=\"" + nom + "\";");
         cursor.moveToFirst();
         if(cursor.getCount()==0){return null;}
         Ingredient retour=new Ingredient(cursor.getString(1), cursor.getInt(2), cursor.getInt(3));
+        cursor.close();
+        db.close();
+        return retour;
+    }
+    public int getIngredientIdByNm(String nom){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from ingredient where nom=\"" + nom + "\";", null);
+        Log.d("QUERY", "getIngredientByNm: select * from ingredient where nom=\"" + nom + "\";");
+        cursor.moveToFirst();
+
+        int retour=cursor.getInt(0);
         cursor.close();
         db.close();
         return retour;
@@ -110,7 +125,7 @@ public class DataBaseManager {
         if (cursor.getInt(3)<=1){
 
             SQLiteDatabase db2 = helper.getWritableDatabase();
-            db2.execSQL("delete from ingredient where nom=\""+nom+"\";");
+            db2.execSQL("delete from ingredient where nom=\"" + nom + "\";");
         } else {
 
             //cursor.moveToNext();
@@ -136,7 +151,54 @@ public class DataBaseManager {
 
     }
 
+    /**
+     * Methode qui permet d'ajouter un ingredient dans la base de donnees.
+     */
 
+    public void AddRecette(Recette recette){
+
+        HashMap<Nourriture, Float> composition=recette.getComposition();
+
+
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues row = new ContentValues();
+
+        row.put("nom", recette.getNom());
+        //row.put("", recette.);
+
+        db.insert("recette", null, row);
+
+        final String MY_QUERY = "SELECT last_insert_rowid()";
+        Cursor cur = db.rawQuery(MY_QUERY, null);
+        cur.moveToFirst();
+        int idRecette = cur.getInt(0);
+        cur.close();
+
+        for(Map.Entry<Nourriture, Float> entry : composition.entrySet()) {
+
+            Ingredient value = (Ingredient) entry.getKey();
+            float qte = entry.getValue();
+
+            int idIngredient=getIngredientIdByNm(value.getNom());
+
+            ContentValues row2 = new ContentValues();
+
+            row2.put("idRecette", idRecette);
+            row2.put("idIngredient", idIngredient);
+            db.insert("associationRecette", null, row2);
+
+        }
+
+
+
+
+
+
+
+
+        db.close();
+    }
 
 
 

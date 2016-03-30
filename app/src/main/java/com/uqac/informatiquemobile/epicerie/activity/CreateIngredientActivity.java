@@ -15,7 +15,7 @@ import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 /**
  * Activite qui permet d'ajouter un ingredient au frigo.
  */
-public class AddIngredientActivity extends Activity {
+public class CreateIngredientActivity extends Activity {
 
     EditText editTextNomIngredient, editTextPrixIngredient;
     Button boutonAjouterIngredient;

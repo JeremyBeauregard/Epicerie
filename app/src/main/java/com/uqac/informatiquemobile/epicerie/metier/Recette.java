@@ -9,14 +9,18 @@ import java.util.Map.*;
 public class Recette extends Nourriture {
 
     // Variables locales
-    HashMap<Nourriture, Float> composition = new HashMap<Nourriture, Float>();
+    private HashMap<Nourriture, Float> composition;
 
 
     // Constructeur
-    public Recette(String nom) {
+    public Recette(String nom, HashMap<Nourriture, Float> composition) {
         super(nom);
+        this.composition = composition;
     }
 
+    public HashMap<Nourriture, Float> getComposition(){
+        return this.composition;
+    }
     // Retourne le prix de la recette
     @Override public int getPrix() {
 

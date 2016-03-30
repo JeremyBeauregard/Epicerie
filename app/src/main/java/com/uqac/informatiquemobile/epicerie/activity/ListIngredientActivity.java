@@ -45,7 +45,7 @@ public class ListIngredientActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(getApplicationContext(), AddIngredientActivity.class);
+                Intent i = new Intent(getApplicationContext(), CreateIngredientActivity.class);
                 startActivityForResult(i, 123);
             }
         });

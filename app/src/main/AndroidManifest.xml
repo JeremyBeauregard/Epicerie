@@ -27,7 +27,7 @@
         </activity>
 
         <activity
-            android:name=".activity.AddIngredientActivity"
+            android:name=".activity.CreateIngredientActivity"
             android:label="Ajouter un ingredient"
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
