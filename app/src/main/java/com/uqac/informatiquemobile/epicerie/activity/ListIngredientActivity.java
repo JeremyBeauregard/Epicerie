@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
@@ -44,9 +43,8 @@ public class ListIngredientActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i = new Intent(getApplicationContext(), CreateIngredientActivity.class);
-                startActivityForResult(i, 123);
+                startActivity(i);
             }
         });
 
@@ -141,41 +139,20 @@ public class ListIngredientActivity extends AppCompatActivity {
 
     /**
      * Recuperation de l'ingredient cree.
-     * @param requestCode
-     * @param resultCode
-     * @param data Gson de l'ingredient cree.
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onResume(){
+        super.onResume();
 
-        if (data!=null){
-            if(requestCode == 123){
+        ArrayList<Ingredient> ingredients= dbm.getAllIngredient();
 
-                String jsonIngredient;
+        listIngredients.removeAll(listIngredients);
 
-                Bundle extras = data.getExtras();
-                if (extras != null) {
-                    jsonIngredient = extras.getString("ingredient");
-                    Toast.makeText(getApplicationContext(), jsonIngredient, Toast.LENGTH_SHORT ).show();
-                } else {
-                    jsonIngredient = null;
-                }
-                Ingredient ingredientCree = new Gson().fromJson(jsonIngredient, Ingredient.class);
-                Gson g = new Gson();
-                System.out.println("INGREDIENT :"+g.fromJson(jsonIngredient, Ingredient.class).getPrix());
-                System.out.println("INGREDIENT : "+ingredientCree.getNom()+ingredientCree.getPrix()+ingredientCree.getQuantite());
-
-                DataBaseManager dbm = new DataBaseManager(getApplicationContext());
-                dbm.addIngredient(ingredientCree.getNom(), ingredientCree.getPrix());
-                listIngredients.add(ingredientCree.getNom() + " : " + ingredientCree.getQuantite());
-                adapterListViewIngredients.notifyDataSetChanged();
-
-
-
-                ArrayList<Ingredient> ingredients= dbm.getAllIngredient();
-                }
+        for (Ingredient i :ingredients) {
+            listIngredients.add(i.getNom());
         }
+
+        adapterListViewIngredients.notifyDataSetChanged();
 
     }
 
