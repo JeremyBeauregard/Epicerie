@@ -165,7 +165,7 @@ public class DataBaseManager {
         ContentValues row = new ContentValues();
 
         row.put("nom", recette.getNom());
-        //row.put("", recette.);
+
 
         db.insert("recette", null, row);
 
@@ -178,7 +178,7 @@ public class DataBaseManager {
         for(Map.Entry<Nourriture, Float> entry : composition.entrySet()) {
 
             Ingredient value = (Ingredient) entry.getKey();
-            float qte = entry.getValue();
+            int qte = entry.getValue().intValue();
 
             int idIngredient=getIngredientIdByNm(value.getNom());
             SQLiteDatabase dbtemp = helper.getWritableDatabase();
@@ -186,6 +186,7 @@ public class DataBaseManager {
 
             row2.put("idRecette", idRecette);
             row2.put("idIngredient", idIngredient);
+            row2.put("quantite",qte);
             dbtemp.insert("associationRecette", null, row2);
             dbtemp.close();
 
@@ -248,6 +249,7 @@ public class DataBaseManager {
         Recette temp =new Recette(cursor.getString(1),new HashMap<Nourriture, Float>(), cursor.getInt(0) );
         Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + id + ";", null);
         if(cursor2 !=null && cursor2.moveToFirst()){
+            cursor2.move(-1);
             while(cursor2.moveToNext()) {
 
                 int idIng = cursor2.getInt(0);

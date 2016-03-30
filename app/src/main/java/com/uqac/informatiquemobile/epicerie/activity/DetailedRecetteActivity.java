@@ -3,6 +3,7 @@ package com.uqac.informatiquemobile.epicerie.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -11,16 +12,21 @@ import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Guillaume2 on 30/03/2016.
  */
 public class DetailedRecetteActivity extends Activity {
     private DataBaseManager dbm ;
-    private ListView listViewIngredient;
+    private ListView listViewIngredients;
     private TextView textViewName;
     private TextView textViewDesc;
     private Button buttonMod;
     private Button buttonDel;
+    private ArrayList<String> titres;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +40,14 @@ public class DetailedRecetteActivity extends Activity {
 
         textViewName = (TextView) findViewById(R.id.textViewName);
         buttonMod = (Button) findViewById(R.id.buttonMod);
+        listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
 
         textViewName.setText(recette.getNom());
+
+        titres = new ArrayList(recette.getComposition().keySet());
+
+        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.resultat_recherche_layout, (List)titres);
+        listViewIngredients.setAdapter(adapter);
 
         buttonMod.setOnClickListener(new View.OnClickListener() {
             @Override
