@@ -32,7 +32,8 @@
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
         
-        <activity android:name=".activity.ListeCourses"></activity>
+        <activity android:name=".activity.ListeCourses"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.CreateRecetteActivity"></activity>
         <activity android:name=".activity.AddIngredientActivity"></activity>
 

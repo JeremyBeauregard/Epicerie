@@ -1,16 +1,21 @@
 package com.uqac.informatiquemobile.epicerie.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
@@ -28,6 +33,7 @@ public class AddIngredientActivity extends Activity {
     private ArrayList<Ingredient> ingredients;
     private ArrayAdapter<String> adapterListViewIngredients;
     private TextView textViewPrix;
+    private String resultat;
 
     private TextView textViewValeurIngredients;
 
@@ -68,6 +74,55 @@ public class AddIngredientActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO
+
+                final String tv = ((TextView)view).getText().toString();
+                // get prompts.xml view
+                LayoutInflater li = LayoutInflater.from(AddIngredientActivity.this);
+                View promptsView = li.inflate(R.layout.input_quantite_layout, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        AddIngredientActivity.this);
+
+                // set prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                final EditText userInput = (EditText) promptsView
+                        .findViewById(R.id.editTextDialogUserInput);
+
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // get user input and set it to result
+                                        // edit text
+                                        Ingredient temp = dbm.getIngredientByNm(tv);
+                                        resultat = userInput.getText().toString();
+                                        Ingredient retour = new Ingredient(tv, temp.getPrix(), Integer.parseInt(resultat));
+                                        //Toast.makeText(getApplicationContext(), retour.toString(), Toast.LENGTH_SHORT).show();
+                                        Bundle data = new Bundle();
+                                        data.putString("ingredient", new Gson().toJson(retour));
+                                        Intent intent = new Intent();
+                                        intent.putExtras(data);
+                                        setResult(123, intent);
+                                        finish();
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+
+
             }
         });
 

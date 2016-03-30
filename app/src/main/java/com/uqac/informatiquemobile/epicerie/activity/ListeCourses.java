@@ -47,9 +47,9 @@ public class ListeCourses extends Activity {
         //////////////////////////////////////////////////
 
         ingredients = new HashMap<>();
-        ingredients.put("Baguette", new Ingredient("Baguette", 50, 3));
+        /*ingredients.put("Baguette", new Ingredient("Baguette", 50, 3));
         ingredients.put("Tomate", new Ingredient("Tomate", 25, 3));
-        ingredients.put("Patate",new Ingredient("Patate", 10, 3));
+        ingredients.put("Patate",new Ingredient("Patate", 10, 3));*/
 
         //////////////////////////////////////////////////
 

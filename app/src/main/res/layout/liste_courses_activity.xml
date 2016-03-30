@@ -7,7 +7,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ajouter un nouvel ingrédient"
+        android:text="Ajouter un ingrédient à la liste"
         android:id="@+id/buttonAjouterIngredient" />
 
     <TextView
