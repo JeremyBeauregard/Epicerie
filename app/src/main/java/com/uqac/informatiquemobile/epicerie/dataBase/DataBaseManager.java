@@ -155,7 +155,7 @@ public class DataBaseManager {
      * Methode qui permet d'ajouter un ingredient dans la base de donnees.
      */
 
-    public void AddRecette(Recette recette){
+    public void addRecette(Recette recette){
 
         HashMap<Nourriture, Float> composition=recette.getComposition();
 

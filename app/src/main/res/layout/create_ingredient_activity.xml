@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextNomIngredient"
+        android:layout_gravity="center_horizontal"
+        android:hint="Nom de l&apos;ingredient" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editTextPrixIngredient"
+        android:layout_gravity="center_horizontal"
+        android:hint="Prix en cents" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ajouter l&apos;ingredient"
+        android:id="@+id/boutonAjouter"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

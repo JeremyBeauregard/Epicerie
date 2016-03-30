@@ -23,7 +23,7 @@ public class CreateIngredientActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_ingredient_activity);
+        setContentView(R.layout.create_ingredient_activity);
 
 
         editTextNomIngredient= (EditText)findViewById(R.id.editTextNomIngredient);
