@@ -45,7 +45,7 @@ public class ListRecettesActivity extends Activity {
 
         dbm = new DataBaseManager(getApplicationContext());
 
-        listViewRecettes = (ListView) findViewById(R.id.listIngredients);
+        listViewRecettes = (ListView) findViewById(R.id.listRecettes);
         listRecettes = new ArrayList<>();
 
         recettes= dbm.getAllRecettes();
