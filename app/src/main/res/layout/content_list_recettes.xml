@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/listRecettes"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/textViewLabelValeur" />
+        android:layout_below="@+id/buttonRechercherRecette" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,5 +37,16 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textViewLabelValeur"
         android:layout_toEndOf="@+id/textViewLabelValeur" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rechercher une recette en ligne"
+        android:id="@+id/buttonRechercherRecette"
+        android:layout_below="@+id/textViewLabelValeur"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/listRecettes"
+        android:layout_alignEnd="@+id/listRecettes" />
 
 </RelativeLayout>

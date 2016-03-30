@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.uqac.informatiquemobile.epicerie.R;
@@ -24,6 +25,7 @@ public class ListRecettesActivity extends Activity {
     private ArrayList<String> listRecettes;
     ArrayList<Recette> recettes;
     private ArrayAdapter<String> adapterListViewRecettes;
+    Button buttonRechercherRecetteEnLigne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class ListRecettesActivity extends Activity {
 
         dbm = new DataBaseManager(getApplicationContext());
 
-        listViewRecettes = (ListView) findViewById(R.id.listIngredients);
+        listViewRecettes = (ListView) findViewById(R.id.listRecettes);
         listRecettes = new ArrayList<>();
 
         recettes= dbm.getAllRecettes();
@@ -53,6 +55,15 @@ public class ListRecettesActivity extends Activity {
 
             listRecettes.add(i.getNom());
         }
+
+        buttonRechercherRecetteEnLigne = (Button)findViewById(R.id.buttonRechercherRecette);
+        buttonRechercherRecetteEnLigne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ListRecettesActivity.this, RechercheActivity.class);
+                startActivity(i);
+            }
+        });
 
         adapterListViewRecettes = new ArrayAdapter<String>(ListRecettesActivity.this, android.R.layout.simple_list_item_1, listRecettes);
         listViewRecettes.setAdapter(adapterListViewRecettes);
