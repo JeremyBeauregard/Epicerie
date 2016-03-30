@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
@@ -65,7 +68,20 @@ public class ListRecettesActivity extends Activity {
         adapterListViewRecettes = new ArrayAdapter<String>(ListRecettesActivity.this, android.R.layout.simple_list_item_1, listRecettes);
         listViewRecettes.setAdapter(adapterListViewRecettes);
 
+        listViewRecettes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Recette selectedRecette=recettes.get(position);
+                int idRecette=selectedRecette.getId();
 
+                Intent mIntent = new Intent(getApplicationContext(), DetailedRecetteActivity.class);
+                Bundle extras = new Bundle();
+                extras.putInt("id", idRecette);
+                mIntent.putExtras(extras);
+                startActivity(mIntent);
+
+            }
+        });
 
     }
 
@@ -86,4 +102,5 @@ public class ListRecettesActivity extends Activity {
         adapterListViewRecettes.notifyDataSetChanged();
 
     }
+
 }
