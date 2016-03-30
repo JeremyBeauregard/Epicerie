@@ -23,14 +23,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/listView2"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textView2" />
+            android:layout_below="@+id/textViewTitreRecette" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Valeur de mes ingrédients : "
-            android:id="@+id/textView2"
+            android:id="@+id/textViewTitreRecette"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -42,7 +42,7 @@
             android:text="valeur"
             android:id="@+id/textView3"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/textView2"
-            android:layout_toEndOf="@+id/textView2" />
+            android:layout_toRightOf="@+id/textViewTitreRecette"
+            android:layout_toEndOf="@+id/textViewTitreRecette" />
     </RelativeLayout>
 </LinearLayout>
