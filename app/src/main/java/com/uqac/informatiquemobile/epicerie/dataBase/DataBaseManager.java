@@ -202,6 +202,37 @@ public class DataBaseManager {
 
 
 
+    public ArrayList<Recette> getAllRecettes() {
+
+        ArrayList<Recette> retour = new ArrayList<>();
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from recette order by nom;", null);
+        while(cursor.moveToNext()){
+            Recette temp =new Recette(cursor.getString(1),new HashMap<Nourriture, Float>() );
+            Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + cursor.getInt(0) + ";", null);
+            while(cursor2.moveToNext()) {
+
+                int idIng = cursor2.getInt(0);
+                int qte = cursor2.getInt(1);
+                cursor2.close();
+
+                Cursor cursor3 = db.rawQuery("select nom, prix from ingredient where id=" + idIng + ";", null);
+
+                String nomIng = cursor3.getString(0);
+                int prixIng = cursor3.getInt(1);
+                cursor3.close();
+
+                Ingredient tempIng=new Ingredient(nomIng,prixIng);
+                temp.addItem(tempIng,qte);
+
+            }
+                retour.add(temp);
+        }
+        cursor.close();
+        db.close();
+        return retour;
+    }
 
 
 
