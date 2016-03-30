@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
+import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,11 @@ import java.util.ArrayList;
  */
 public class ListRecettesActivity extends Activity {
     private DataBaseManager dbm;
+
+    private ListView listViewRecettes;
+    private ArrayList<String> listRecettes;
+    ArrayList<Recette> recettes;
+    private ArrayAdapter<String> adapterListViewRecettes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,18 @@ public class ListRecettesActivity extends Activity {
         });
 
         dbm = new DataBaseManager(getApplicationContext());
+
+        listViewRecettes = (ListView) findViewById(R.id.listIngredients);
+        listRecettes = new ArrayList<>();
+
+        recettes= dbm.getAllRecettes();
+        for (Recette i :recettes) {
+
+            listRecettes.add(i.getNom());
+        }
+
+        adapterListViewRecettes = new ArrayAdapter<String>(ListRecettesActivity.this, android.R.layout.simple_list_item_1, listRecettes);
+        listViewRecettes.setAdapter(adapterListViewRecettes);
 
 
 
