@@ -26,7 +26,7 @@ public class MainMenu extends AppCompatActivity {
         buttonCalendrier= (Button)findViewById(R.id.buttonCalendrier);
         buttonCourses= (Button)findViewById(R.id.buttonCourses);
 
-        buttonRecettes.setEnabled(false);
+        //buttonRecettes.setEnabled(false);
         buttonCalendrier.setEnabled(false);
         //buttonCourses.setEnabled(false);
 
@@ -46,6 +46,14 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
+        buttonRecettes.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i =new Intent(getApplicationContext(),ListRecettesActivity.class);
+                startActivity(i);
+
+            }
+        });
 
 
     }

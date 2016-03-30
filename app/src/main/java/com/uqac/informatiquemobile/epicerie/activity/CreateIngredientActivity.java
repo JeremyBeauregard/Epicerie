@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
+import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 
 /**
@@ -39,15 +40,17 @@ public class CreateIngredientActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "Veuillez entrer le prix de l'ingredient", Toast.LENGTH_SHORT).show();
                 } else {
                     Ingredient retour = new Ingredient(editTextNomIngredient.getText().toString(), Integer.parseInt(editTextPrixIngredient.getText().toString()),1);
-                    Bundle data = new Bundle();
-                    data.putString("ingredient", new Gson().toJson(retour));
-                    Intent intent = new Intent();
-                    intent.putExtras(data);
+
+                    DataBaseManager dbm =new DataBaseManager(getApplicationContext());
+                    dbm.addIngredient(retour.getNom(),retour.getPrix());
+
+
+
 
 
                     System.out.println(Integer.parseInt(editTextPrixIngredient.getText().toString()));
 
-                    setResult(666, intent);
+
 
                     finish();
                 }
