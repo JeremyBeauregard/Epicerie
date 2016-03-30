@@ -6,9 +6,9 @@ package com.uqac.informatiquemobile.epicerie.metier;
 public class Ingredient extends Nourriture {
 
     // Variables locales
-    int _prixUnitaire;
-    Unite unite;
-    int quantite;
+    private int _prixUnitaire;
+    private Unite unite;
+    private int quantite;
 
     // Constructeurs
     public Ingredient(String nom, int prixUnitaire) {

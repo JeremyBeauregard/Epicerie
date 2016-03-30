@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.R;
+import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 
 import java.util.ArrayList;
@@ -21,13 +22,18 @@ import java.util.List;
  */
 public class ListeCourses extends Activity {
 
-    ListView listViewIngredients;
+    private DataBaseManager dbm;
+    private ListView listViewIngredients;
+    private Button ajouterAuFrigo;
+
     ArrayList<Ingredient> selectedIngredients = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.liste_courses_activity);
+
+        dbm = new DataBaseManager(getApplicationContext());
 
         //////////////////////////////////////////////////
 
@@ -40,20 +46,54 @@ public class ListeCourses extends Activity {
 
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
         listViewIngredients.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        ArrayList<String> titres = new ArrayList(ingredients.values());
+        final ArrayList<String> titres = new ArrayList(ingredients.keySet());
 
 
-        ArrayAdapter<Ingredient> adapter = new ArrayAdapter<Ingredient>(getApplicationContext(), R.layout.courses_row_layout, (List)titres);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.courses_row_layout, (List)titres);
         listViewIngredients.setAdapter(adapter);
+
         listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView tv = (TextView)view;
-                Ingredient selectedIngredient = ingredients.get(tv.getText().toString());
-                Toast.makeText(getApplicationContext(), selectedIngredient.toString(), Toast.LENGTH_SHORT).show();
+                String nom = tv.getText().toString().split(" | ")[0];
+                //Toast.makeText(getApplicationContext(), "-"+nom+"-", Toast.LENGTH_SHORT).show();
+                Ingredient selectedIngredient = ingredients.get(nom);
+                //Toast.makeText(getApplicationContext(), selectedIngredient.toString(), Toast.LENGTH_SHORT).show();
+                selectedIngredients.add(selectedIngredient);
             }
         });
 
+
+
+        Button ajouterAuFrigo = (Button)findViewById(R.id.buttonAjouterAuFrigo);
+        ajouterAuFrigo.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                for (Ingredient i : selectedIngredients) {
+                    for(int x = 0 ; x < i.getQuantite() ; x++){
+                        dbm.addIngredient(i.getNom(), i.getPrix());
+
+
+                    }
+                    for (int x = 0 ; x<titres.size() ; x++) {
+
+                        if (i.getNom().equals(titres.get(x))){
+                            titres.remove(x);
+                        }else {
+                            //Toast.makeText(getApplicationContext(), i.getNom().toString() + (titres.get(x).toString()), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                //Toast.makeText(getApplicationContext(), titres.toString(), Toast.LENGTH_SHORT).show();
+
+                adapter.notifyDataSetChanged();
+
+
+
+            }
+        });
 
 
 
