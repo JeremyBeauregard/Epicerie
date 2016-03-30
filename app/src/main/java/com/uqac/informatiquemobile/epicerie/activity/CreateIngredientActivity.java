@@ -1,14 +1,12 @@
 package com.uqac.informatiquemobile.epicerie.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
@@ -43,9 +41,6 @@ public class CreateIngredientActivity extends Activity {
 
                     DataBaseManager dbm =new DataBaseManager(getApplicationContext());
                     dbm.addIngredient(retour.getNom(),retour.getPrix());
-
-
-
 
 
                     System.out.println(Integer.parseInt(editTextPrixIngredient.getText().toString()));

@@ -26,7 +26,7 @@ public class CreateRecetteActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_ingredient_activity);
+        setContentView(R.layout.create_recette);
 
 
         editTextNomRecette = (EditText)findViewById(R.id.editTextName);
