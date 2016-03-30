@@ -73,7 +73,7 @@ public class ListRecettesActivity extends Activity {
     protected void onResume(){
         super.onResume();
 
-        ArrayList<Ingredient> ingredients= dbm.getAllIngredient();
+
 
         listRecettes.removeAll(listRecettes);
 
