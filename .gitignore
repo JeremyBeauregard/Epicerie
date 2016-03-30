@@ -12,3 +12,6 @@
 app/app.iml
 .idea/misc.xml
 .idea/misc.xml
+app/app.iml
+*.iml
+app/build.gradle
