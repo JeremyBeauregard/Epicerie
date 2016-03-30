@@ -55,33 +55,38 @@ public class ListeCourses extends Activity {
         listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView tv = (TextView)view;
+                TextView tv = (TextView) view;
                 String nom = tv.getText().toString().split(" | ")[0];
                 //Toast.makeText(getApplicationContext(), "-"+nom+"-", Toast.LENGTH_SHORT).show();
                 Ingredient selectedIngredient = ingredients.get(nom);
                 //Toast.makeText(getApplicationContext(), selectedIngredient.toString(), Toast.LENGTH_SHORT).show();
-                selectedIngredients.add(selectedIngredient);
+                if (selectedIngredients.contains(selectedIngredient)) {
+                    selectedIngredients.remove(selectedIngredient);
+                } else {
+                    selectedIngredients.add(selectedIngredient);
+                }
+
             }
         });
 
 
 
         Button ajouterAuFrigo = (Button)findViewById(R.id.buttonAjouterAuFrigo);
-        ajouterAuFrigo.setOnClickListener(new View.OnClickListener(){
+        ajouterAuFrigo.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 for (Ingredient i : selectedIngredients) {
-                    for(int x = 0 ; x < i.getQuantite() ; x++){
+                    for (int x = 0; x < i.getQuantite(); x++) {
                         dbm.addIngredient(i.getNom(), i.getPrix());
 
 
                     }
-                    for (int x = 0 ; x<titres.size() ; x++) {
+                    for (int x = 0; x < titres.size(); x++) {
 
-                        if (i.getNom().equals(titres.get(x))){
+                        if (i.getNom().equals(titres.get(x))) {
                             titres.remove(x);
-                        }else {
+                        } else {
                             //Toast.makeText(getApplicationContext(), i.getNom().toString() + (titres.get(x).toString()), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -89,6 +94,8 @@ public class ListeCourses extends Activity {
                 //Toast.makeText(getApplicationContext(), titres.toString(), Toast.LENGTH_SHORT).show();
 
                 adapter.notifyDataSetChanged();
+
+                
 
 
 
