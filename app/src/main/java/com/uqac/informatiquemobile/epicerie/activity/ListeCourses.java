@@ -34,6 +34,7 @@ public class ListeCourses extends Activity {
     private ArrayAdapter<String> adapter;
     private int total = 0;
     TextView textViewPrix;
+    String prixTotal;
 
     private ArrayList<Ingredient> selectedIngredients = new ArrayList<>();
 
@@ -54,7 +55,7 @@ public class ListeCourses extends Activity {
         //////////////////////////////////////////////////
 
         textViewPrix = (TextView)findViewById(R.id.textViewPrix);
-        textViewPrix.setText("Prix : 0");
+        textViewPrix.setText("Prix : 0,00$");
 
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
         listViewIngredients.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -78,7 +79,8 @@ public class ListeCourses extends Activity {
                     selectedIngredients.add(selectedIngredient);
                     total+=selectedIngredient.getPrixTotal();
                 }
-                textViewPrix.setText("Prix : "+(double)total/100);
+                prixTotal = "Prix : "+(double)total/100 + "$";
+                textViewPrix.setText(prixTotal);
             }
         });
 
