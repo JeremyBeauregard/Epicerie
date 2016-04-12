@@ -16,11 +16,22 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Liste de courses"
+        android:id="@+id/buttonCourses"
+        android:layout_below="@+id/buttonCalendrier"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Mes provisions"
         android:id="@+id/buttonFrigo"
         android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp" />
+        android:layout_marginTop="55dp"
+        android:layout_alignLeft="@+id/buttonRecettes"
+        android:layout_alignStart="@+id/buttonRecettes"
+        android:layout_alignRight="@+id/buttonRecettes"
+        android:layout_alignEnd="@+id/buttonRecettes" />
 
     <Button
         android:layout_width="wrap_content"
@@ -28,7 +39,10 @@
         android:text="Mes recettes"
         android:id="@+id/buttonRecettes"
         android:layout_below="@+id/buttonFrigo"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/buttonCourses"
+        android:layout_alignStart="@+id/buttonCourses"
+        android:layout_alignRight="@+id/buttonCalendrier"
+        android:layout_alignEnd="@+id/buttonCalendrier" />
 
     <Button
         android:layout_width="wrap_content"
@@ -36,13 +50,8 @@
         android:text="Calendrier"
         android:id="@+id/buttonCalendrier"
         android:layout_below="@+id/buttonRecettes"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Liste de courses"
-        android:id="@+id/buttonCourses"
-        android:layout_below="@+id/buttonCalendrier"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignRight="@+id/buttonCourses"
+        android:layout_alignEnd="@+id/buttonCourses"
+        android:layout_alignLeft="@+id/buttonCourses"
+        android:layout_alignStart="@+id/buttonCourses" />
 </RelativeLayout>
