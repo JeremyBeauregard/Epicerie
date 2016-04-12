@@ -159,7 +159,7 @@ public class ListeCourses extends Activity {
                 Ingredient ingredientAjout = new Gson().fromJson(jsonIngredient, Ingredient.class);
                 Gson g = new Gson();
 
-                titres.add(ingredientAjout.getNom() + " : " + ingredientAjout.getQuantite());
+                titres.add(ingredientAjout.getNom() /*+ " : " + ingredientAjout.getQuantite()*/);
                 ingredients.put(ingredientAjout.getNom(), ingredientAjout);
                 adapter.notifyDataSetChanged();
 

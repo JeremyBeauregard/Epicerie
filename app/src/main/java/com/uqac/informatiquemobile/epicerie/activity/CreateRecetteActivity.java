@@ -110,6 +110,5 @@ public class CreateRecetteActivity extends Activity {
 
             }
         }
-
     }
 }
