@@ -1,6 +1,7 @@
 package com.uqac.informatiquemobile.epicerie.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,14 @@ public class PlanifierRepasActivity extends Activity {
         datePicker = (DatePicker) findViewById(R.id.datePicker);
         timePicker = (TimePicker) findViewById(R.id.timePicker);
 
+
+        selectionRecette.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), SelectRecetteActivity.class);
+                startActivityForResult(i, 123);
+            }
+        });
 
         planifierRepas.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -54,6 +54,8 @@ public class AddIngredientActivity extends Activity {
             }
         });
 
+        ((TextView)findViewById(R.id.textViewPrix)).setText("");
+
 
         dbm = new DataBaseManager(getApplicationContext());
 

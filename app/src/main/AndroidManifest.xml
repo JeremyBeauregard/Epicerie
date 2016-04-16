@@ -43,6 +43,8 @@
         <activity android:name=".activity.AfficherRecetteRecherche"></activity>
         <activity android:name=".activity.DetailedRecetteActivity"></activity>
         <activity android:name=".activity.PlanifierRepasActivity"></activity>
+        <activity android:name=".activity.SelectRecetteActivity"></activity>
+
         <service android:name=".Service.DateRecetteService"></service>
 
 
