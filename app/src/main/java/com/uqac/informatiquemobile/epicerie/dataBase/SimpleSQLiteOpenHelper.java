@@ -16,9 +16,10 @@ public class SimpleSQLiteOpenHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL("drop table ingredient");
-        db.execSQL("create table ingredient (id integer primary key autoincrement, nom text, prix integer, quantite integer)");
+        db.execSQL("create table ingredient (id integer primary key autoincrement, nom text, prix integer)");
         db.execSQL("create table recette (id integer primary key autoincrement, nom text)");
         db.execSQL("create table associationRecette (idRecette integer, idIngredient, quantite integer)");
+        db.execSQL("create table frigo (idIngredient integer, quantite integer)");
     }
 
     @Override
