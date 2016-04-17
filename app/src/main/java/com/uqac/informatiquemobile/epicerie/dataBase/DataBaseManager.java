@@ -6,15 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by paull on 20/03/2016.
@@ -77,9 +74,8 @@ public class DataBaseManager {
     /**
      * Methode qui permet d'ajouter un ingredient dans la base de donnees.
      * @param ingredient ingredient à ajouter.
-     * @param frigo vrai si il faut l'ajouter au frigo.
      */
-    public void addIngredient(Ingredient ingredient, boolean frigo){
+    public boolean addIngredient(Ingredient ingredient){
 
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient where nom = \""+ingredient.getNom()+"\"", null);
@@ -91,34 +87,95 @@ public class DataBaseManager {
 
             row.put("nom", ingredient.getNom());
             row.put("prix", ingredient.getPrix());
-//            row.put("quantite", 0);
 
             db2.insert("ingredient", null, row);
+
+            db2.close();
+
+            cursor.close();
+            db.close();
+
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+
+
+
+
+
+    }
+
+
+
+    public void addIngredientFrigo(Ingredient ingredient){
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from  ingredient i inner join frigo f on f.idIngredient = i.id where nom = \""+ingredient.getNom()+"\"", null);
+        cursor.moveToNext();
+        if (cursor.getCount()==0){
+            Log.d("cursor", "addIngredient: null");
+            SQLiteDatabase db2 = helper.getWritableDatabase();
+            ContentValues row = new ContentValues();
+
+            row.put("nom", ingredient.getNom());
+            row.put("prix", ingredient.getPrix());
+            //row.put("quantite", 0);
+            db2.insert("ingredient", null, row);
+
+            final String MY_QUERY = "SELECT last_insert_rowid()";
+            Cursor cur = db.rawQuery(MY_QUERY, null);
+            cur.moveToFirst();
+            int idIngredient = cur.getInt(0);
+            cur.close();
+
+            SQLiteDatabase db3 = helper.getWritableDatabase();
+            ContentValues row2 = new ContentValues();
+
+            row2.put("idIngredient", idIngredient);
+            //row2.put("prix", ingredient.getPrix());
+            row2.put("quantite", ingredient.getQuantite());
+            db3.insert("ingredient", null, row);
+
+
+
+
         } else {
             Log.d("cursor", "addIngredient: not null");
             //cursor.moveToNext();
+
+            int qtte = cursor.getInt(4);
+            int id = cursor.getInt(0);
+
+
             ContentValues row = new ContentValues();
-            row.put("nom", nom);
-            row.put("prix", prix);
-            int u = (cursor.getInt(3)+1);
+            int u = (qtte+ingredient.getQuantite());
             row.put("quantite", u);
             Log.d("qtte", "addIngredient: "+u);
             SQLiteDatabase db2 = helper.getWritableDatabase();
-            int ok = db2.update("ingredient", row, "nom=\""+nom+"\"",null);
+            int ok = db2.update("frigo", row, "idIngredient=\""+id+"\"",null);
             //Log.d("ok", "addIngredient: "+ok);
             db2.close();
 
-        }
-
-        if (frigo = true){
 
         }
+
+
+
 
 
 
         cursor.close();
         db.close();
     }
+
+
+
 
     /**
      * Methode qui permet de supprimer un ingredient.
