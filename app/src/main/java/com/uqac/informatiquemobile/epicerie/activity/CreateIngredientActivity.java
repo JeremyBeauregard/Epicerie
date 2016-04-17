@@ -40,7 +40,7 @@ public class CreateIngredientActivity extends Activity {
                     Ingredient retour = new Ingredient(editTextNomIngredient.getText().toString(), Integer.parseInt(editTextPrixIngredient.getText().toString()),1);
 
                     DataBaseManager dbm =new DataBaseManager(getApplicationContext());
-                    dbm.addIngredient(retour.getNom(),retour.getPrix());
+                    dbm.addIngredient(retour);
 
 
                     System.out.println(Integer.parseInt(editTextPrixIngredient.getText().toString()));
