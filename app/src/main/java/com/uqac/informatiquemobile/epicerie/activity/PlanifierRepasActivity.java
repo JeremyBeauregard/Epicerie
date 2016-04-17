@@ -11,7 +11,8 @@ import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.R;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  * Created by paull on 16/04/2016.
@@ -30,6 +31,7 @@ public class PlanifierRepasActivity extends Activity {
 
         selectionRecette = (Button) findViewById(R.id.buttonSelection);
         planifierRepas = (Button)findViewById(R.id.buttonPlanifier);
+        //planifierRepas.setEnabled(false);
         datePicker = (DatePicker) findViewById(R.id.datePicker);
         timePicker = (TimePicker) findViewById(R.id.timePicker);
 
@@ -46,7 +48,7 @@ public class PlanifierRepasActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //String jour = String.valueOf(datePicker.getDayOfMonth())+"-"+String.valueOf(datePicker.getMonth())+"-"+String.valueOf(datePicker.getYear());
-                Date date = new Date(datePicker.getYear()-1900, datePicker.getMonth(), datePicker.getDayOfMonth());
+                Date date = new Date(datePicker.getYear()-1900, datePicker.getMonth(), datePicker.getDayOfMonth(), timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                 Toast.makeText(getApplication(), date.toString(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -55,4 +57,11 @@ public class PlanifierRepasActivity extends Activity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+
+    }
 }
