@@ -42,6 +42,7 @@ public class DetailedRecetteActivity extends Activity {
 
         textViewName = (TextView) findViewById(R.id.textViewName);
         buttonMod = (Button) findViewById(R.id.buttonMod);
+        buttonDel = (Button) findViewById(R.id.buttonDel);
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
 
         textViewName.setText(recette.getNom());
@@ -56,6 +57,20 @@ public class DetailedRecetteActivity extends Activity {
             public void onClick(View v) {
                 finish();
             }
+        });
+        buttonDel.setOnClickListener(new View.OnClickListener(){
+
+
+            @Override
+            public void onClick(View v) {
+
+                int id = getIntent().getExtras().getInt("id");
+
+                dbm.DeleteRecette(id);
+
+                finish();
+            }
+
         });
 
     }

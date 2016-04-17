@@ -73,8 +73,6 @@ public class ListRecettesActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Recette selectedRecette=recettes.get(position);
                 int idRecette = selectedRecette.getId();
-
-                Toast.makeText(getApplicationContext(), "Id de la recette : "+idRecette, Toast.LENGTH_SHORT).show();
                 Intent mIntent = new Intent(getApplicationContext(), DetailedRecetteActivity.class);
                 Bundle extras = new Bundle();
                 extras.putInt("id", idRecette);
@@ -98,7 +96,7 @@ public class ListRecettesActivity extends Activity {
         recettes= dbm.getAllRecettes();
         for (Recette i :recettes) {
 
-            listRecettes.add(i.getNom()+i.getId());
+            listRecettes.add(i.getNom());
         }
 
         adapterListViewRecettes.notifyDataSetChanged();

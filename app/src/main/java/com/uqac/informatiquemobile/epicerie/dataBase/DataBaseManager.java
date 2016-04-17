@@ -283,6 +283,17 @@ public class DataBaseManager {
         return temp;
     }
 
+    public void DeleteRecette(int id){
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("DELETE from recette Where id="+id+";", null);
+        db.delete("recette", "id" + "=" + id, null) ;
+
+        cursor.close();
+        db.close();
+
+    }
+
     /*public ArrayList<Recette> getRecette(int id){
         ArrayList<Recette> retour = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
