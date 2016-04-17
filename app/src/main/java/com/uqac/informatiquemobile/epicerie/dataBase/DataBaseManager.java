@@ -76,22 +76,23 @@ public class DataBaseManager {
 
     /**
      * Methode qui permet d'ajouter un ingredient dans la base de donnees.
-     * @param nom Nom de l'ingredient a ajouter.
-     * @param prix Prix de l'ingredient a ajouter.
+     * @param ingredient ingredient à ajouter.
+     * @param frigo vrai si il faut l'ajouter au frigo.
      */
-    public void addIngredient(String nom, int prix){
+    public void addIngredient(Ingredient ingredient, boolean frigo){
 
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from ingredient where nom = \""+nom+"\"", null);
+        Cursor cursor = db.rawQuery("select * from ingredient where nom = \""+ingredient.getNom()+"\"", null);
         cursor.moveToNext();
         if (cursor.getCount()==0){
             Log.d("cursor", "addIngredient: null");
             SQLiteDatabase db2 = helper.getWritableDatabase();
             ContentValues row = new ContentValues();
 
-            row.put("nom", nom);
-            row.put("prix", prix);
-            row.put("quantite", 0);
+            row.put("nom", ingredient.getNom());
+            row.put("prix", ingredient.getPrix());
+//            row.put("quantite", 0);
+
             db2.insert("ingredient", null, row);
         } else {
             Log.d("cursor", "addIngredient: not null");
@@ -106,6 +107,10 @@ public class DataBaseManager {
             int ok = db2.update("ingredient", row, "nom=\""+nom+"\"",null);
             //Log.d("ok", "addIngredient: "+ok);
             db2.close();
+
+        }
+
+        if (frigo = true){
 
         }
 
