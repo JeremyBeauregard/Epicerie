@@ -37,7 +37,7 @@ public class DataBaseManager {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient order by nom;", null);
         while(cursor.moveToNext()){
-            retour.add(new Ingredient(cursor.getString(1), cursor.getInt(2), cursor.getInt(3)));
+            retour.add(new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(3)));
             System.out.println(cursor.getString(1)+ cursor.getInt(2)+cursor.getInt(3));
         }
         cursor.close();

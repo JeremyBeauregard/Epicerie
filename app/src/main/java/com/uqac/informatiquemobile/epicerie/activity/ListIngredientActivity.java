@@ -3,6 +3,7 @@ package com.uqac.informatiquemobile.epicerie.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -11,9 +12,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.uqac.informatiquemobile.epicerie.Adapter.IngredientListAdapter;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
@@ -25,9 +29,9 @@ public class ListIngredientActivity extends AppCompatActivity {
     private DataBaseManager dbm;
 
     private ListView listViewIngredients;
-    private ArrayList<String> listIngredients;
+    private ArrayList<Ingredient> listIngredients;
     ArrayList<Ingredient> ingredients;
-    private ArrayAdapter<String> adapterListViewIngredients;
+    private IngredientListAdapter adapterListViewIngredients;
 
     private TextView textViewValeurIngredients;
 
@@ -59,10 +63,10 @@ public class ListIngredientActivity extends AppCompatActivity {
         ingredients= dbm.getAllIngredient();
         for (Ingredient i :ingredients) {
             //System.out.println(i.getNom()+" : "+i.getPrix()+i.getQuantite()+" : "+"\n");
-            listIngredients.add(i.getNom()+" : "+i.getQuantite());
+            listIngredients.add(i);
         }
 
-        adapterListViewIngredients = new ArrayAdapter<String>(ListIngredientActivity.this, android.R.layout.simple_list_item_1, listIngredients);
+        adapterListViewIngredients = new IngredientListAdapter(ListIngredientActivity.this, R.layout.resultat_recherche_layout, listIngredients);
         listViewIngredients.setAdapter(adapterListViewIngredients);
 
 
@@ -100,13 +104,31 @@ public class ListIngredientActivity extends AppCompatActivity {
         listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String t = ((TextView) view).getText().toString().split(" ")[0];
-                Ingredient i = dbm.getIngredientByNm(t);
 
-                dbm.addIngredient(i.getNom(), i.getPrix());
-                Toast.makeText(getApplicationContext(), "Ajout : " + i.getNom()+i.getQuantite(), Toast.LENGTH_SHORT).show();
+                String name=listIngredients.get(position).getNom();
+                Toast.makeText(getApplicationContext(), name, Toast.LENGTH_SHORT).show();
+                Ingredient i = dbm.getIngredientByNm(name);
+                if (i!= null){
+                    //Toast.makeText(getApplicationContext(), i.getNom(), Toast.LENGTH_SHORT).show();
+                    dbm.addIngredient(i.getNom(), i.getPrix());
+                    i.setQuantite(i.getQuantite()+1);
+                    Toast.makeText(getApplicationContext(), "Ajout : " + i.getNom()+i.getQuantite(), Toast.LENGTH_SHORT).show();
 
-                ((TextView) view).setText(t+" : "+(i.getQuantite()+1));
+                }else{
+                    Toast.makeText(getApplicationContext(), "ingredient null", Toast.LENGTH_SHORT).show();
+                }
+
+                ArrayList<Ingredient> ingredients= dbm.getAllIngredient();
+
+                listIngredients.removeAll(listIngredients);
+
+                for (Ingredient in :ingredients) {
+                    listIngredients.add(in);
+
+                }
+
+                adapterListViewIngredients.notifyDataSetChanged();
+
 
                 int val = 0;
                 ingredients= dbm.getAllIngredient();
@@ -149,7 +171,8 @@ public class ListIngredientActivity extends AppCompatActivity {
         listIngredients.removeAll(listIngredients);
 
         for (Ingredient i :ingredients) {
-            listIngredients.add(i.getNom());
+            listIngredients.add(i);
+            //Toast.makeText(getApplicationContext(), i.getNom(), Toast.LENGTH_SHORT).show();
         }
 
         adapterListViewIngredients.notifyDataSetChanged();
@@ -176,22 +199,7 @@ public class ListIngredientActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+
+
     }
-
-/*    private void test() {
-
-        // Crée des ingrédients pour le fun
-        Ingredient tranchePain = new Ingredient("Tranche de pain", 0.05f);
-        Ingredient banane = new Ingredient("Banane", 0.25f);
-
-        Recette sandwichBanane = new Recette("Sandwich aux bananes");
-        sandwichBanane.addItem(tranchePain, 2);
-        sandwichBanane.addItem(banane, 1);
-
-
-        // Récupère le textView pour afficher le résultat à l'écran
-        TextView tv = (TextView)findViewById(R.id.textView);
-        tv.setText(sandwichBanane.getNom() + ": " + sandwichBanane.getPrix() + "$");
-
-    }*/
 }
