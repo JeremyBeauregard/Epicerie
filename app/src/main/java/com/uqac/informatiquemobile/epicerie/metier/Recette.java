@@ -51,5 +51,8 @@ public class Recette extends Nourriture {
     }
 
 
-
+    @Override
+    public String toString() {
+        return this.getId()+":"+this.getNom();
+    }
 }
