@@ -45,7 +45,7 @@
         <activity android:name=".activity.PlanifierRepasActivity"></activity>
         <activity android:name=".activity.SelectRecetteActivity"></activity>
 
-        <service android:name=".Service.DateRecetteService"></service>
+        <service android:name=".service.DateRecetteService"></service>
 
 
     </application>

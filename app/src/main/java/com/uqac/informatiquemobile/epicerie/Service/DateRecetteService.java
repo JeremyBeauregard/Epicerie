@@ -1,4 +1,4 @@
-package com.uqac.informatiquemobile.epicerie.Service;
+package com.uqac.informatiquemobile.epicerie.service;
 
 import android.app.Service;
 import android.content.Intent;
