@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.uqac.informatiquemobile.epicerie.Adapter.IngredientListAdapter;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
@@ -25,12 +26,12 @@ import java.util.List;
  * Activité qui permet de créer une recette
  */
 public class CreateRecetteActivity extends Activity {
-    private HashMap<Nourriture, Float> composition=new HashMap<Nourriture, Float>(); //update à l'ajout d'ingrédients
+    private ArrayList<Nourriture> composition=new ArrayList<Nourriture>(); //update à l'ajout d'ingrédients
 
     private ListView listViewIngredients;
-    private HashMap<String, Ingredient> ingredients;
-    private ArrayList<String> titres;
-    private ArrayAdapter<String> adapter;
+    private ArrayList<Nourriture> ingredients;
+
+    private IngredientListAdapter adapter;
 
     EditText editTextNomRecette, editTextDescRecette;
     Button boutonAjouterIngredient, boutonAjouterRecette;
@@ -47,10 +48,10 @@ public class CreateRecetteActivity extends Activity {
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
 
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
-        ingredients = new HashMap<>();
-        titres = new ArrayList(ingredients.keySet());
+        ingredients = new ArrayList<Nourriture>();
 
-        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.resultat_recherche_layout, (List)titres);
+
+        adapter = new IngredientListAdapter(getApplicationContext(), R.layout.resultat_recherche_layout, (List)ingredients);
         listViewIngredients.setAdapter(adapter);
 
         boutonAjouterRecette = (Button)findViewById(R.id.buttonCreate);
@@ -102,11 +103,13 @@ public class CreateRecetteActivity extends Activity {
                 Ingredient ingredientAjout = new Gson().fromJson(jsonIngredient, Ingredient.class);
                 Gson g = new Gson();
 
-                titres.add(ingredientAjout.getNom() + " : " + ingredientAjout.getQuantite());
-                ingredients.put(ingredientAjout.getNom(), ingredientAjout);
-                adapter.notifyDataSetChanged();
+                if(ingredientAjout.getQuantite()!=0){
 
-                composition.put(ingredientAjout, (float)ingredientAjout.getQuantite());
+                    ingredients.add(ingredientAjout);
+                    adapter.notifyDataSetChanged();
+
+                    composition.add(ingredientAjout);
+                }else{Toast.makeText(getApplicationContext(), "La quantité de l'ingrédient ne peut être nulle", Toast.LENGTH_SHORT).show();}
 
             }
         }

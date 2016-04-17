@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
@@ -55,7 +56,7 @@ public class DataBaseManager {
         Log.d("QUERY", "getIngredientByNm: select * from ingredient where nom=\"" + nom + "\";");
         cursor.moveToFirst();
         if(cursor.getCount()==0){return null;}
-        Ingredient retour=new Ingredient(cursor.getString(1), cursor.getInt(2), cursor.getInt(3));
+        Ingredient retour=new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(3));
         cursor.close();
         db.close();
         return retour;
@@ -157,7 +158,7 @@ public class DataBaseManager {
 
     public void addRecette(Recette recette){
 
-        HashMap<Nourriture, Float> composition=recette.getComposition();
+        ArrayList<Nourriture> composition=recette.getComposition();
 
 
 
@@ -175,12 +176,12 @@ public class DataBaseManager {
         int idRecette = cur.getInt(0);
         cur.close();
 
-        for(Map.Entry<Nourriture, Float> entry : composition.entrySet()) {
+        for(Nourriture nourr : composition) {
 
-            Ingredient value = (Ingredient) entry.getKey();
-            int qte = entry.getValue().intValue();
 
-            int idIngredient=getIngredientIdByNm(value.getNom());
+            int qte = nourr.getQuantite();
+
+            int idIngredient=getIngredientIdByNm(nourr.getNom());
             SQLiteDatabase dbtemp = helper.getWritableDatabase();
             ContentValues row2 = new ContentValues();
 
@@ -211,7 +212,9 @@ public class DataBaseManager {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from recette order by nom;", null);
         while(cursor.moveToNext()){
-            Recette temp =new Recette(cursor.getString(1),new HashMap<Nourriture, Float>(),cursor.getInt(0) );
+
+
+            Recette temp =new Recette(cursor.getString(1),new ArrayList<Nourriture>(),cursor.getInt(0) );
             Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + cursor.getInt(0) + ";", null);
             if(cursor2 !=null && cursor2.moveToFirst()){
                 while(cursor2.moveToNext()) {
@@ -226,8 +229,8 @@ public class DataBaseManager {
                     int prixIng = cursor3.getInt(1);
                     cursor3.close();
 
-                    Ingredient tempIng=new Ingredient(nomIng,prixIng);
-                    temp.addItem(tempIng,qte);
+                    Ingredient tempIng=new Ingredient(nomIng,prixIng,qte);
+                    temp.addItem(tempIng);
 
                 }
                 cursor2.close();
@@ -242,34 +245,39 @@ public class DataBaseManager {
 
     public Recette getRecetteById(int id){
 
-
+        Recette temp= new Recette("temp",new ArrayList<Nourriture>());
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from recette where id="+id+";", null);
         cursor.moveToFirst();
-        Recette temp =new Recette(cursor.getString(1),new HashMap<Nourriture, Float>(), cursor.getInt(0) );
-        Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + id + ";", null);
-        if(cursor2 !=null && cursor2.moveToFirst()){
-            cursor2.move(-1);
-            while(cursor2.moveToNext()) {
+        if(cursor !=null /*&& cursor.moveToFirst()*/){
+            //cursor.move(-1);
+            temp =new Recette(""+cursor.getCount()+""+cursor.getString(1) /*"test"cursor.getString(1)*/,new ArrayList<Nourriture>()/*, cursor.getInt(0)*/ );
+            Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + id + ";", null);
+            if(cursor2 !=null && cursor2.moveToFirst()){
+                cursor2.move(-1);
+                while(cursor2.moveToNext()) {
 
-                int idIng = cursor2.getInt(0);
-                int qte = cursor2.getInt(1);
+                    int idIng = cursor2.getInt(0);
+                    int qte = cursor2.getInt(1);
 
 
-                Cursor cursor3 = db.rawQuery("select nom, prix from ingredient where id=" + idIng + ";", null);
-                cursor3.moveToFirst();
-                String nomIng = cursor3.getString(0);
-                int prixIng = cursor3.getInt(1);
-                cursor3.close();
+                    Cursor cursor3 = db.rawQuery("select nom, prix from ingredient where id=" + idIng + ";", null);
+                    cursor3.moveToFirst();
+                    String nomIng = cursor3.getString(0);
+                    int prixIng = cursor3.getInt(1);
+                    cursor3.close();
 
-                Ingredient tempIng=new Ingredient(nomIng,prixIng);
-                temp.addItem(tempIng,qte);
+                    Ingredient tempIng=new Ingredient(nomIng,prixIng,qte);
+                    temp.addItem(tempIng);
+
+                }
 
             }
 
+            cursor2.close();
         }
 
-        cursor2.close();
+
         cursor.close();
         db.close();
         return temp;

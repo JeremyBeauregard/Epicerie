@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.uqac.informatiquemobile.epicerie.Adapter.IngredientListAdapter;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
+import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
 import java.util.ArrayList;
@@ -25,8 +27,8 @@ public class DetailedRecetteActivity extends Activity {
     private TextView textViewDesc;
     private Button buttonMod;
     private Button buttonDel;
-    private ArrayList<String> titres;
-    private ArrayAdapter<String> adapter;
+    private ArrayList<Nourriture> ingredients;
+    private IngredientListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +46,9 @@ public class DetailedRecetteActivity extends Activity {
 
         textViewName.setText(recette.getNom());
 
-        titres = new ArrayList(recette.getComposition().keySet());
+        ingredients = new ArrayList(recette.getComposition());
 
-        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.resultat_recherche_layout, (List)titres);
+        adapter = new IngredientListAdapter(getApplicationContext(), R.layout.resultat_recherche_layout, (List)ingredients);
         listViewIngredients.setAdapter(adapter);
 
         buttonMod.setOnClickListener(new View.OnClickListener() {

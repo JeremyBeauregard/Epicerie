@@ -8,7 +8,7 @@ public class Ingredient extends Nourriture {
     // Variables locales
     private int _prixUnitaire;
     private Unite unite;
-    private int quantite;
+
 
     // Constructeurs
     public Ingredient(String nom, int prixUnitaire) {
@@ -16,9 +16,13 @@ public class Ingredient extends Nourriture {
         setPrix(prixUnitaire);
     }
     public Ingredient(String nom, int prixUnitaire, int quantite) {
-        super(nom);
+        super(nom,quantite);
         setPrix(prixUnitaire);
-        this.quantite = quantite;
+    }
+    public Ingredient(int id,String nom, int prixUnitaire, int quantite) {
+        super(id,nom,quantite);
+        setPrix(prixUnitaire);
+
     }
     public Ingredient(String nom, int prixUnitaire, Unite u) {
         super(nom);
@@ -30,9 +34,9 @@ public class Ingredient extends Nourriture {
 
     // Accesseurs
     @Override public int getPrix() {return _prixUnitaire;}
-    public int getPrixTotal() {return _prixUnitaire*quantite;}
+    public int getPrixTotal() {return _prixUnitaire*this.getQuantite();}
     private void setPrix(int value) {_prixUnitaire=value;}
-    public int getQuantite(){return this.quantite;}
+
 
     @Override
     public String toString() {
