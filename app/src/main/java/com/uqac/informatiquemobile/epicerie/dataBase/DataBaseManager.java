@@ -35,7 +35,20 @@ public class DataBaseManager {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient order by nom;", null);
         while(cursor.moveToNext()){
-            retour.add(new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(3)));
+            retour.add(new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2)));
+
+        }
+        cursor.close();
+        db.close();
+        return retour;
+    }
+    public ArrayList<Ingredient> getAllIngredientFrigo(){
+        ArrayList<Ingredient> retour = new ArrayList<>();
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from ingredient inner join frigo on frigo.idIngredient=ingredient.id order by nom;", null);
+        while(cursor.moveToNext()){
+            retour.add(new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(4)));
             System.out.println(cursor.getString(1)+ cursor.getInt(2)+cursor.getInt(3));
         }
         cursor.close();
@@ -54,7 +67,7 @@ public class DataBaseManager {
         Log.d("QUERY", "getIngredientByNm: select * from ingredient where nom=\"" + nom + "\";");
         cursor.moveToFirst();
         if(cursor.getCount()==0){return null;}
-        Ingredient retour=new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(3));
+        Ingredient retour=new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2));
         cursor.close();
         db.close();
         return retour;
@@ -77,6 +90,8 @@ public class DataBaseManager {
      * @param ingredient ingredient à ajouter.
      */
     public boolean addIngredient(Ingredient ingredient){
+
+        System.out.println();
 
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient where nom = \""+ingredient.getNom()+"\"", null);
@@ -118,30 +133,25 @@ public class DataBaseManager {
 
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from  ingredient i inner join frigo f on f.idIngredient = i.id where nom = \""+ingredient.getNom()+"\"", null);
+        Cursor addIngredient = db.rawQuery("select * from  ingredient where nom = \""+ingredient.getNom()+"\"", null);
+
         cursor.moveToNext();
         if (cursor.getCount()==0){
-            Log.d("cursor", "addIngredient: null");
-            SQLiteDatabase db2 = helper.getWritableDatabase();
-            ContentValues row = new ContentValues();
 
-            row.put("nom", ingredient.getNom());
-            row.put("prix", ingredient.getPrix());
-            //row.put("quantite", 0);
-            db2.insert("ingredient", null, row);
 
-            final String MY_QUERY = "SELECT last_insert_rowid()";
-            Cursor cur = db.rawQuery(MY_QUERY, null);
-            cur.moveToFirst();
-            int idIngredient = cur.getInt(0);
-            cur.close();
+
+            addIngredient.moveToFirst();
+            int idIngredient = addIngredient.getInt(0);
+            addIngredient.close();
 
             SQLiteDatabase db3 = helper.getWritableDatabase();
             ContentValues row2 = new ContentValues();
 
             row2.put("idIngredient", idIngredient);
-            //row2.put("prix", ingredient.getPrix());
             row2.put("quantite", ingredient.getQuantite());
-            db3.insert("ingredient", null, row);
+            db3.insert("frigo", null, row2);
+
+            System.out.println("ajout ingredient inexistant");
 
 
 
@@ -162,6 +172,8 @@ public class DataBaseManager {
             int ok = db2.update("frigo", row, "idIngredient=\""+id+"\"",null);
             //Log.d("ok", "addIngredient: "+ok);
             db2.close();
+
+            System.out.println("ajout ingredient existant");
 
 
         }

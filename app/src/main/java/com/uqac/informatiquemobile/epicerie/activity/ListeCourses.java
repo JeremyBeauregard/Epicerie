@@ -90,11 +90,9 @@ public class ListeCourses extends Activity {
             @Override
             public void onClick(View v) {
                 for (Ingredient i : selectedIngredients) {
-                    for (int x = 0; x < i.getQuantite(); x++) {
-                        dbm.addIngredient(i.getNom(), i.getPrix());
 
+                    dbm.addIngredientFrigo(i);
 
-                    }
                     for (int x = 0; x < titres.size(); x++) {
 
                         if (i.getNom().equals(titres.get(x))) {

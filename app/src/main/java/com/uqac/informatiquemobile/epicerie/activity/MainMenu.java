@@ -33,7 +33,7 @@ public class MainMenu extends AppCompatActivity {
         buttonProvisions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), ListIngredientActivity.class);
+                Intent i = new Intent(getApplicationContext(), ListFrigoActivity.class);
                 startActivity(i);
             }
         });

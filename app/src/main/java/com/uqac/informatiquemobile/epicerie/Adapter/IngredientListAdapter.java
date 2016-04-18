@@ -1,4 +1,4 @@
-package com.uqac.informatiquemobile.epicerie.Adapter;
+package com.uqac.informatiquemobile.epicerie.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
