@@ -15,3 +15,4 @@ app/app.iml
 app/app.iml
 *.iml
 app/build.gradle
+*.iml

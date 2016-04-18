@@ -360,22 +360,25 @@ public class DataBaseManager {
     }
 
     public void DeleteRecette(int id){
-
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("DELETE from recette Where id="+id+";", null);
-        db.delete("recette", "id" + "=" + id, null) ;
-
+        db.delete("recette", "id" + "=" + id, null);
         cursor.close();
         db.close();
-
     }
 
 
 
     public void sauvegarderRepas(Repas repas){
 
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("idRecette", repas.getRecette().getId());
+        String date = repas.getDatePreparation().getYear()+":"+repas.getDatePreparation().getMonth()+":"+repas.getDatePreparation().getDay()+":"+repas.getDatePreparation().getHours()+":"+repas.getDatePreparation().getMinutes();
+        cv.put("dateRepas", date);
 
-
+        db.insert("repas", null, cv);
+        db.close();
     }
 
     public int IngIsAvailable(Ingredient ingredient){
