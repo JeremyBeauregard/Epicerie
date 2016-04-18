@@ -49,7 +49,7 @@ public class CreateRecetteActivity extends Activity {
         ingredients = new ArrayList<Nourriture>();
 
 
-        adapter = new IngredientListAdapter(getApplicationContext(), R.layout.resultat_recherche_layout, (List)ingredients);
+        adapter = new IngredientListAdapter(getApplicationContext(), R.layout.resultat_recherche_layout, (List)ingredients,false);
         listViewIngredients.setAdapter(adapter);
 
         boutonAjouterRecette = (Button)findViewById(R.id.buttonCreate);

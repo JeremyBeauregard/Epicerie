@@ -64,7 +64,7 @@ public class ListFrigoActivity extends AppCompatActivity {
             listIngredients.add(i);
         }
 
-        adapterListViewIngredients = new IngredientListAdapter(ListFrigoActivity.this, R.layout.resultat_recherche_layout, listIngredients);
+        adapterListViewIngredients = new IngredientListAdapter(ListFrigoActivity.this, R.layout.resultat_recherche_layout, listIngredients, false);
         listViewIngredients.setAdapter(adapterListViewIngredients);
 
 
@@ -99,7 +99,7 @@ public class ListFrigoActivity extends AppCompatActivity {
             }
         });
 
-        listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -139,7 +139,7 @@ public class ListFrigoActivity extends AppCompatActivity {
 
 
             }
-        });
+        });*/
 
 
 

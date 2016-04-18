@@ -1,6 +1,7 @@
 package com.uqac.informatiquemobile.epicerie.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.uqac.informatiquemobile.epicerie.R;
+import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 
 import java.util.List;
@@ -17,8 +19,12 @@ import java.util.List;
  */
 public class IngredientListAdapter extends ArrayAdapter<Ingredient> {
 
-    public IngredientListAdapter (Context context, int textViewResourceId,List<Ingredient> ingredients){
+    boolean changeColors;
+    DataBaseManager dbm;
+
+    public IngredientListAdapter (Context context, int textViewResourceId,List<Ingredient> ingredients, boolean changeColors){
         super(context, textViewResourceId,ingredients);
+        this.changeColors=changeColors;
     }
 
     @Override
@@ -33,6 +39,8 @@ public class IngredientListAdapter extends ArrayAdapter<Ingredient> {
         }
 
         Ingredient p = getItem(position);
+        dbm=new DataBaseManager(getContext());
+        int dispo=dbm.IngIsAvailable(p);
 
         if (p != null) {
             TextView ttn = (TextView) v.findViewById(R.id.name);
@@ -41,10 +49,23 @@ public class IngredientListAdapter extends ArrayAdapter<Ingredient> {
 
             if (ttn != null) {
                 ttn.setText(p.getNom());
+
             }
 
             if (ttq != null) {
                 ttq.setText(""+p.getQuantite());
+
+                if(changeColors){
+                    if (dispo==-1){
+                        ttq.setTextColor(getContext().getResources().getColor(R.color.missing));
+                    }else if (dispo==0){
+                        ttq.setTextColor(getContext().getResources().getColor(R.color.available));
+                    }else if(dispo>0){
+                        ttq.setTextColor(getContext().getResources().getColor(R.color.incomplete));
+                    }
+
+
+                }
             }
 
             if (ttp != null) {
