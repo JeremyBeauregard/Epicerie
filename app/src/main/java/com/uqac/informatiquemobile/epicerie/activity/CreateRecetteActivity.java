@@ -94,7 +94,7 @@ public class CreateRecetteActivity extends Activity {
                 Bundle extras = data.getExtras();
                 if (extras != null) {
                     jsonIngredient = extras.getString("ingredient");
-                    Toast.makeText(getApplicationContext(), jsonIngredient, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), jsonIngredient, Toast.LENGTH_SHORT).show();
                 } else {
                     jsonIngredient = null;
                 }
@@ -102,11 +102,26 @@ public class CreateRecetteActivity extends Activity {
                 Gson g = new Gson();
 
                 if(ingredientAjout.getQuantite()!=0){
+                    ArrayList<String> listnomIng=new ArrayList<String>();
+                    for (Nourriture nouriture:ingredients) {
+                        listnomIng.add(nouriture.getNom());
+                    }
 
-                    ingredients.add(ingredientAjout);
+                    if(listnomIng.contains(ingredientAjout.getNom())){
+                        int index=listnomIng.indexOf(ingredientAjout.getNom());
+                        if(ingredients.get(index) instanceof Ingredient){
+                            Ingredient ingtemp=(Ingredient)ingredients.get(index);
+                            ingtemp.setQuantite(ingtemp.getQuantite()+ingredientAjout.getQuantite());
+                        }
+
+                    }else{
+                        ingredients.add(ingredientAjout);
+                        composition.add(ingredientAjout);
+                    }
+
                     adapter.notifyDataSetChanged();
 
-                    composition.add(ingredientAjout);
+
                 }else{Toast.makeText(getApplicationContext(), "La quantité de l'ingrédient ne peut être nulle", Toast.LENGTH_SHORT).show();}
 
             }
