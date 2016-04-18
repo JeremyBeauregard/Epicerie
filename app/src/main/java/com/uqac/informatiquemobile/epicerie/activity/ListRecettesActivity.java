@@ -13,11 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.R;
+import com.uqac.informatiquemobile.epicerie.adapter.RecetteListAdapter;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Guillaume2 on 30/03/2016.
@@ -26,9 +28,8 @@ public class ListRecettesActivity extends Activity {
     private DataBaseManager dbm;
 
     private ListView listViewRecettes;
-    private ArrayList<String> listRecettes;
-    ArrayList<Recette> recettes;
-    private ArrayAdapter<String> adapterListViewRecettes;
+    private ArrayList<Recette> recettes;
+    private RecetteListAdapter adapterListViewRecettes;
     Button buttonRechercherRecetteEnLigne;
 
     @Override
@@ -52,7 +53,7 @@ public class ListRecettesActivity extends Activity {
         dbm = new DataBaseManager(getApplicationContext());
 
         listViewRecettes = (ListView) findViewById(R.id.listRecettes);
-        listRecettes = new ArrayList<>();
+
 
 
 
@@ -65,7 +66,8 @@ public class ListRecettesActivity extends Activity {
             }
         });
 
-        adapterListViewRecettes = new ArrayAdapter<String>(ListRecettesActivity.this, android.R.layout.simple_list_item_1, listRecettes);
+        recettes= dbm.getAllRecettes();
+        adapterListViewRecettes = new RecetteListAdapter(ListRecettesActivity.this, R.layout.list_recette_layout, recettes,true);
         listViewRecettes.setAdapter(adapterListViewRecettes);
 
         listViewRecettes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,13 +93,12 @@ public class ListRecettesActivity extends Activity {
 
 
 
-        listRecettes.removeAll(listRecettes);
+
 
         recettes= dbm.getAllRecettes();
-        for (Recette i :recettes) {
+        adapterListViewRecettes = new RecetteListAdapter(ListRecettesActivity.this, R.layout.list_recette_layout, recettes,true);
+        listViewRecettes.setAdapter(adapterListViewRecettes);
 
-            listRecettes.add(i.getNom());
-        }
 
         adapterListViewRecettes.notifyDataSetChanged();
 

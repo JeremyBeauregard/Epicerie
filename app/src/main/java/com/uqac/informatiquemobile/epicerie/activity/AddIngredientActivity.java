@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
@@ -100,14 +101,20 @@ public class AddIngredientActivity extends Activity {
                                         // get user input and set it to result
                                         // edit text
                                         Ingredient temp = dbm.getIngredientByNm(tv);
-                                        resultat = userInput.getText().toString();
-                                        Ingredient retour = new Ingredient(tv, temp.getPrix(), Integer.parseInt(resultat));
-                                        //Toast.makeText(getApplicationContext(), retour.toString(), Toast.LENGTH_SHORT).show();
-                                        Bundle data = new Bundle();
-                                        data.putString("ingredient", new Gson().toJson(retour));
-                                        Intent intent = new Intent();
-                                        intent.putExtras(data);
-                                        setResult(123, intent);
+                                        if(userInput.getText().toString().length()!=0){
+                                            resultat = userInput.getText().toString();
+
+                                            Ingredient retour = new Ingredient(tv, temp.getPrix(), Integer.parseInt(resultat));
+                                            //Toast.makeText(getApplicationContext(), retour.toString(), Toast.LENGTH_SHORT).show();
+                                            Bundle data = new Bundle();
+                                            data.putString("ingredient", new Gson().toJson(retour));
+                                            Intent intent = new Intent();
+                                            intent.putExtras(data);
+                                            setResult(123, intent);
+                                        }else {
+                                            Toast.makeText(getApplicationContext(), "La quantité ne peut être nulle", Toast.LENGTH_SHORT).show();
+                                        }
+
                                         finish();
                                     }
                                 })

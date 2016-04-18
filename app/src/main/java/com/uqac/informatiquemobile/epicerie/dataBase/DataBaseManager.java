@@ -385,9 +385,9 @@ public class DataBaseManager {
     /**
      * Methode qui permet verifier la disponibilite d'un ingredient dans le frigo
      * @param ingredient Ingredient dont il faut verifier la disponibilite.
-     * @return -1 si l'infredient est disponible
+     * @return -1 si l'ingredient est disponible
      *          0 s'il est manquant
-     *          quantite>0 s'il en manque une ceratine quantite.
+     *          quantite>0 s'il en manque une certaine quantite.
      */
     public int IngIsAvailable(Ingredient ingredient){
 
@@ -413,7 +413,7 @@ public class DataBaseManager {
     /**
      * Methode qui permet verifier la disponibilite des ingredients d'une recette dans le frigo
      * @param recette Recette dont il faut verifier la disponibilite.
-     * @return le nombre d'ingredients manquants pour faire la recette
+     * @return le nombre d'ingredients manquants pour faire la recette ou -1 s'il manque tous les ingrédients
      */
     public int RecetteIsAvailable(Recette recette){
         ArrayList<Nourriture> composition=recette.getComposition();
@@ -436,8 +436,12 @@ public class DataBaseManager {
 
         }
 
+        if(missing==composition.size()){
+            return -1;
+        }else{
+            return missing;
+        }
 
-        return missing;
 
     }
 

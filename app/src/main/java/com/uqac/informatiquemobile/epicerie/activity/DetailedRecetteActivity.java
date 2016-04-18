@@ -40,12 +40,14 @@ public class DetailedRecetteActivity extends Activity {
         Recette recette= dbm.getRecetteById(id);
 
         textViewName = (TextView) findViewById(R.id.textViewName);
+        textViewDesc=(TextView) findViewById(R.id.textViewDesc);
 
         buttonMod = (Button) findViewById(R.id.buttonMod);
         buttonDel = (Button) findViewById(R.id.buttonDel);
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
 
         textViewName.setText(recette.getNom());
+        textViewDesc.setText(""+dbm.RecetteIsAvailable(recette));
 
         ingredients = new ArrayList(recette.getComposition());
 
