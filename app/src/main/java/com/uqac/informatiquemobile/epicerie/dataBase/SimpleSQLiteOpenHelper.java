@@ -20,6 +20,7 @@ public class SimpleSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL("create table recette (id integer primary key autoincrement, nom text)");
         db.execSQL("create table associationRecette (idRecette integer, idIngredient, quantite integer)");
         db.execSQL("create table frigo (idIngredient integer, quantite integer)");
+        db.execSQL("create table repas (id integer primary key autoincrement, idRecette integer, dateRepas varchar(50))");
     }
 
     @Override

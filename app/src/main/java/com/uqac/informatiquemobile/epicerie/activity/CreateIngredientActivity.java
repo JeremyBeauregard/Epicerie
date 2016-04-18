@@ -25,6 +25,9 @@ public class CreateIngredientActivity extends Activity {
         setContentView(R.layout.create_ingredient_activity);
 
 
+
+
+
         editTextNomIngredient= (EditText)findViewById(R.id.editTextNomIngredient);
         editTextPrixIngredient = (EditText)findViewById(R.id.editTextPrixIngredient);
         boutonAjouterIngredient = (Button)findViewById(R.id.boutonAjouter);
