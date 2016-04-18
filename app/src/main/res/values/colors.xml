@@ -5,6 +5,6 @@
     <color name="colorAccent">#FFFF00</color>
     <color name="available">#0000CD</color>
     <color name="missing">#FF0000</color>
-    <color name="incomplete">#00FF00</color>
+    <color name="incomplete">#FFD700</color>
 
 </resources>

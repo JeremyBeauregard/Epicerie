@@ -381,6 +381,14 @@ public class DataBaseManager {
         db.close();
     }
 
+
+    /**
+     * Methode qui permet verifier la disponibilite d'un ingredient dans le frigo
+     * @param ingredient Ingredient dont il faut verifier la disponibilite.
+     * @return -1 si l'infredient est disponible
+     *          0 s'il est manquant
+     *          quantite>0 s'il en manque une ceratine quantite.
+     */
     public int IngIsAvailable(Ingredient ingredient){
 
 
@@ -388,7 +396,7 @@ public class DataBaseManager {
         Cursor cursor = db.rawQuery("select * from frigo where idIngredient=\"" + ingredient.getId() + "\";", null);
         Log.d("QUERY", "IngisAvailable: select * from frigo where idIngredient=\"" + ingredient.getId() + "\";");
         cursor.moveToFirst();
-        if(cursor.getCount()==0){return -1;}
+        if(cursor.getCount()==0){return 0;}
         int dispo=cursor.getInt(1);
         cursor.close();
         db.close();
@@ -397,9 +405,39 @@ public class DataBaseManager {
         if (diff<0){
             return -diff;
         }
-        return 0;
+        return -1;
 
 
+
+    }
+    /**
+     * Methode qui permet verifier la disponibilite des ingredients d'une recette dans le frigo
+     * @param recette Recette dont il faut verifier la disponibilite.
+     * @return le nombre d'ingredients manquants pour faire la recette
+     */
+    public int RecetteIsAvailable(Recette recette){
+        ArrayList<Nourriture> composition=recette.getComposition();
+
+        int missing=0;
+        int ingmissing;
+
+        for (Nourriture nourriture: composition) {
+            if (nourriture instanceof Ingredient) {
+                ingmissing=IngIsAvailable((Ingredient) nourriture);
+                if(ingmissing>=0){
+                    missing++;
+                }
+            } else if(nourriture instanceof Recette){
+                ingmissing=RecetteIsAvailable((Recette)nourriture);
+                if(ingmissing>0){
+                    missing++;
+                }
+            }
+
+        }
+
+
+        return missing;
 
     }
 
