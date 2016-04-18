@@ -3,12 +3,11 @@ package com.uqac.informatiquemobile.epicerie.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.uqac.informatiquemobile.epicerie.Adapter.IngredientListAdapter;
+import com.uqac.informatiquemobile.epicerie.adapter.IngredientListAdapter;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Nourriture;

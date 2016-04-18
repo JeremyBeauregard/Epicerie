@@ -30,6 +30,11 @@ public class Ingredient extends Nourriture {
         setPrix(prixUnitaire);
     }
 
+    public Ingredient(int id,String nom, int prixUnitaire) {
+        super(id,nom);
+        setPrix(prixUnitaire);
+
+    }
 
 
     // Accesseurs
