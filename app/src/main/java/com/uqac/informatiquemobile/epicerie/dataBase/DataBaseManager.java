@@ -231,7 +231,7 @@ public class DataBaseManager {
      * Methode qui permet d'ajouter un ingredient dans la base de donnees.
      */
 
-    public void addRecette(Recette recette){
+    public int addRecette(Recette recette){
 
         ArrayList<Nourriture> composition=recette.getComposition();
 
@@ -276,6 +276,7 @@ public class DataBaseManager {
 
 
         db.close();
+        return idRecette;
     }
 
 
@@ -492,8 +493,8 @@ public class DataBaseManager {
     public Recette updateRecette(Recette recette){
 
         deleteRecette(recette.getId());
-        addRecette(recette);
-        recette=getRecetteByNm(recette.getNom());
+        int id=addRecette(recette);
+        recette=getRecetteById(id);
         return recette;
 
     }
