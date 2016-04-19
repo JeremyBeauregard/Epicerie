@@ -34,9 +34,10 @@ public class AddIngredientActivity extends Activity {
     private ArrayList<Ingredient> ingredients;
     private ArrayAdapter<String> adapterListViewIngredients;
     private TextView textViewPrix;
+    private TextView textViewLabel;
     private String resultat;
 
-    private TextView textViewValeurIngredients;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,10 @@ public class AddIngredientActivity extends Activity {
         setContentView(R.layout.list_ingredients_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-
+        textViewPrix=(TextView)findViewById(R.id.textViewValeur);
+        textViewPrix.setText("");
+        textViewLabel=(TextView)findViewById(R.id.textViewLabelValeur);
+        textViewLabel.setText("");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,14 +141,7 @@ public class AddIngredientActivity extends Activity {
 
 
 
-        textViewValeurIngredients = (TextView)findViewById(R.id.textViewValeur);
-        int val = 0;
-        for (Ingredient i:ingredients) {
-            System.out.println(i.getPrixTotal());
-            val = val +i.getPrixTotal();
-        }
 
-        textViewValeurIngredients.setText(String.valueOf((double)val/100));
 
 
     }

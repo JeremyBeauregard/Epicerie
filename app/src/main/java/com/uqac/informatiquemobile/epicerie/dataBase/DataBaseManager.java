@@ -257,6 +257,7 @@ public class DataBaseManager {
         ContentValues row = new ContentValues();
 
         row.put("nom", recette.getNom());
+        row.put("description",recette.getDescription());
 
 
         db.insert("recette", null, row);
@@ -306,7 +307,7 @@ public class DataBaseManager {
         while(cursor.moveToNext()){
 
 
-            Recette temp =new Recette(cursor.getString(1),new ArrayList<Nourriture>(),cursor.getInt(0) );
+            Recette temp =new Recette(cursor.getString(1),new ArrayList<Nourriture>(),cursor.getInt(0), ""/*cursor.getString(2)*/ );
             Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + cursor.getInt(0) + ";", null);
             if(cursor2 !=null && cursor2.moveToFirst()){
                 cursor2.moveToPosition(-1);
@@ -338,54 +339,14 @@ public class DataBaseManager {
 
     public Recette getRecetteById(int id){
 
-        Recette temp= new Recette("temp",new ArrayList<Nourriture>());
+        Recette temp= new Recette("temp",new ArrayList<Nourriture>(),"");
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from recette where id="+id+";", null);
         cursor.moveToFirst();
         if(cursor !=null /*&& cursor.moveToFirst()*/){
             //cursor.move(-1);
-            temp =new Recette(cursor.getString(1) ,new ArrayList<Nourriture>(), cursor.getInt(0) );
+            temp =new Recette(cursor.getString(1) ,new ArrayList<Nourriture>(), cursor.getInt(0), cursor.getString(2) );
             Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + id + ";", null);
-            if(cursor2 !=null && cursor2.moveToFirst()){
-                cursor2.move(-1);
-                while(cursor2.moveToNext()) {
-
-                    int idIng = cursor2.getInt(0);
-                    int qte = cursor2.getInt(1);
-
-
-                    Cursor cursor3 = db.rawQuery("select nom, prix from ingredient where id=" + idIng + ";", null);
-                    System.out.println(""+idIng);
-                    cursor3.moveToFirst();
-                    String nomIng = cursor3.getString(0);
-                    int prixIng = cursor3.getInt(1);
-                    cursor3.close();
-
-                    Ingredient tempIng=new Ingredient(idIng,nomIng,prixIng,qte);
-                    temp.addItem(tempIng);
-
-                }
-
-            }
-
-            cursor2.close();
-        }
-
-
-        cursor.close();
-        db.close();
-        return temp;
-    }
-    public Recette getRecetteByNm(String nom){
-
-        Recette temp= new Recette(nom,new ArrayList<Nourriture>());
-        SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from recette where nom = \""+nom+"\"", null);
-        cursor.moveToFirst();
-        if(cursor !=null /*&& cursor.moveToFirst()*/){
-            //cursor.move(-1);
-            temp =new Recette(cursor.getString(1) ,new ArrayList<Nourriture>(), cursor.getInt(0) );
-            Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + temp.getId() + ";", null);
             if(cursor2 !=null && cursor2.moveToFirst()){
                 cursor2.move(-1);
                 while(cursor2.moveToNext()) {
