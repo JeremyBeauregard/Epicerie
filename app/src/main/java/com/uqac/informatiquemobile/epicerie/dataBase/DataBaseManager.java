@@ -292,6 +292,7 @@ public class DataBaseManager {
             Recette temp =new Recette(cursor.getString(1),new ArrayList<Nourriture>(),cursor.getInt(0) );
             Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + cursor.getInt(0) + ";", null);
             if(cursor2 !=null && cursor2.moveToFirst()){
+                cursor2.moveToPosition(-1);
                 while(cursor2.moveToNext()) {
 
                     int idIng = cursor2.getInt(0);
@@ -304,7 +305,7 @@ public class DataBaseManager {
                     int prixIng = cursor3.getInt(1);
                     cursor3.close();
 
-                    Ingredient tempIng=new Ingredient(nomIng,prixIng,qte);
+                    Ingredient tempIng=new Ingredient(idIng,nomIng,prixIng,qte);
                     temp.addItem(tempIng);
 
                 }
@@ -326,7 +327,7 @@ public class DataBaseManager {
         cursor.moveToFirst();
         if(cursor !=null /*&& cursor.moveToFirst()*/){
             //cursor.move(-1);
-            temp =new Recette(""+cursor.getCount()+""+cursor.getString(1) /*"test"cursor.getString(1)*/,new ArrayList<Nourriture>()/*, cursor.getInt(0)*/ );
+            temp =new Recette(cursor.getString(1) ,new ArrayList<Nourriture>(), cursor.getInt(0) );
             Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + id + ";", null);
             if(cursor2 !=null && cursor2.moveToFirst()){
                 cursor2.move(-1);
@@ -337,12 +338,53 @@ public class DataBaseManager {
 
 
                     Cursor cursor3 = db.rawQuery("select nom, prix from ingredient where id=" + idIng + ";", null);
+                    System.out.println(""+idIng);
                     cursor3.moveToFirst();
                     String nomIng = cursor3.getString(0);
                     int prixIng = cursor3.getInt(1);
                     cursor3.close();
 
-                    Ingredient tempIng=new Ingredient(nomIng,prixIng,qte);
+                    Ingredient tempIng=new Ingredient(idIng,nomIng,prixIng,qte);
+                    temp.addItem(tempIng);
+
+                }
+
+            }
+
+            cursor2.close();
+        }
+
+
+        cursor.close();
+        db.close();
+        return temp;
+    }
+    public Recette getRecetteByNm(String nom){
+
+        Recette temp= new Recette(nom,new ArrayList<Nourriture>());
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from recette where nom = \""+nom+"\"", null);
+        cursor.moveToFirst();
+        if(cursor !=null /*&& cursor.moveToFirst()*/){
+            //cursor.move(-1);
+            temp =new Recette(cursor.getString(1) ,new ArrayList<Nourriture>(), cursor.getInt(0) );
+            Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + temp.getId() + ";", null);
+            if(cursor2 !=null && cursor2.moveToFirst()){
+                cursor2.move(-1);
+                while(cursor2.moveToNext()) {
+
+                    int idIng = cursor2.getInt(0);
+                    int qte = cursor2.getInt(1);
+
+
+                    Cursor cursor3 = db.rawQuery("select nom, prix from ingredient where id=" + idIng + ";", null);
+                    System.out.println(""+idIng);
+                    cursor3.moveToFirst();
+                    String nomIng = cursor3.getString(0);
+                    int prixIng = cursor3.getInt(1);
+                    cursor3.close();
+
+                    Ingredient tempIng=new Ingredient(idIng,nomIng,prixIng,qte);
                     temp.addItem(tempIng);
 
                 }
@@ -358,11 +400,14 @@ public class DataBaseManager {
         return temp;
     }
 
-    public void DeleteRecette(int id){
+    public void deleteRecette(int id){
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("DELETE from recette Where id="+id+";", null);
+        //Cursor cursor = db.rawQuery("DELETE from recette Where id="+id+";", null);
         db.delete("recette", "id" + "=" + id, null);
-        cursor.close();
+        //cursor.close();
+        //Cursor cursor2 = db.rawQuery("DELETE from recette Where id="+id+";", null);
+        db.delete("associationRecette", "idRecette" + "=" + id, null);
+        //cursor2.close();
         db.close();
     }
 
@@ -378,6 +423,79 @@ public class DataBaseManager {
 
         db.insert("repas", null, cv);
         db.close();
+    }
+
+
+    /**
+     * Methode qui permet verifier la disponibilite d'un ingredient dans le frigo
+     * @param ingredient Ingredient dont il faut verifier la disponibilite.
+     * @return -1 si l'ingredient est disponible
+     *          0 s'il est manquant
+     *          quantite>0 s'il en manque une certaine quantite.
+     */
+    public int ingIsAvailable(Ingredient ingredient){
+
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from frigo where idIngredient=\"" + ingredient.getId() + "\";", null);
+        Log.d("QUERY", "IngisAvailable: select * from frigo where idIngredient=\"" + ingredient.getId() + "\";");
+        cursor.moveToFirst();
+        if(cursor.getCount()==0){return 0;}
+        int dispo=cursor.getInt(1);
+        cursor.close();
+        db.close();
+
+        int diff =dispo-ingredient.getQuantite();
+        if (diff<0){
+            return -diff;
+        }
+        return -1;
+
+
+
+    }
+    /**
+     * Methode qui permet verifier la disponibilite des ingredients d'une recette dans le frigo
+     * @param recette Recette dont il faut verifier la disponibilite.
+     * @return le nombre d'ingredients manquants pour faire la recette ou -1 s'il manque tous les ingrédients
+     */
+    public int recetteIsAvailable(Recette recette){
+        ArrayList<Nourriture> composition=recette.getComposition();
+
+        int missing=0;
+        int ingmissing;
+
+        for (Nourriture nourriture: composition) {
+            if (nourriture instanceof Ingredient) {
+                ingmissing= ingIsAvailable((Ingredient) nourriture);
+                if(ingmissing>=0){
+                    missing++;
+                }
+            } else if(nourriture instanceof Recette){
+                ingmissing= recetteIsAvailable((Recette)nourriture);
+                if(ingmissing>0){
+                    missing++;
+                }
+            }
+
+        }
+
+        if(missing==composition.size()&&missing!=0){
+            return -1;
+        }else{
+            return missing;
+        }
+
+
+    }
+
+    public Recette updateRecette(Recette recette){
+
+        deleteRecette(recette.getId());
+        addRecette(recette);
+        recette=getRecetteByNm(recette.getNom());
+        return recette;
+
     }
 
 

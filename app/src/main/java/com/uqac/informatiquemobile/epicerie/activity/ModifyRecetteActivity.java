@@ -11,8 +11,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.uqac.informatiquemobile.epicerie.adapter.IngredientListAdapter;
 import com.uqac.informatiquemobile.epicerie.R;
+import com.uqac.informatiquemobile.epicerie.adapter.IngredientListAdapter;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
@@ -22,40 +22,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Activité qui permet de créer une recette
+ * Created by guilo on 18/04/16.
  */
-public class CreateRecetteActivity extends Activity {
+public class ModifyRecetteActivity extends Activity {
 
 
     private ListView listViewIngredients;
     private ArrayList<Nourriture> ingredients;
-
+    private DataBaseManager dbm;
     private IngredientListAdapter adapter;
 
     EditText editTextNomRecette, editTextDescRecette;
-    Button boutonAjouterIngredient, boutonAjouterRecette;
+    Button boutonAjouterIngredient, boutonSaveRecette;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_recette);
+        setContentView(R.layout.modify_recette_activity_layout);
+
+        final int id = getIntent().getExtras().getInt("id");
+        dbm = new DataBaseManager(getApplicationContext());
+        Recette recette= dbm.getRecetteById(id);
+
 
 
         editTextNomRecette = (EditText)findViewById(R.id.editTextName);
+        editTextNomRecette.setText(recette.getNom());
         editTextDescRecette = (EditText)findViewById(R.id.editTextDesc);
         boutonAjouterIngredient = (Button)findViewById(R.id.buttonAdd);
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
 
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
-        ingredients = new ArrayList<Nourriture>();
+        ingredients = recette.getComposition();
 
 
         adapter = new IngredientListAdapter(getApplicationContext(), R.layout.resultat_recherche_layout, (List)ingredients,false);
         listViewIngredients.setAdapter(adapter);
 
-        boutonAjouterRecette = (Button)findViewById(R.id.buttonCreate);
+        boutonSaveRecette = (Button)findViewById(R.id.buttonSave);
 
-        boutonAjouterRecette.setOnClickListener(new View.OnClickListener() {
+        boutonSaveRecette.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (editTextNomRecette.getText().toString().equals("")) {
@@ -63,12 +69,17 @@ public class CreateRecetteActivity extends Activity {
                 }  else {
 
 
-                    Recette recette= new Recette(editTextNomRecette.getText().toString(),ingredients);
+                    Recette recette= new Recette(editTextNomRecette.getText().toString(),ingredients,id);
 
                     DataBaseManager dbm = new DataBaseManager(getApplicationContext());
-                    dbm.addRecette(recette);
+                    recette=dbm.updateRecette(recette);
 
-
+                    int idRecette = recette.getId();
+                    Bundle data = new Bundle();
+                    data.putInt("id",idRecette );
+                    Intent intent = new Intent();
+                    intent.putExtras(data);
+                    setResult(456, intent);
                     finish();
                 }
             }
@@ -92,7 +103,7 @@ public class CreateRecetteActivity extends Activity {
 
 
 
-            return true;
+                return true;
             }
         });
 
