@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class ListRecettesActivity extends Activity {
     private DataBaseManager dbm;
-    private boolean checkmissingingredients=false;
+    private boolean checkmissingingredients=true;
     private ListView listViewRecettes;
     private ArrayList<Recette> recettes;
     private RecetteListAdapter adapterListViewRecettes;
