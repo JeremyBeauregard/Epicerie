@@ -27,7 +27,7 @@ public class ListFrigoActivity extends AppCompatActivity {
 
     private ListView listViewIngredients;
     private ArrayList<Ingredient> listIngredients;
-    ArrayList<Ingredient> ingredients;
+
     private IngredientListAdapter adapterListViewIngredients;
 
     private TextView textViewValeurIngredients;
@@ -58,11 +58,8 @@ public class ListFrigoActivity extends AppCompatActivity {
         listViewIngredients = (ListView) findViewById(R.id.listIngredients);
         listIngredients = new ArrayList<>();
 
-        ingredients= dbm.getAllIngredientFrigo();
-        for (Ingredient i :ingredients) {
-            //System.out.println(i.getNom()+" : "+i.getPrix()+i.getQuantite()+" : "+"\n");
-            listIngredients.add(i);
-        }
+        listIngredients= dbm.getAllIngredientFrigo();
+
 
         adapterListViewIngredients = new IngredientListAdapter(ListFrigoActivity.this, R.layout.resultat_recherche_layout, listIngredients, false);
         listViewIngredients.setAdapter(adapterListViewIngredients);
@@ -71,24 +68,19 @@ public class ListFrigoActivity extends AppCompatActivity {
         listViewIngredients.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String t = ((TextView) view).getText().toString().split(" ")[0];
-                dbm.supprimerIngredient(t);
-                Toast.makeText(getApplicationContext(), "Delete : " + t, Toast.LENGTH_SHORT).show();
+                Ingredient ingredient=listIngredients.get(position);
+                dbm.supprimerIngredient(ingredient.getId());
+                Toast.makeText(getApplicationContext(), "Delete : " + ingredient.getNom(), Toast.LENGTH_SHORT).show();
 
-                Ingredient i = dbm.getIngredientByNm(t);
-                if (i != null) {
-                    int qtte = i.getQuantite();
-                    System.out.println(qtte);
-                    ((TextView) view).setText(t + " : " + qtte);
-                } else {
-                    listIngredients.remove(position);
-                    adapterListViewIngredients.notifyDataSetChanged();
-                }
+                listIngredients=dbm.getAllIngredient();
+                adapterListViewIngredients.notifyDataSetChanged();
+
+
 
 
                 int val = 0;
-                ingredients= dbm.getAllIngredient();
-                for (Ingredient in:ingredients) {
+
+                for (Ingredient in:listIngredients) {
                     System.out.println(in.getPrixTotal());
                     val = val +in.getPrixTotal();
                 }
@@ -145,7 +137,7 @@ public class ListFrigoActivity extends AppCompatActivity {
 
         textViewValeurIngredients = (TextView)findViewById(R.id.textViewValeur);
         int val = 0;
-        for (Ingredient i:ingredients) {
+        for (Ingredient i:listIngredients) {
             System.out.println(i.getPrixTotal());
             val = val +i.getPrixTotal();
         }

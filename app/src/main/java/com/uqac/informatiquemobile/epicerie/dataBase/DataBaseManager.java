@@ -228,6 +228,21 @@ public class DataBaseManager {
     }
 
     /**
+     * Methode qui permet de supprimer un ingredient.
+     * @param id ID de l'ingredient a supprimer.
+     */
+    public void supprimerIngredient(int id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        db.execSQL("delete from frigo where idIngredient=" + id + ";");
+
+        db.close();
+
+
+
+    }
+
+    /**
      * Methode qui permet d'ajouter un ingredient dans la base de donnees.
      */
 
