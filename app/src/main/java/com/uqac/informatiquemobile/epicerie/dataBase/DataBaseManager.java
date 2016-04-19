@@ -13,6 +13,7 @@ import com.uqac.informatiquemobile.epicerie.metier.Recette;
 import com.uqac.informatiquemobile.epicerie.metier.Repas;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by paull on 20/03/2016.
@@ -496,6 +497,36 @@ public class DataBaseManager {
         int id=addRecette(recette);
         recette=getRecetteById(id);
         return recette;
+
+    }
+
+
+    public ArrayList<Repas> getRepasPlanifies(){
+        ArrayList<Repas> retour = new ArrayList<>();
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from repas;", null);
+        while(cursor.moveToNext()){
+
+            Recette r = this.getRecetteById(cursor.getInt(1));
+            String stringDate = cursor.getString(2);
+            String[] tabDate = stringDate.split(":");
+            Date date = new Date(
+                    Integer.parseInt(tabDate[0]),
+                    Integer.parseInt(tabDate[1]),
+                    Integer.parseInt(tabDate[2]),
+                    Integer.parseInt(tabDate[3]),
+                    Integer.parseInt(tabDate[4])
+            );
+
+            retour.add(new Repas(r,date));
+
+
+        }
+        cursor.close();
+        db.close();
+
+        return retour;
 
     }
 

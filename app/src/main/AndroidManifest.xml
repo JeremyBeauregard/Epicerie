@@ -44,6 +44,7 @@
         <activity android:name=".activity.recette.DetailedRecetteActivity"></activity>
         <activity android:name=".activity.calendrier.PlanifierRepasActivity"></activity>
         <activity android:name=".activity.recette.SelectRecetteActivity"></activity>
+        <activity android:name=".activity.calendrier.RepasPlanifiesActivity"></activity>
         <activity
             android:name=".activity.recette.ModifyRecetteActivity"
             android:label="Modifier une recette">

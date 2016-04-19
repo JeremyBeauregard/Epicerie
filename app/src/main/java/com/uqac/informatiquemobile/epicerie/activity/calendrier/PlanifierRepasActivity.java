@@ -12,11 +12,8 @@ import android.widget.Toast;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.activity.recette.SelectRecetteActivity;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
-import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
-import com.uqac.informatiquemobile.epicerie.metier.Recette;
 import com.uqac.informatiquemobile.epicerie.metier.Repas;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -57,7 +54,7 @@ public class PlanifierRepasActivity extends Activity {
                 Date date = new Date(datePicker.getYear()-1900, datePicker.getMonth(), datePicker.getDayOfMonth(), timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                 Toast.makeText(getApplication(), date.toString(), Toast.LENGTH_SHORT).show();
                 DataBaseManager dbm = new DataBaseManager(getApplicationContext());
-                dbm.sauvegarderRepas(new Repas(new Recette("wololo", new ArrayList<Nourriture>(), 1), date));
+                dbm.sauvegarderRepas(new Repas(dbm.getRecetteById(1), date));
             }
         });
 
