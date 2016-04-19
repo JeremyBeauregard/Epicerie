@@ -47,7 +47,7 @@ public class DetailedRecetteActivity extends Activity {
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
 
         textViewName.setText(recette.getNom());
-        textViewDesc.setText(""+dbm.RecetteIsAvailable(recette));
+        textViewDesc.setText("composition.size : "+recette.getComposition().size()+" \nmissing : "+dbm.RecetteIsAvailable(recette));
 
         ingredients = new ArrayList(recette.getComposition());
 

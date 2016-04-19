@@ -292,6 +292,7 @@ public class DataBaseManager {
             Recette temp =new Recette(cursor.getString(1),new ArrayList<Nourriture>(),cursor.getInt(0) );
             Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + cursor.getInt(0) + ";", null);
             if(cursor2 !=null && cursor2.moveToFirst()){
+                cursor2.moveToPosition(-1);
                 while(cursor2.moveToNext()) {
 
                     int idIng = cursor2.getInt(0);
@@ -326,7 +327,7 @@ public class DataBaseManager {
         cursor.moveToFirst();
         if(cursor !=null /*&& cursor.moveToFirst()*/){
             //cursor.move(-1);
-            temp =new Recette(""+cursor.getCount()+""+cursor.getString(1) /*"test"cursor.getString(1)*/,new ArrayList<Nourriture>()/*, cursor.getInt(0)*/ );
+            temp =new Recette(cursor.getString(1) ,new ArrayList<Nourriture>(), cursor.getInt(0) );
             Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + id + ";", null);
             if(cursor2 !=null && cursor2.moveToFirst()){
                 cursor2.move(-1);
@@ -436,7 +437,7 @@ public class DataBaseManager {
 
         }
 
-        if(missing==composition.size()){
+        if(missing==composition.size()&&missing!=0){
             return -1;
         }else{
             return missing;

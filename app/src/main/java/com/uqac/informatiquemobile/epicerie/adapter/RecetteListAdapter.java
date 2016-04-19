@@ -53,8 +53,9 @@ public class RecetteListAdapter extends ArrayAdapter<Recette> {
 
 
 
+
             if (ttn != null) {
-                ttn.setText(r.getNom());
+                ttn.setText(r.getNom()+" "+r.getComposition().size());
             }
             if (tta != null) {
 
