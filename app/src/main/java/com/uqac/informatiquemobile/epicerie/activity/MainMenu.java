@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.uqac.informatiquemobile.epicerie.R;
+import com.uqac.informatiquemobile.epicerie.activity.calendrier.PlanifierRepasActivity;
+import com.uqac.informatiquemobile.epicerie.activity.courses.ListeCourses;
+import com.uqac.informatiquemobile.epicerie.activity.ingredient.ListFrigoActivity;
+import com.uqac.informatiquemobile.epicerie.activity.recette.ListRecettesActivity;
 
 /**
  * Created by paull on 29/03/2016.

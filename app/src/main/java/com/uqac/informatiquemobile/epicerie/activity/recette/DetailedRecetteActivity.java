@@ -1,4 +1,4 @@
-package com.uqac.informatiquemobile.epicerie.activity;
+package com.uqac.informatiquemobile.epicerie.activity.recette;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,12 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.adapter.IngredientListAdapter;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
-import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
 

@@ -1,4 +1,4 @@
-package com.uqac.informatiquemobile.epicerie.activity;
+package com.uqac.informatiquemobile.epicerie.activity.ingredient;
 
 import android.app.Activity;
 import android.app.AlertDialog;

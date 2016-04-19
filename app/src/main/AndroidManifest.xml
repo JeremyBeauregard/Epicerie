@@ -22,30 +22,30 @@
             ></activity>
 
         <activity
-            android:name=".activity.ListFrigoActivity"
+            android:name=".activity.ingredient.ListFrigoActivity"
             android:label="Mon frigo"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.CreateIngredientActivity"
+            android:name=".activity.ingredient.CreateIngredientActivity"
             android:label="Ajouter un ingredient"
             android:theme="@style/AppTheme.NoActionBar"
             ></activity>
         
-        <activity android:name=".activity.ListeCourses"
+        <activity android:name=".activity.courses.ListeCourses"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.CreateRecetteActivity"></activity>
-        <activity android:name=".activity.AddIngredientActivity"></activity>
-        <activity android:name=".activity.ListRecettesActivity"></activity>
-        <activity android:name=".activity.RechercheActivity"></activity>
-        <activity android:name=".activity.AfficherRecetteRecherche"></activity>
-        <activity android:name=".activity.DetailedRecetteActivity"></activity>
-        <activity android:name=".activity.PlanifierRepasActivity"></activity>
-        <activity android:name=".activity.SelectRecetteActivity"></activity>
+        <activity android:name=".activity.recette.CreateRecetteActivity"></activity>
+        <activity android:name=".activity.ingredient.AddIngredientActivity"></activity>
+        <activity android:name=".activity.recette.ListRecettesActivity"></activity>
+        <activity android:name=".activity.recette.RechercheActivity"></activity>
+        <activity android:name=".activity.recette.AfficherRecetteRecherche"></activity>
+        <activity android:name=".activity.recette.DetailedRecetteActivity"></activity>
+        <activity android:name=".activity.calendrier.PlanifierRepasActivity"></activity>
+        <activity android:name=".activity.recette.SelectRecetteActivity"></activity>
         <activity
-            android:name=".activity.ModifyRecetteActivity"
+            android:name=".activity.recette.ModifyRecetteActivity"
             android:label="Modifier une recette">
 
         </activity>

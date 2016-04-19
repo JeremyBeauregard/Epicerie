@@ -1,4 +1,4 @@
-package com.uqac.informatiquemobile.epicerie.activity;
+package com.uqac.informatiquemobile.epicerie.activity.ingredient;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,7 +64,7 @@ public class ListFrigoActivity extends AppCompatActivity {
             listIngredients.add(i);
         }
 
-        adapterListViewIngredients = new IngredientListAdapter(ListFrigoActivity.this, R.layout.resultat_recherche_layout, listIngredients);
+        adapterListViewIngredients = new IngredientListAdapter(ListFrigoActivity.this, R.layout.resultat_recherche_layout, listIngredients, false);
         listViewIngredients.setAdapter(adapterListViewIngredients);
 
 

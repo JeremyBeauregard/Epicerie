@@ -1,4 +1,4 @@
-package com.uqac.informatiquemobile.epicerie.activity;
+package com.uqac.informatiquemobile.epicerie.activity.recette;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,20 +6,15 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.adapter.RecetteListAdapter;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
-import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Guillaume2 on 30/03/2016.
