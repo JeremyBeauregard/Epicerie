@@ -31,6 +31,7 @@ public class DetailedRecetteActivity extends Activity {
     private Button buttonDel;
     private ArrayList<Nourriture> ingredients;
     private IngredientListAdapter adapter;
+    private Recette recette;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class DetailedRecetteActivity extends Activity {
         setContentView(R.layout.detailed_recette_activity);
 
         int id = getIntent().getExtras().getInt("id");
-        final Recette recette=displayinfo(id);
+        recette=displayinfo(id);
 
         buttonMod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +102,7 @@ public class DetailedRecetteActivity extends Activity {
                 Bundle extras = data.getExtras();
                 if (extras != null) {
                     int id =extras.getInt("id");
-                    displayinfo(id);
+                    recette=displayinfo(id);
                 }
 
 
