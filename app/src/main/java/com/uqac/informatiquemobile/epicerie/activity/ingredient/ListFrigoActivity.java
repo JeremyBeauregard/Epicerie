@@ -72,9 +72,13 @@ public class ListFrigoActivity extends AppCompatActivity {
                 dbm.supprimerIngredient(ingredient.getId());
                 Toast.makeText(getApplicationContext(), "Delete : " + ingredient.getNom(), Toast.LENGTH_SHORT).show();
 
-                listIngredients=dbm.getAllIngredient();
-                adapterListViewIngredients.notifyDataSetChanged();
 
+                listIngredients.remove(position);
+                
+
+
+
+                adapterListViewIngredients.notifyDataSetChanged();
 
 
 
@@ -91,47 +95,7 @@ public class ListFrigoActivity extends AppCompatActivity {
             }
         });
 
-        listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String name=listIngredients.get(position).getNom();
-                Toast.makeText(getApplicationContext(), name, Toast.LENGTH_SHORT).show();
-                Ingredient i = dbm.getIngredientByNm(name);
-                if (i!= null){
-
-                    dbm.addIngredientFrigo(i);
-                    i.setQuantite(i.getQuantite()+1);
-                    Toast.makeText(getApplicationContext(), "Ajout : " + i.getNom()+i.getQuantite(), Toast.LENGTH_SHORT).show();
-
-                }else{
-                    Toast.makeText(getApplicationContext(), "ingredient null", Toast.LENGTH_SHORT).show();
-                }
-
-                ArrayList<Ingredient> ingredients= dbm.getAllIngredient();
-
-                listIngredients.removeAll(listIngredients);
-
-                for (Ingredient in :ingredients) {
-                    listIngredients.add(in);
-
-                }
-
-                adapterListViewIngredients.notifyDataSetChanged();
-
-
-                int val = 0;
-                ingredients= dbm.getAllIngredient();
-                for (Ingredient in:ingredients) {
-                    System.out.println(in.getPrixTotal());
-                    val = val +in.getPrixTotal();
-                }
-
-                textViewValeurIngredients.setText(String.valueOf((double) val / 100));
-
-
-            }
-        });
 
 
 
@@ -155,12 +119,12 @@ public class ListFrigoActivity extends AppCompatActivity {
         super.onResume();
 
         ArrayList<Ingredient> ingredients= dbm.getAllIngredientFrigo();
-        Toast.makeText(getApplicationContext(), ""+ingredients.size(), Toast.LENGTH_SHORT).show();
+
         listIngredients.removeAll(listIngredients);
 
         for (Ingredient i :ingredients) {
             listIngredients.add(i);
-            Toast.makeText(getApplicationContext(), i.getNom(), Toast.LENGTH_SHORT).show();
+
         }
 
         adapterListViewIngredients.notifyDataSetChanged();
