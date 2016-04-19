@@ -1,6 +1,5 @@
 package com.uqac.informatiquemobile.epicerie.adapter;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +19,12 @@ import java.util.List;
  */
 public class RecetteListAdapter extends ArrayAdapter<Recette> {
 
-    boolean changeColors;
+    boolean checkmissing;
     DataBaseManager dbm;
 
-    public RecetteListAdapter(Context context, int textViewResourceId, List<Recette> recettes, boolean changeColors) {
+    public RecetteListAdapter(Context context, int textViewResourceId, List<Recette> recettes, boolean checkmissing) {
         super(context, textViewResourceId, recettes);
-        this.changeColors=changeColors;
+        this.checkmissing =checkmissing;
     }
 
     @Override
@@ -48,36 +47,45 @@ public class RecetteListAdapter extends ArrayAdapter<Recette> {
             TableRow trn=(TableRow) v.findViewById(R.id.TableRowname);
             TableRow tra=(TableRow) v.findViewById(R.id.TableRowavalability);
 
-            dbm=new DataBaseManager(getContext());
-            int dispo=dbm.RecetteIsAvailable(r);
 
 
-
-
-            if (ttn != null) {
-                ttn.setText(r.getNom()+" "+r.getComposition().size());
-            }
-            if (tta != null) {
+            if(checkmissing){
+                dbm=new DataBaseManager(getContext());
+                int dispo=dbm.RecetteIsAvailable(r);
 
 
                 switch (dispo){
                     case -1:
-                        tta.setText(dispo+" Vous n'avez aucun des ingrédients nécessaires");
+                        tta.setText(" Vous n'avez aucun des ingrédients nécessaires");
                         trn.setBackgroundResource(R.color.missing);
                         tra.setBackgroundResource(R.color.missing);
 
                         break;
                     case 0:
-                        tta.setText(dispo+" Vous pouvez faire cette recette");
+                        tta.setText(" Vous pouvez faire cette recette");
                         trn.setBackgroundResource(R.color.available);
                         tra.setBackgroundResource(R.color.available);
                         break;
+                    case 1:
+                        tta.setText("Il manque "+dispo+" ingrédient");
+                        trn.setBackgroundResource(R.color.incomplete);
+                        tra.setBackgroundResource(R.color.incomplete);
+                        break;
                     default:
-                        tta.setText("Il manque "+dispo+" ingrédients");
+                        tta.setText("Il manque  "+dispo+" ingrédients");
                         tra.setBackgroundResource(R.color.incomplete);
                         trn.setBackgroundResource(R.color.incomplete);
 
                 }
+            }
+
+
+
+            if (ttn != null) {
+                ttn.setText(r.getNom());
+
+            }
+            if (tta != null) {
 
 
             }

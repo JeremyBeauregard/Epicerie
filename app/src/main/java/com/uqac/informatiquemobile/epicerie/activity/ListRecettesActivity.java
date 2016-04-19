@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class ListRecettesActivity extends Activity {
     private DataBaseManager dbm;
-
+    private boolean checkmissingingredients=false;
     private ListView listViewRecettes;
     private ArrayList<Recette> recettes;
     private RecetteListAdapter adapterListViewRecettes;
@@ -67,7 +67,7 @@ public class ListRecettesActivity extends Activity {
         });
 
         recettes= dbm.getAllRecettes();
-        adapterListViewRecettes = new RecetteListAdapter(ListRecettesActivity.this, R.layout.list_recette_layout, recettes,true);
+        adapterListViewRecettes = new RecetteListAdapter(ListRecettesActivity.this, R.layout.list_recette_layout, recettes,checkmissingingredients);
         listViewRecettes.setAdapter(adapterListViewRecettes);
 
         listViewRecettes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -96,7 +96,7 @@ public class ListRecettesActivity extends Activity {
 
 
         recettes= dbm.getAllRecettes();
-        adapterListViewRecettes = new RecetteListAdapter(ListRecettesActivity.this, R.layout.list_recette_layout, recettes,true);
+        adapterListViewRecettes = new RecetteListAdapter(ListRecettesActivity.this, R.layout.list_recette_layout, recettes,checkmissingingredients);
         listViewRecettes.setAdapter(adapterListViewRecettes);
 
 

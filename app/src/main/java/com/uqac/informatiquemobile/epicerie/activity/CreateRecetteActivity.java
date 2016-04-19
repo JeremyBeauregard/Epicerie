@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -78,6 +79,20 @@ public class CreateRecetteActivity extends Activity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), AddIngredientActivity.class);
                 startActivityForResult(i, 123);
+            }
+        });
+
+        listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ingredients.remove(position);
+                composition.remove(position);
+
+                adapter.notifyDataSetChanged();
+
+
+
+
             }
         });
 

@@ -26,7 +26,7 @@
             android:id="@+id/availability"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Disponibilité"
+            android:text=""
             android:layout_weight="1"
             android:height="20sp" />
 
