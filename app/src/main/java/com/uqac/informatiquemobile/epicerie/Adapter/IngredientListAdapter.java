@@ -1,12 +1,10 @@
 package com.uqac.informatiquemobile.epicerie.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -60,7 +58,7 @@ public class IngredientListAdapter extends ArrayAdapter<Ingredient> {
 
                 if(changeColors){
                     dbm=new DataBaseManager(getContext());
-                    int dispo=dbm.IngIsAvailable(p);
+                    int dispo=dbm.ingIsAvailable(p);
                     if (dispo==0){
 
                         tr1.setBackgroundResource(R.color.missing);

@@ -51,7 +51,7 @@ public class RecetteListAdapter extends ArrayAdapter<Recette> {
 
             if(checkmissing){
                 dbm=new DataBaseManager(getContext());
-                int dispo=dbm.RecetteIsAvailable(r);
+                int dispo=dbm.recetteIsAvailable(r);
 
 
                 switch (dispo){

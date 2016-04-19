@@ -359,12 +359,55 @@ public class DataBaseManager {
         db.close();
         return temp;
     }
+    public Recette getRecetteByNm(String nom){
 
-    public void DeleteRecette(int id){
+        Recette temp= new Recette(nom,new ArrayList<Nourriture>());
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("DELETE from recette Where id="+id+";", null);
-        db.delete("recette", "id" + "=" + id, null);
+        Cursor cursor = db.rawQuery("select * from recette where nom = \""+nom+"\"", null);
+        cursor.moveToFirst();
+        if(cursor !=null /*&& cursor.moveToFirst()*/){
+            //cursor.move(-1);
+            temp =new Recette(cursor.getString(1) ,new ArrayList<Nourriture>(), cursor.getInt(0) );
+            Cursor cursor2 = db.rawQuery("select idIngredient, quantite from associationRecette where idRecette=" + temp.getId() + ";", null);
+            if(cursor2 !=null && cursor2.moveToFirst()){
+                cursor2.move(-1);
+                while(cursor2.moveToNext()) {
+
+                    int idIng = cursor2.getInt(0);
+                    int qte = cursor2.getInt(1);
+
+
+                    Cursor cursor3 = db.rawQuery("select nom, prix from ingredient where id=" + idIng + ";", null);
+                    System.out.println(""+idIng);
+                    cursor3.moveToFirst();
+                    String nomIng = cursor3.getString(0);
+                    int prixIng = cursor3.getInt(1);
+                    cursor3.close();
+
+                    Ingredient tempIng=new Ingredient(idIng,nomIng,prixIng,qte);
+                    temp.addItem(tempIng);
+
+                }
+
+            }
+
+            cursor2.close();
+        }
+
+
         cursor.close();
+        db.close();
+        return temp;
+    }
+
+    public void deleteRecette(int id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        //Cursor cursor = db.rawQuery("DELETE from recette Where id="+id+";", null);
+        db.delete("recette", "id" + "=" + id, null);
+        //cursor.close();
+        //Cursor cursor2 = db.rawQuery("DELETE from recette Where id="+id+";", null);
+        db.delete("associationRecette", "idRecette" + "=" + id, null);
+        //cursor2.close();
         db.close();
     }
 
@@ -390,7 +433,7 @@ public class DataBaseManager {
      *          0 s'il est manquant
      *          quantite>0 s'il en manque une certaine quantite.
      */
-    public int IngIsAvailable(Ingredient ingredient){
+    public int ingIsAvailable(Ingredient ingredient){
 
 
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -416,7 +459,7 @@ public class DataBaseManager {
      * @param recette Recette dont il faut verifier la disponibilite.
      * @return le nombre d'ingredients manquants pour faire la recette ou -1 s'il manque tous les ingrédients
      */
-    public int RecetteIsAvailable(Recette recette){
+    public int recetteIsAvailable(Recette recette){
         ArrayList<Nourriture> composition=recette.getComposition();
 
         int missing=0;
@@ -424,12 +467,12 @@ public class DataBaseManager {
 
         for (Nourriture nourriture: composition) {
             if (nourriture instanceof Ingredient) {
-                ingmissing=IngIsAvailable((Ingredient) nourriture);
+                ingmissing= ingIsAvailable((Ingredient) nourriture);
                 if(ingmissing>=0){
                     missing++;
                 }
             } else if(nourriture instanceof Recette){
-                ingmissing=RecetteIsAvailable((Recette)nourriture);
+                ingmissing= recetteIsAvailable((Recette)nourriture);
                 if(ingmissing>0){
                     missing++;
                 }
@@ -443,6 +486,15 @@ public class DataBaseManager {
             return missing;
         }
 
+
+    }
+
+    public Recette updateRecette(Recette recette){
+
+        deleteRecette(recette.getId());
+        addRecette(recette);
+        recette=getRecetteByNm(recette.getNom());
+        return recette;
 
     }
 
