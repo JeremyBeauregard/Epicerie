@@ -304,7 +304,7 @@ public class DataBaseManager {
                     int prixIng = cursor3.getInt(1);
                     cursor3.close();
 
-                    Ingredient tempIng=new Ingredient(idIng,nomIng,prixIng,qte);
+                    Ingredient tempIng=new Ingredient(nomIng,prixIng,qte);
                     temp.addItem(tempIng);
 
                 }
@@ -337,13 +337,12 @@ public class DataBaseManager {
 
 
                     Cursor cursor3 = db.rawQuery("select nom, prix from ingredient where id=" + idIng + ";", null);
-                    System.out.println(""+idIng);
                     cursor3.moveToFirst();
                     String nomIng = cursor3.getString(0);
                     int prixIng = cursor3.getInt(1);
                     cursor3.close();
 
-                    Ingredient tempIng=new Ingredient(idIng,nomIng,prixIng,qte);
+                    Ingredient tempIng=new Ingredient(nomIng,prixIng,qte);
                     temp.addItem(tempIng);
 
                 }
@@ -379,66 +378,6 @@ public class DataBaseManager {
 
         db.insert("repas", null, cv);
         db.close();
-    }
-
-
-    /**
-     * Methode qui permet verifier la disponibilite d'un ingredient dans le frigo
-     * @param ingredient Ingredient dont il faut verifier la disponibilite.
-     * @return -1 si l'infredient est disponible
-     *          0 s'il est manquant
-     *          quantite>0 s'il en manque une ceratine quantite.
-     */
-    public int IngIsAvailable(Ingredient ingredient){
-
-
-        SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from frigo where idIngredient=\"" + ingredient.getId() + "\";", null);
-        Log.d("QUERY", "IngisAvailable: select * from frigo where idIngredient=\"" + ingredient.getId() + "\";");
-        cursor.moveToFirst();
-        if(cursor.getCount()==0){return 0;}
-        int dispo=cursor.getInt(1);
-        cursor.close();
-        db.close();
-
-        int diff =dispo-ingredient.getQuantite();
-        if (diff<0){
-            return -diff;
-        }
-        return -1;
-
-
-
-    }
-    /**
-     * Methode qui permet verifier la disponibilite des ingredients d'une recette dans le frigo
-     * @param recette Recette dont il faut verifier la disponibilite.
-     * @return le nombre d'ingredients manquants pour faire la recette
-     */
-    public int RecetteIsAvailable(Recette recette){
-        ArrayList<Nourriture> composition=recette.getComposition();
-
-        int missing=0;
-        int ingmissing;
-
-        for (Nourriture nourriture: composition) {
-            if (nourriture instanceof Ingredient) {
-                ingmissing=IngIsAvailable((Ingredient) nourriture);
-                if(ingmissing>=0){
-                    missing++;
-                }
-            } else if(nourriture instanceof Recette){
-                ingmissing=RecetteIsAvailable((Recette)nourriture);
-                if(ingmissing>0){
-                    missing++;
-                }
-            }
-
-        }
-
-
-        return missing;
-
     }
 
 

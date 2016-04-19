@@ -40,7 +40,6 @@ public class DetailedRecetteActivity extends Activity {
         Recette recette= dbm.getRecetteById(id);
 
         textViewName = (TextView) findViewById(R.id.textViewName);
-
         buttonMod = (Button) findViewById(R.id.buttonMod);
         buttonDel = (Button) findViewById(R.id.buttonDel);
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
@@ -49,7 +48,7 @@ public class DetailedRecetteActivity extends Activity {
 
         ingredients = new ArrayList(recette.getComposition());
 
-        adapter = new IngredientListAdapter(getApplicationContext(), R.layout.resultat_recherche_layout, (List)ingredients, true);
+        adapter = new IngredientListAdapter(getApplicationContext(), R.layout.resultat_recherche_layout, (List)ingredients);
         listViewIngredients.setAdapter(adapter);
 
         buttonMod.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +66,6 @@ public class DetailedRecetteActivity extends Activity {
                 int id = getIntent().getExtras().getInt("id");
 
                 dbm.DeleteRecette(id);
-
 
                 finish();
             }

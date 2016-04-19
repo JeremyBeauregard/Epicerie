@@ -1,7 +1,5 @@
 package com.uqac.informatiquemobile.epicerie.metier;
 
-import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
-
 /**
  * Classe qui definit une sorte d'ingredient selon son prix son unite et sa quantite.
  */
@@ -49,6 +47,4 @@ public class Ingredient extends Nourriture {
     public String toString() {
         return this.getNom()+" | Q : "+this.getQuantite()+" | PU : "+this.getPrix();
     }
-
-
 }
