@@ -69,7 +69,7 @@ public class ListFrigoActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Ingredient ingredient=listIngredients.get(position);
-                dbm.supprimerIngredient(ingredient.getId());
+                dbm.supprimerIngredientFrigo(ingredient.getId());
                 Toast.makeText(getApplicationContext(), "Delete : " + ingredient.getNom(), Toast.LENGTH_SHORT).show();
 
 
