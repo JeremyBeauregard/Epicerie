@@ -56,4 +56,13 @@
         android:layout_marginRight="49dp"
         android:layout_marginEnd="49dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recette effectuée"
+        android:id="@+id/buttonConsumeIngredients"
+        android:layout_above="@+id/buttonMod"
+        android:layout_alignLeft="@+id/buttonMod"
+        android:layout_alignStart="@+id/buttonMod" />
+
 </RelativeLayout>

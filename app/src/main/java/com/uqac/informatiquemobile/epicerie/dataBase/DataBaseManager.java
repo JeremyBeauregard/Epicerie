@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
@@ -73,6 +74,19 @@ public class DataBaseManager {
         db.close();
         return retour;
     }
+
+    public Ingredient getIngredientFrigoById(int id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from ingredient inner join frigo on frigo.idIngredient=ingredient.id  where idIngredient=" + id + ";", null);
+        Log.d("QUERY", "getIngredientByNm: select * from frigo where id=" + id + ";");
+        cursor.moveToFirst();
+        if(cursor.getCount()==0){return null;}
+        Ingredient retour=new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(4));
+        cursor.close();
+        db.close();
+        return retour;
+    }
+
     public int getIngredientIdByNm(String nom){
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient where nom=\"" + nom + "\";", null);
@@ -120,10 +134,6 @@ public class DataBaseManager {
             return false;
 
         }
-
-
-
-
 
 
     }
@@ -195,7 +205,7 @@ public class DataBaseManager {
      * Methode qui permet de supprimer un ingredient.
      * @param nom Nom de l'ingredient a supprimer.
      */
-    public void supprimerIngredient(String nom){
+    public void supprimerIngredientFrigo(String nom){
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient where nom = \""+nom+"\"", null);
         cursor.moveToNext();
@@ -232,12 +242,32 @@ public class DataBaseManager {
      * Methode qui permet de supprimer un ingredient.
      * @param id ID de l'ingredient a supprimer.
      */
-    public void supprimerIngredient(int id){
+    public void supprimerIngredientFrigo(int id){
         SQLiteDatabase db = helper.getReadableDatabase();
 
         db.execSQL("delete from frigo where idIngredient=" + id + ";");
 
         db.close();
+
+
+
+    }
+
+    public void supprimerIngredientFrigo(Ingredient i,int quantité){
+        int id=i.getId();
+        Ingredient ingredient= getIngredientFrigoById(id);
+        int qteFrigo=ingredient.getQuantite();
+        System.out.println("qtefrigo : "+qteFrigo);
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        db.execSQL("delete from frigo where idIngredient=" + id + ";");
+
+        db.close();
+
+        ingredient.setQuantite(qteFrigo-quantité);
+
+        addIngredientFrigo(ingredient);
+
 
 
 

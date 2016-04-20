@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.adapter.IngredientListAdapter;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
+import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
 
@@ -30,6 +32,7 @@ public class DetailedRecetteActivity extends Activity {
     private ArrayList<Nourriture> ingredients;
     private IngredientListAdapter adapter;
     private Recette recette;
+    private Button buttonConsume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,23 @@ public class DetailedRecetteActivity extends Activity {
 
         });
 
+        buttonConsume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(dbm.recetteIsAvailable(recette)==0){
+                    for (Nourriture ingredient:recette.getComposition()) {
+                        if(ingredient instanceof Ingredient){
+                            dbm.supprimerIngredientFrigo((Ingredient)ingredient, ingredient.getQuantite());
+                            finish();
+                        }
+
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "Vous n'avez pas les ingrédients nécessaires", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     private Recette displayinfo(int id){
@@ -78,6 +98,7 @@ public class DetailedRecetteActivity extends Activity {
 
         buttonMod = (Button) findViewById(R.id.buttonMod);
         buttonDel = (Button) findViewById(R.id.buttonDel);
+        buttonConsume=(Button)findViewById(R.id.buttonConsumeIngredients);
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
 
         textViewName.setText(recette.getNom());
