@@ -13,6 +13,7 @@ import com.uqac.informatiquemobile.epicerie.metier.Recette;
 import com.uqac.informatiquemobile.epicerie.metier.Repas;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -425,13 +426,24 @@ public class DataBaseManager {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("idRecette", repas.getRecette().getId());
-        String date = repas.getDatePreparation().getYear()+":"+repas.getDatePreparation().getMonth()+":"+repas.getDatePreparation().getDay()+":"+repas.getDatePreparation().getHours()+":"+repas.getDatePreparation().getMinutes();
+
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(repas.getDatePreparation());
+
+        //Toast.makeText(getContext(), cal.toString(), Toast.LENGTH_SHORT).show();
+
+        int jour  = cal.get(Calendar.DAY_OF_MONTH);
+
+
+        String date = repas.getDatePreparation().getYear()+":"+((repas.getDatePreparation().getMonth()))+":"+jour+":"+repas.getDatePreparation().getHours()+":"+repas.getDatePreparation().getMinutes();
         cv.put("dateRepas", date);
 
         db.insert("repas", null, cv);
         db.close();
 
         System.out.println("sauvegarde repas");
+        Log.d("SAUVEGARDE", "sauvegarderRepas: Date="+date);
     }
 
 
@@ -517,17 +529,21 @@ public class DataBaseManager {
 
             Recette r = this.getRecetteById(cursor.getInt(1));
             String stringDate = cursor.getString(2);
+            System.out.println("DATE STRING = "+stringDate);
             String[] tabDate = stringDate.split(":");
             Date date = new Date(
-                    Integer.parseInt(tabDate[0])+1900,
+                    Integer.parseInt(tabDate[0]),
                     Integer.parseInt(tabDate[1]),
                     Integer.parseInt(tabDate[2]),
                     Integer.parseInt(tabDate[3]),
                     Integer.parseInt(tabDate[4])
             );
 
+
+
             retour.add(new Repas(r,date));
-            System.out.println("parcours repas");
+            //System.out.println(Integer.parseInt(tabDate[2]));
+            System.out.println("Date : "+date);
 
 
         }

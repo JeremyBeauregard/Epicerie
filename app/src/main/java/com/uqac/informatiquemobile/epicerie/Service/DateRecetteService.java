@@ -1,25 +1,69 @@
 package com.uqac.informatiquemobile.epicerie.service;
 
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
+import com.uqac.informatiquemobile.epicerie.metier.Repas;
+
+import java.util.ArrayList;
 
 /**
  * Created by paull on 16/04/2016.
  */
-public class DateRecetteService extends IntentService {
+public class DateRecetteService extends Service {
 
 
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
-    public DateRecetteService(String name) {
-        super(name);
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return new MyBinder();
     }
 
+    public class MyBinder extends Binder{
+        public DateRecetteService getService(){
+            return DateRecetteService.this;
+        }
+    }
+
+
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public void onCreate() {
+        super.onCreate();
+        Log.d("SERVICE : ", "onCreate: Service lancé");
+        final DataBaseManager dbm = new DataBaseManager(getApplicationContext());
+
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+
+
+                    ArrayList<Repas> repas  = new ArrayList<>();
+                    repas = dbm.getRepasPlanifies();
+
+
+                    try{
+                        Thread.sleep(60000);
+                    } catch (InterruptedException ie){
+                        ie.printStackTrace();
+                    }
+
+
+
+
+
+                }
+            }
+        });
+
+        t.start();
+
 
     }
 }

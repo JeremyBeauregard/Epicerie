@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.R;
+import com.uqac.informatiquemobile.epicerie.activity.recette.DetailedRecetteActivity;
 import com.uqac.informatiquemobile.epicerie.adapter.RepasListAdapter;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
+import com.uqac.informatiquemobile.epicerie.metier.Recette;
 import com.uqac.informatiquemobile.epicerie.metier.Repas;
 
 import java.util.ArrayList;
@@ -47,6 +50,17 @@ public class RepasPlanifiesActivity extends Activity {
         rla = new RepasListAdapter(getApplicationContext(), R.layout.item_list_row, repasPlanifies, false);
 
         listViewRepas.setAdapter(rla);
+        listViewRepas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Recette recette = ((Repas)(parent.getItemAtPosition(position))).getRecette();
+
+                Intent i = new Intent(getApplicationContext(), DetailedRecetteActivity.class);
+                i.putExtra("id", recette.getId());
+                startActivity(i);
+
+            }
+        });
 
 
 

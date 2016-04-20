@@ -58,6 +58,9 @@ public class PlanifierRepasActivity extends Activity {
                     //String jour = String.valueOf(datePicker.getDayOfMonth())+"-"+String.valueOf(datePicker.getMonth())+"-"+String.valueOf(datePicker.getYear());
                     Date date = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth(), timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                     Toast.makeText(getApplication(), date.toString(), Toast.LENGTH_SHORT).show();
+
+
+
                     DataBaseManager dbm = new DataBaseManager(getApplicationContext());
                     dbm.sauvegarderRepas(new Repas(recetteAPlanifier, date));
                     finish();

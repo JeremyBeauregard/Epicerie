@@ -11,6 +11,7 @@ import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Repas;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -49,7 +50,19 @@ public class RepasListAdapter extends ArrayAdapter<Repas> {
             }
 
             if (tvDate != null) {
-                tvDate.setText("" + repas.getDatePreparation().getDay() + "/" + repas.getDatePreparation().getMonth() + "/" + repas.getDatePreparation().getYear());
+                //System.out.println("MOIS : "+repas.getDatePreparation().getMonth());
+
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(repas.getDatePreparation());
+
+                //Toast.makeText(getContext(), cal.toString(), Toast.LENGTH_SHORT).show();
+
+                int jour  = cal.get(Calendar.DAY_OF_MONTH);
+
+
+
+
+                tvDate.setText("le "+jour + "/" + ((repas.getDatePreparation().getMonth())+1) + "/" + (repas.getDatePreparation().getYear()+1900)+" à "+repas.getDatePreparation().getHours()+":"+repas.getDatePreparation().getMinutes());
             }
 
 
