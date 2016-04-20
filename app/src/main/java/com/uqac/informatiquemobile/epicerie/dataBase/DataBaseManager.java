@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
@@ -520,7 +519,7 @@ public class DataBaseManager {
             String stringDate = cursor.getString(2);
             String[] tabDate = stringDate.split(":");
             Date date = new Date(
-                    Integer.parseInt(tabDate[0]),
+                    Integer.parseInt(tabDate[0])+1900,
                     Integer.parseInt(tabDate[1]),
                     Integer.parseInt(tabDate[2]),
                     Integer.parseInt(tabDate[3]),
