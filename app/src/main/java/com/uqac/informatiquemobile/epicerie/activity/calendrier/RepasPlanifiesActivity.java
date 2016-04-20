@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.R;
+import com.uqac.informatiquemobile.epicerie.adapter.RepasListAdapter;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Repas;
 
@@ -36,8 +37,14 @@ public class RepasPlanifiesActivity extends Activity {
         });
 
         DataBaseManager dbm = new DataBaseManager(getApplicationContext());
+        System.out.println("Chargement des repas");
         ArrayList<Repas> repasPlanifies = dbm.getRepasPlanifies();
+        System.out.println("Repas chargés");
         Toast.makeText(getApplicationContext(), repasPlanifies.toString(), Toast.LENGTH_SHORT);
+        RepasListAdapter rla = new RepasListAdapter(getApplicationContext(), R.layout.item_list_row, repasPlanifies, false);
+
+        listViewRepas.setAdapter(rla);
+
 
 
     }

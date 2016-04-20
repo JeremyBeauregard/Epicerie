@@ -431,6 +431,8 @@ public class DataBaseManager {
 
         db.insert("repas", null, cv);
         db.close();
+
+        System.out.println("sauvegarde repas");
     }
 
 
@@ -526,6 +528,7 @@ public class DataBaseManager {
             );
 
             retour.add(new Repas(r,date));
+            System.out.println("parcours repas");
 
 
         }

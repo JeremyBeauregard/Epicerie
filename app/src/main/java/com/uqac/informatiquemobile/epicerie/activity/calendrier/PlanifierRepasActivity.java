@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.activity.recette.SelectRecetteActivity;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
+import com.uqac.informatiquemobile.epicerie.metier.Recette;
 import com.uqac.informatiquemobile.epicerie.metier.Repas;
 
 import java.util.Date;
@@ -25,6 +26,8 @@ public class PlanifierRepasActivity extends Activity {
     Button selectionRecette, planifierRepas;
     DatePicker datePicker;
     TimePicker timePicker;
+
+    Recette recetteAPlanifier;
 
 
     @Override
@@ -50,11 +53,17 @@ public class PlanifierRepasActivity extends Activity {
         planifierRepas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String jour = String.valueOf(datePicker.getDayOfMonth())+"-"+String.valueOf(datePicker.getMonth())+"-"+String.valueOf(datePicker.getYear());
-                Date date = new Date(datePicker.getYear()-1900, datePicker.getMonth(), datePicker.getDayOfMonth(), timePicker.getCurrentHour(), timePicker.getCurrentMinute());
-                Toast.makeText(getApplication(), date.toString(), Toast.LENGTH_SHORT).show();
-                DataBaseManager dbm = new DataBaseManager(getApplicationContext());
-                dbm.sauvegarderRepas(new Repas(dbm.getRecetteById(1), date));
+
+                if (recetteAPlanifier!=null) {
+
+                    //String jour = String.valueOf(datePicker.getDayOfMonth())+"-"+String.valueOf(datePicker.getMonth())+"-"+String.valueOf(datePicker.getYear());
+                    Date date = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth(), timePicker.getCurrentHour(), timePicker.getCurrentMinute());
+                    Toast.makeText(getApplication(), date.toString(), Toast.LENGTH_SHORT).show();
+                    DataBaseManager dbm = new DataBaseManager(getApplicationContext());
+                    dbm.sauvegarderRepas(new Repas(recetteAPlanifier, date));
+                }else{
+                    Toast.makeText(getApplicationContext(), "Veuillez choisir une recette à planifier !", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -66,6 +75,28 @@ public class PlanifierRepasActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        DataBaseManager dbm = new DataBaseManager(getApplicationContext());
+
+        if (data!=null){
+            if(requestCode == 123){
+
+                String jsonRecette;
+
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    jsonRecette = extras.getString("recette");
+                    Toast.makeText(getApplicationContext(), jsonRecette, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "NULL", Toast.LENGTH_SHORT).show();
+                    jsonRecette = null;
+                }
+                //recetteAPlanifier = new Gson().fromJson(jsonRecette, Recette.class);
+                System.out.println("WOLOLO");
+
+
+
+            }
+        }
 
 
     }
