@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Repas;
@@ -34,7 +33,7 @@ public class DateRecetteService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("SERVICE : ", "onCreate: Service lancé");
+        System.out.println("Service lancé !");
         final DataBaseManager dbm = new DataBaseManager(getApplicationContext());
 
 
@@ -46,10 +45,12 @@ public class DateRecetteService extends Service {
 
                     ArrayList<Repas> repas  = new ArrayList<>();
                     repas = dbm.getRepasPlanifies();
+                    System.out.println(repas);
+
 
 
                     try{
-                        Thread.sleep(60000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException ie){
                         ie.printStackTrace();
                     }

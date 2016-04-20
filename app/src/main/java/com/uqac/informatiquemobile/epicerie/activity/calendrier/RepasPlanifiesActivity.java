@@ -61,6 +61,9 @@ public class RepasPlanifiesActivity extends Activity {
 
             }
         });
+        System.out.println("Lancement service...");
+        Intent i = new Intent(getApplicationContext(), DataBaseManager.class);
+        startService(i);
 
 
 
@@ -70,5 +73,7 @@ public class RepasPlanifiesActivity extends Activity {
     protected void onResume() {
         super.onResume();
         rla.notifyDataSetChanged();
+
+
     }
 }
