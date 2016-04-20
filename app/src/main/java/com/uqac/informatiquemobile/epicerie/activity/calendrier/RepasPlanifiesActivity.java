@@ -66,6 +66,9 @@ public class RepasPlanifiesActivity extends Activity {
         startService(i);
 
 
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+
 
     }
 
@@ -75,5 +78,12 @@ public class RepasPlanifiesActivity extends Activity {
         rla.notifyDataSetChanged();
 
 
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
