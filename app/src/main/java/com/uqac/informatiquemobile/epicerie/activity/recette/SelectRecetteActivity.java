@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.adapter.RecetteListAdapter;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
@@ -41,7 +40,7 @@ public class SelectRecetteActivity extends Activity {
                 Toast.makeText(getApplicationContext(),(parent.getItemAtPosition(position)).toString(),Toast.LENGTH_SHORT).show();
 
                 Bundle data = new Bundle();
-                data.putString("recette", new Gson().toJson(parent.getItemAtPosition(position)));
+                data.putInt("recette", ((Recette)(parent.getItemAtPosition(position))).getId());
                 Intent intent = new Intent();
                 intent.putExtras(data);
                 setResult(123, intent);

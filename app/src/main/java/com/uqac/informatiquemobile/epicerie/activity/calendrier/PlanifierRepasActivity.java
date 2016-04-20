@@ -55,12 +55,12 @@ public class PlanifierRepasActivity extends Activity {
             public void onClick(View v) {
 
                 if (recetteAPlanifier!=null) {
-
                     //String jour = String.valueOf(datePicker.getDayOfMonth())+"-"+String.valueOf(datePicker.getMonth())+"-"+String.valueOf(datePicker.getYear());
                     Date date = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth(), timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                     Toast.makeText(getApplication(), date.toString(), Toast.LENGTH_SHORT).show();
                     DataBaseManager dbm = new DataBaseManager(getApplicationContext());
                     dbm.sauvegarderRepas(new Repas(recetteAPlanifier, date));
+                    finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "Veuillez choisir une recette à planifier !", Toast.LENGTH_SHORT).show();
                 }
@@ -79,25 +79,15 @@ public class PlanifierRepasActivity extends Activity {
 
         if (data!=null){
             if(requestCode == 123){
-
-                String jsonRecette;
-
+                int id = 0;
                 Bundle extras = data.getExtras();
                 if (extras != null) {
-                    jsonRecette = extras.getString("recette");
-                    Toast.makeText(getApplicationContext(), jsonRecette, Toast.LENGTH_SHORT).show();
+                    id = extras.getInt("recette");
                 } else {
                     Toast.makeText(getApplicationContext(), "NULL", Toast.LENGTH_SHORT).show();
-                    jsonRecette = null;
                 }
-                //recetteAPlanifier = new Gson().fromJson(jsonRecette, Recette.class);
-                System.out.println("WOLOLO");
-
-
-
+                recetteAPlanifier = new DataBaseManager(getApplicationContext()).getRecetteById(id);
             }
         }
-
-
     }
 }

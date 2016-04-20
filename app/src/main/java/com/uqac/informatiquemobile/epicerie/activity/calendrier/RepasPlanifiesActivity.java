@@ -19,6 +19,9 @@ import java.util.ArrayList;
  * Created by paull on 19/04/2016.
  */
 public class RepasPlanifiesActivity extends Activity {
+
+    RepasListAdapter rla;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +44,17 @@ public class RepasPlanifiesActivity extends Activity {
         ArrayList<Repas> repasPlanifies = dbm.getRepasPlanifies();
         System.out.println("Repas chargés");
         Toast.makeText(getApplicationContext(), repasPlanifies.toString(), Toast.LENGTH_SHORT);
-        RepasListAdapter rla = new RepasListAdapter(getApplicationContext(), R.layout.item_list_row, repasPlanifies, false);
+        rla = new RepasListAdapter(getApplicationContext(), R.layout.item_list_row, repasPlanifies, false);
 
         listViewRepas.setAdapter(rla);
 
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        rla.notifyDataSetChanged();
     }
 }

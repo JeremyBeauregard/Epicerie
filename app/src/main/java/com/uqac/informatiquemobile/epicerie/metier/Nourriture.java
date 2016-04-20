@@ -17,7 +17,6 @@ public abstract class Nourriture {
     public Nourriture( int id, String nom) {
         setId(id);
         setNom(nom);
-
     }
     public Nourriture(String nom, int qte){
         setNom(nom);
@@ -27,7 +26,6 @@ public abstract class Nourriture {
         setId(id);
         setNom(nom);
         setQuantite(qte);
-
     }
 
 
