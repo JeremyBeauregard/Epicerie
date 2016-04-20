@@ -64,7 +64,7 @@ public class CreateRecetteActivity extends Activity {
                 }  else {
 
 
-                    Recette recette= new Recette(editTextNomRecette.getText().toString(),ingredients);
+                    Recette recette= new Recette(editTextNomRecette.getText().toString(),ingredients,editTextDescRecette.getText().toString());
 
                     DataBaseManager dbm = new DataBaseManager(getApplicationContext());
                     dbm.addRecette(recette);

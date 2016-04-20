@@ -74,7 +74,7 @@ public class ListFrigoActivity extends AppCompatActivity {
 
 
                 listIngredients.remove(position);
-                
+
 
 
 

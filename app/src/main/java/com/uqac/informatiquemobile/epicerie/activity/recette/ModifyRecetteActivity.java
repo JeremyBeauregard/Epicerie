@@ -50,6 +50,7 @@ public class ModifyRecetteActivity extends Activity {
         editTextNomRecette = (EditText)findViewById(R.id.editTextName);
         editTextNomRecette.setText(recette.getNom());
         editTextDescRecette = (EditText)findViewById(R.id.editTextDesc);
+        editTextDescRecette.setText(recette.getDescription());
         boutonAjouterIngredient = (Button)findViewById(R.id.buttonAdd);
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
 
@@ -70,7 +71,7 @@ public class ModifyRecetteActivity extends Activity {
                 }  else {
 
 
-                    Recette recette= new Recette(editTextNomRecette.getText().toString(),ingredients,id);
+                    Recette recette= new Recette(editTextNomRecette.getText().toString(),ingredients,id,editTextDescRecette.getText().toString());
 
                     DataBaseManager dbm = new DataBaseManager(getApplicationContext());
                     recette=dbm.updateRecette(recette);

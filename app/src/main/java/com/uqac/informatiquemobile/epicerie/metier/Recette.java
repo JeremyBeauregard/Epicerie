@@ -9,16 +9,19 @@ public class Recette extends Nourriture {
 
     // Variables locales
     private ArrayList<Nourriture> composition;
+    private String description;
 
 
     // Constructeur
-    public Recette(String nom, ArrayList<Nourriture> composition) {
+    public Recette(String nom, ArrayList<Nourriture> composition, String description) {
         super(nom);
         this.composition = composition;
+        this.description=description;
     }
-    public Recette(String nom, ArrayList<Nourriture> composition, int id){
+    public Recette(String nom, ArrayList<Nourriture> composition, int id, String description){
         super(id,nom);
         this.composition = composition;
+        this.description=description;
 
 
     }
@@ -54,5 +57,13 @@ public class Recette extends Nourriture {
     @Override
     public String toString() {
         return this.getId()+":"+this.getNom();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
