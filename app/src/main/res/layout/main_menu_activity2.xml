@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff8000"
+        android:layout_weight="0.05"
+        android:id="@+id/buttonFrigo"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="82dp"
+            android:layout_height="122dp"
+            android:id="@+id/imageView"
+            android:src="@mipmap/fridge"
+            android:scaleType="fitCenter"
+            android:maxWidth="20dp"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Mes Provisions"
+            android:id="@+id/textView2"
+            android:textColor="#FFF"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_gravity="top|left|bottom|center_vertical|right"
+            android:autoText="false"
+            android:clickable="false" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#bb00ff"
+        android:layout_weight="0.05"
+        android:id="@+id/buttonRecettes"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="82dp"
+            android:layout_height="122dp"
+            android:id="@+id/imageView2"
+            android:src="@mipmap/pizza"
+            android:scaleType="fitCenter"
+            android:maxWidth="20dp"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Mes recettes"
+            android:id="@+id/textView22"
+            android:textColor="#FFF"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_gravity="top|left|bottom|center_vertical|right"
+            android:autoText="false"
+            android:clickable="false" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#309600"
+        android:layout_weight="0.05"
+        android:id="@+id/buttonCalendrier"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="82dp"
+            android:layout_height="122dp"
+            android:id="@+id/imageView3"
+            android:src="@mipmap/planner"
+            android:scaleType="fitCenter"
+            android:maxWidth="20dp"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Calendrier"
+            android:id="@+id/textView3"
+            android:textColor="#FFF"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_gravity="top|left|bottom|center_vertical|right"
+            android:autoText="false"
+            android:clickable="false" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00a79c"
+        android:layout_weight="0.05"
+        android:id="@+id/buttonCourses"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="82dp"
+            android:layout_height="122dp"
+            android:id="@+id/imageView4"
+            android:src="@mipmap/buy"
+            android:scaleType="fitCenter"
+            android:maxWidth="20dp"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Liste de courses"
+            android:id="@+id/textView4"
+            android:textColor="#FFF"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_gravity="top|left|bottom|center_vertical|right"
+            android:autoText="false"
+            android:clickable="false" />
+
+    </LinearLayout>
+
+</LinearLayout>

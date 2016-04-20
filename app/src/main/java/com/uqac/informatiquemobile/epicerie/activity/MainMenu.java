@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.activity.calendrier.RepasPlanifiesActivity;
@@ -17,18 +17,18 @@ import com.uqac.informatiquemobile.epicerie.activity.recette.ListRecettesActivit
  */
 public class MainMenu extends AppCompatActivity {
 
-    private Button buttonProvisions, buttonCourses, buttonCalendrier, buttonRecettes;
+    private LinearLayout buttonProvisions, buttonCourses, buttonCalendrier, buttonRecettes;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main_menu_activity);
-        buttonProvisions = (Button)findViewById(R.id.buttonFrigo);
-        buttonRecettes= (Button)findViewById(R.id.buttonRecettes);
-        buttonCalendrier= (Button)findViewById(R.id.buttonCalendrier);
-        buttonCourses= (Button)findViewById(R.id.buttonCourses);
+        setContentView(R.layout.main_menu_activity2);
+        buttonProvisions = (LinearLayout) findViewById(R.id.buttonFrigo);
+        buttonRecettes= (LinearLayout)findViewById(R.id.buttonRecettes);
+        buttonCalendrier= (LinearLayout)findViewById(R.id.buttonCalendrier);
+        buttonCourses= (LinearLayout)findViewById(R.id.buttonCourses);
 
         //buttonRecettes.setEnabled(false);
         //buttonCalendrier.setEnabled(false);
