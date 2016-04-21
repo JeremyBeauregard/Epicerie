@@ -37,6 +37,7 @@ public class RepasPlanifiesActivity extends Activity {
         boutonPlanifierRepas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent i =new Intent(getApplicationContext(),PlanifierRepasActivity.class);
                 startActivity(i);
             }
@@ -61,9 +62,9 @@ public class RepasPlanifiesActivity extends Activity {
 
             }
         });
-        System.out.println("Lancement service...");
+        /*System.out.println("Lancement service...");
         Intent i = new Intent(getApplicationContext(), DataBaseManager.class);
-        startService(i);
+        startService(i);*/
 
 
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

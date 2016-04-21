@@ -23,8 +23,9 @@
 
         <activity
             android:name=".activity.ingredient.ListFrigoActivity"
-            android:label="Mon frigo"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="Mes provisions"
+            android:theme="@style/Frigo"
+            android:icon="@mipmap/fridge">
 
         </activity>
 

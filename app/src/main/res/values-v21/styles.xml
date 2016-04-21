@@ -6,4 +6,15 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="Frigo" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">@color/frigoMain</item>
+        <item name="colorPrimaryDark">@color/frigoMain</item>
+        <item name="colorAccent">@color/frigoMain</item>
+        <item name="android:navigationBarColor">@color/frigoMain</item>
+
+    </style>
 </resources>

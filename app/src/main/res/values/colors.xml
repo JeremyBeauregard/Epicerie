@@ -6,4 +6,10 @@
     <color name="available">#0000CD</color>
     <color name="missing">#FF0000</color>
     <color name="incomplete">#FFD700</color>
+
+    <color name="frigoMain">#ff8000</color>
+    <color name="recettesMain">#bb00ff</color>
+    <color name="calendrierMain">#309600</color>
+    <color name="coursesMain">#00a79c</color>
+
 </resources>
