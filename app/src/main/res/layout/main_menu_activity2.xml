@@ -7,7 +7,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ff8000"
+        android:background="@color/frigoMain"
         android:layout_weight="0.05"
         android:id="@+id/buttonFrigo"
         android:clickable="true">
@@ -39,7 +39,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#bb00ff"
+        android:background="@color/recettesMain"
         android:layout_weight="0.05"
         android:id="@+id/buttonRecettes"
         android:clickable="true">
@@ -72,7 +72,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#309600"
+        android:background="@color/calendrierMain"
         android:layout_weight="0.05"
         android:id="@+id/buttonCalendrier"
         android:clickable="true">
@@ -105,7 +105,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00a79c"
+        android:background="@color/coursesMain"
         android:layout_weight="0.05"
         android:id="@+id/buttonCourses"
         android:clickable="true">
