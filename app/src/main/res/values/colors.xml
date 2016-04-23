@@ -13,6 +13,7 @@
     <color name="coursesMain">#00a79c</color>
     <color name="black">#309600</color>
     <color name="bleuClair">#0073ff</color>
+    <color name="rechercheLigne">#da76ff</color>
 
     <color name="courseActivityText">#e6ffe6</color>
     <color name="recetteActivityText">#f8e8fc</color>
