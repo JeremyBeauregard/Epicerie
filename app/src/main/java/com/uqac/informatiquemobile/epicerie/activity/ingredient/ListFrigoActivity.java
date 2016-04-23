@@ -159,10 +159,9 @@ public class ListFrigoActivity extends AppCompatActivity {
                 alertDialog.show();
 
 
-<<<<<<< HEAD
-=======
-                textViewValeurIngredients.setText(String.valueOf((double) val / 100)+"$");
->>>>>>> 15119cc2d88eda63eabc9177caecd7239c260e0a
+
+                //textViewValeurIngredients.setText(String.valueOf((double) val / 100)+"$");
+
 
                 return true;
             }
