@@ -122,7 +122,7 @@ public class AddIngredientActivity extends Activity {
                                         finish();
                                     }
                                 })
-                        .setNegativeButton("Cancel",
+                        .setNegativeButton("Annuler",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();

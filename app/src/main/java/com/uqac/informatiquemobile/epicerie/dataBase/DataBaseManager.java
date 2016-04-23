@@ -275,8 +275,13 @@ public class DataBaseManager {
         db.close();
 
         ingredient.setQuantite(qteFrigo-quantité);
+        if (ingredient.getQuantite()<=0){
+            this.supprimerIngredientFrigo(ingredient.getId());
+        } else {
+            addIngredientFrigo(ingredient);
+        }
 
-        addIngredientFrigo(ingredient);
+
 
 
 

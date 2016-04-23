@@ -1,9 +1,11 @@
 package com.uqac.informatiquemobile.epicerie.metier;
 
+import java.io.Serializable;
+
 /**
  * Classe qui definit une sorte d'ingredient selon son prix son unite et sa quantite.
  */
-public class Ingredient extends Nourriture {
+public class Ingredient extends Nourriture implements Serializable{
 
     // Variables locales
     private int _prixUnitaire;

@@ -1,13 +1,17 @@
 package com.uqac.informatiquemobile.epicerie.activity.ingredient;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,28 +74,91 @@ public class ListFrigoActivity extends AppCompatActivity {
         listViewIngredients.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Ingredient ingredient=listIngredients.get(position);
-                dbm.supprimerIngredientFrigo(ingredient.getId());
-                Toast.makeText(getApplicationContext(), "Delete : " + ingredient.getNom(), Toast.LENGTH_SHORT).show();
+
+                //final String tv = ((TextView)view).getText().toString();
+                // get prompts.xml view
+                LayoutInflater li = LayoutInflater.from(ListFrigoActivity.this);
+                View promptsView = li.inflate(R.layout.input_quantite_layout, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        ListFrigoActivity.this);
+
+                // set prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                final EditText userInput = (EditText) promptsView
+                        .findViewById(R.id.editTextDialogUserInput);
+
+                final int POS = position;
+
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("Supprimer",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // get user input and set it to result
+                                        // edit text
+                                        //Ingredient temp = dbm.getIngredientByNm(tv);
+                                        if(userInput.getText().toString().length()!=0){
+                                            float resultat = Float.parseFloat(userInput.getText().toString());
 
 
-                listIngredients.remove(position);
+
+                                                System.out.println("WOLOLO");
+
+
+                                                Ingredient ingredient=listIngredients.get(POS);
+                                                dbm.supprimerIngredientFrigo(ingredient, resultat);
+                                                Toast.makeText(getApplicationContext(), "Delete : " + ingredient.getNom(), Toast.LENGTH_SHORT).show();
+
+                                                if(ingredient.getQuantite()<=0){
+                                                    listIngredients.remove(POS);
+                                                }
 
 
 
 
-                adapterListViewIngredients.notifyDataSetChanged();
+
+                                                adapterListViewIngredients.notifyDataSetChanged();
 
 
 
-                float val = 0;
+                                                float val = 0;
 
-                for (Ingredient in:listIngredients) {
-                    System.out.println(in.getPrixTotal());
-                    val = val +in.getPrixTotal();
-                }
+                                                for (Ingredient in:listIngredients) {
+                                                    System.out.println(in.getPrixTotal());
+                                                    val = val +in.getPrixTotal();
+                                                }
 
-                textViewValeurIngredients.setText(String.valueOf((double) val / 100));
+                                                textViewValeurIngredients.setText(String.valueOf((double) val / 100));
+
+
+
+
+
+
+                                        }else {
+                                            Toast.makeText(getApplicationContext(), "La quantité ne peut être nulle", Toast.LENGTH_SHORT).show();
+                                        }
+
+
+                                    }
+                                })
+                        .setNegativeButton("Annuler",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+
+
 
                 return true;
             }
