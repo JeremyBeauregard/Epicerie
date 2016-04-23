@@ -139,6 +139,8 @@ public class AddIngredientActivity extends Activity {
             }
         });
 
+        //overridePendingTransition(R.anim.slide_in_fade, R.anim.slide_out_top);
+
 
 
 

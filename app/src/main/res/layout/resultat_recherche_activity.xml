@@ -5,28 +5,37 @@
     android:weightSum="1">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Titre Recette"
         android:id="@+id/textViewTitreRecette"
-        android:layout_gravity="center_horizontal" />
+        android:gravity="center"
+        android:background="@color/recettesMain"
+        android:textColor="#FFF"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="tempsPreparation"
         android:id="@+id/textViewTempsPreparation"
-        android:layout_gravity="center_horizontal" />
+        android:gravity="center"
+        android:background="@color/recettesMain"
+        android:textColor="#FFF"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Temps Cuisson"
         android:id="@+id/textViewTempsCuisson"
-        android:layout_gravity="center_horizontal" />
+        android:gravity="center"
+        android:background="@color/recettesMain"
+        android:textColor="#FFF"
+        android:paddingBottom="10dp"/>
 
     <EditText
         android:layout_width="match_parent"

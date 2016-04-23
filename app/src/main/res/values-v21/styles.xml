@@ -17,4 +17,37 @@
         <item name="android:navigationBarColor">@color/frigoMain</item>
 
     </style>
+
+    <style name="Recettes" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">@color/recettesMain</item>
+        <item name="colorPrimaryDark">@color/recettesMain</item>
+        <item name="colorAccent">@color/recettesMain</item>
+        <item name="android:navigationBarColor">@color/black</item>
+
+    </style>
+
+    <style name="Courses" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">@color/coursesMain</item>
+        <item name="colorPrimaryDark">@color/coursesMain</item>
+        <item name="colorAccent">@color/coursesMain</item>
+        <item name="android:navigationBarColor">@color/black</item>
+
+    </style>
+
+    <style name="Calendrier" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">@color/calendrierMain</item>
+        <item name="colorPrimaryDark">@color/calendrierMain</item>
+        <item name="colorAccent">@color/calendrierMain</item>
+        <item name="android:navigationBarColor">@color/black</item>
+
+    </style>
 </resources>

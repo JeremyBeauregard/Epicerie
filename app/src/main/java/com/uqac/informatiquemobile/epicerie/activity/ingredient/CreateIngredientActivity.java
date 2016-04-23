@@ -3,10 +3,13 @@ package com.uqac.informatiquemobile.epicerie.activity.ingredient;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+
+import android.widget.LinearLayout;
+
 import android.widget.Toast;
 
 import com.uqac.informatiquemobile.epicerie.R;
@@ -23,12 +26,16 @@ import java.util.ArrayList;
 public class CreateIngredientActivity extends Activity {
 
     EditText editTextNomIngredient, editTextPrixIngredient;
-    Button boutonAjouterIngredient;
+
+
     Spinner spinnerUnite;
     UniteSpinnerAdapter uniteSpinnerAdapter;
     ArrayList<Unite> listUnites;
     DataBaseManager dbm;
     Unite uniteAjout;
+
+
+    LinearLayout boutonAjouterIngredient;
 
 
     @Override
@@ -42,7 +49,7 @@ public class CreateIngredientActivity extends Activity {
 
         editTextNomIngredient= (EditText)findViewById(R.id.editTextNomIngredient);
         editTextPrixIngredient = (EditText)findViewById(R.id.editTextPrixIngredient);
-        boutonAjouterIngredient = (Button)findViewById(R.id.boutonAjouter);
+        boutonAjouterIngredient = (LinearLayout)findViewById(R.id.boutonAjouter);
 
         spinnerUnite=(Spinner)findViewById(R.id.spinnerUnite);
         dbm=new DataBaseManager(getApplicationContext());
@@ -84,5 +91,14 @@ public class CreateIngredientActivity extends Activity {
             }
         });
 
+
+        //overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_fade);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //overridePendingTransition(R.anim.slide_in_fade, R.anim.slide_out_top);
     }
 }

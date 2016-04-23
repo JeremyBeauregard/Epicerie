@@ -13,17 +13,19 @@
         android:layout_marginTop="0dp"
         android:layout_toLeftOf="@+id/buttonLancerRecherche"
         android:layout_toStartOf="@+id/buttonLancerRecherche"
-        android:hint="Nom de la recette" />
+        android:hint="Nom de la recette"
+        android:layout_alignBottom="@+id/buttonLancerRecherche" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rechercher"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
+        android:background="@mipmap/search"
+        android:backgroundTint="@color/bleuClair"
         android:id="@+id/buttonLancerRecherche"
-        android:layout_alignBottom="@+id/editTextTermeRecherche"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+         />
 
     <ListView
         android:layout_width="wrap_content"
