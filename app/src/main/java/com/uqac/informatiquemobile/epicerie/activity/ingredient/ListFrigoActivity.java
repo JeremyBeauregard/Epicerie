@@ -116,22 +116,7 @@ public class ListFrigoActivity extends AppCompatActivity {
                                                     listIngredients.remove(POS);
                                                 }
 
-
-
-
-
-                                                adapterListViewIngredients.notifyDataSetChanged();
-
-
-
-                                                float val = 0;
-
-                                                for (Ingredient in:listIngredients) {
-                                                    System.out.println(in.getPrixTotal());
-                                                    val = val +in.getPrixTotal();
-                                                }
-
-                                                textViewValeurIngredients.setText(String.valueOf((double) val / 100));
+                                                refresh();
 
 
 
@@ -199,26 +184,7 @@ public class ListFrigoActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-
-        ArrayList<Ingredient> ingredients= dbm.getAllIngredientFrigo();
-
-        listIngredients.removeAll(listIngredients);
-
-        for (Ingredient i :ingredients) {
-            listIngredients.add(i);
-            //Toast.makeText(getApplicationContext(), ""+i.getQuantite(), Toast.LENGTH_SHORT).show();
-
-        }
-
-        adapterListViewIngredients.notifyDataSetChanged();
-        float val = 0;
-
-        for (Ingredient in:listIngredients) {
-            System.out.println(in.getPrixTotal());
-            val = val +in.getPrixTotal();
-        }
-
-        textViewValeurIngredients.setText(String.valueOf((double) val / 100)+"$");
+        refresh();
 
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -261,6 +227,29 @@ public class ListFrigoActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
 
+
+    }
+
+    public void refresh(){
+        ArrayList<Ingredient> ingredients= dbm.getAllIngredientFrigo();
+
+        listIngredients.removeAll(listIngredients);
+
+        for (Ingredient i :ingredients) {
+            listIngredients.add(i);
+
+
+        }
+
+        adapterListViewIngredients.notifyDataSetChanged();
+        float val = 0;
+
+        for (Ingredient in:listIngredients) {
+            System.out.println(in.getPrixTotal());
+            val = val +in.getPrixTotal();
+        }
+
+        textViewValeurIngredients.setText(String.valueOf((double) val / 100)+"$");
 
     }
 }
