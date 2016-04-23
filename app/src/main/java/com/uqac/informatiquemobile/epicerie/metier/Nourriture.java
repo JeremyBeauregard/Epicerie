@@ -7,7 +7,7 @@ public abstract class Nourriture {
 
     private String nom;
     private int id;
-    private int quantite;
+    private Float quantite;
 
     // Constructeur
 
@@ -18,11 +18,11 @@ public abstract class Nourriture {
         setId(id);
         setNom(nom);
     }
-    public Nourriture(String nom, int qte){
+    public Nourriture(String nom, float qte){
         setNom(nom);
         setQuantite(qte);
     }
-    public Nourriture(int id, String nom, int qte){
+    public Nourriture(int id, String nom, float qte){
         setId(id);
         setNom(nom);
         setQuantite(qte);
@@ -44,11 +44,11 @@ public abstract class Nourriture {
         this.id = id;
     }
 
-    public int getQuantite() {
+    public float getQuantite() {
         return quantite;
     }
 
-    public void setQuantite(int quantite) {
+    public void setQuantite(float quantite) {
         this.quantite = quantite;
     }
 }

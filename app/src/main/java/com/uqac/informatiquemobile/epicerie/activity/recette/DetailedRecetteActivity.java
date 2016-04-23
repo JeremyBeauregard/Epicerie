@@ -77,6 +77,7 @@ public class DetailedRecetteActivity extends Activity {
                     for (Nourriture ingredient:recette.getComposition()) {
                         if(ingredient instanceof Ingredient){
                             dbm.supprimerIngredientFrigo((Ingredient)ingredient, ingredient.getQuantite());
+
                             finish();
                         }
 
