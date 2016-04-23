@@ -11,6 +11,7 @@ import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
 import com.uqac.informatiquemobile.epicerie.metier.Repas;
+import com.uqac.informatiquemobile.epicerie.metier.Unite;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,7 +51,10 @@ public class DataBaseManager {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient inner join frigo on frigo.idIngredient=ingredient.id order by nom;", null);
         while(cursor.moveToNext()){
-            retour.add(new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(4)));
+            Unite unite=getUniteById(cursor.getInt(3));
+
+
+            retour.add(new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getFloat(5),unite));
             System.out.println(cursor.getString(1)+ cursor.getInt(2)+cursor.getInt(3));
         }
         cursor.close();
@@ -69,7 +73,9 @@ public class DataBaseManager {
         Log.d("QUERY", "getIngredientByNm: select * from ingredient where nom=\"" + nom + "\";");
         cursor.moveToFirst();
         if(cursor.getCount()==0){return null;}
-        Ingredient retour=new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2));
+        Unite unite=getUniteById(cursor.getInt(3));
+
+        Ingredient retour=new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), unite);
         cursor.close();
         db.close();
         return retour;
@@ -81,7 +87,7 @@ public class DataBaseManager {
         Log.d("QUERY", "getIngredientByNm: select * from frigo where id=" + id + ";");
         cursor.moveToFirst();
         if(cursor.getCount()==0){return null;}
-        Ingredient retour=new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(4));
+        Ingredient retour=new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getFloat(5));
         cursor.close();
         db.close();
         return retour;
@@ -106,7 +112,7 @@ public class DataBaseManager {
      */
     public boolean addIngredient(Ingredient ingredient){
 
-        System.out.println();
+
 
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient where nom = \""+ingredient.getNom()+"\"", null);
@@ -116,8 +122,12 @@ public class DataBaseManager {
             SQLiteDatabase db2 = helper.getWritableDatabase();
             ContentValues row = new ContentValues();
 
+
+            int idUnite=ingredient.getUnite().getId();
+
             row.put("nom", ingredient.getNom());
             row.put("prix", ingredient.getPrix());
+            row.put("idUnite",idUnite);
 
             db2.insert("ingredient", null, row);
 
@@ -171,12 +181,12 @@ public class DataBaseManager {
             Log.d("cursor", "addIngredient: not null");
             //cursor.moveToNext();
 
-            int qtte = cursor.getInt(4);
+            float qtte = cursor.getInt(5);
             int id = cursor.getInt(0);
 
 
             ContentValues row = new ContentValues();
-            int u = (qtte+ingredient.getQuantite());
+            float u = (qtte+ingredient.getQuantite());
             row.put("quantite", u);
             Log.d("qtte", "addIngredient: "+u);
             SQLiteDatabase db2 = helper.getWritableDatabase();
@@ -253,10 +263,10 @@ public class DataBaseManager {
 
     }
 
-    public void supprimerIngredientFrigo(Ingredient i,int quantité){
+    public void supprimerIngredientFrigo(Ingredient i,float quantité){
         int id=i.getId();
         Ingredient ingredient= getIngredientFrigoById(id);
-        int qteFrigo=ingredient.getQuantite();
+        float qteFrigo=ingredient.getQuantite();
         System.out.println("qtefrigo : "+qteFrigo);
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -301,7 +311,7 @@ public class DataBaseManager {
         for(Nourriture nourr : composition) {
 
 
-            int qte = nourr.getQuantite();
+            float qte = nourr.getQuantite();
 
             int idIngredient=getIngredientIdByNm(nourr.getNom());
             SQLiteDatabase dbtemp = helper.getWritableDatabase();
@@ -385,14 +395,21 @@ public class DataBaseManager {
                     int qte = cursor2.getInt(1);
 
 
-                    Cursor cursor3 = db.rawQuery("select nom, prix from ingredient where id=" + idIng + ";", null);
+                    Cursor cursor3 = db.rawQuery("select nom, prix,idUnite from ingredient where id=" + idIng + ";", null);
                     System.out.println(""+idIng);
                     cursor3.moveToFirst();
                     String nomIng = cursor3.getString(0);
                     int prixIng = cursor3.getInt(1);
+
+                    Unite unite;
+
+                    Cursor cursorUnite=db.rawQuery("select * from unite where id="+ cursor3.getInt(2)+";",null);
+                    cursorUnite.moveToFirst();
+                    if(cursorUnite.getCount()==0){unite= null;}
+                    unite=new Unite(cursorUnite.getInt(0),cursorUnite.getString(1),cursorUnite.getString(2));
                     cursor3.close();
 
-                    Ingredient tempIng=new Ingredient(idIng,nomIng,prixIng,qte);
+                    Ingredient tempIng=new Ingredient(idIng,nomIng,prixIng,qte,unite);
                     temp.addItem(tempIng);
 
                 }
@@ -454,7 +471,7 @@ public class DataBaseManager {
      *          0 s'il est manquant
      *          quantite>0 s'il en manque une certaine quantite.
      */
-    public int ingIsAvailable(Ingredient ingredient){
+    public float ingIsAvailable(Ingredient ingredient){
 
 
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -466,7 +483,7 @@ public class DataBaseManager {
         cursor.close();
         db.close();
 
-        int diff =dispo-ingredient.getQuantite();
+        float diff =dispo-ingredient.getQuantite();
         if (diff<0){
             return -diff;
         }
@@ -484,7 +501,7 @@ public class DataBaseManager {
         ArrayList<Nourriture> composition=recette.getComposition();
 
         int missing=0;
-        int ingmissing;
+        float ingmissing;
 
         for (Nourriture nourriture: composition) {
             if (nourriture instanceof Ingredient) {
@@ -554,5 +571,75 @@ public class DataBaseManager {
 
     }
 
+    public ArrayList<Unite> getAllUnites(){
+        ArrayList<Unite> retour = new ArrayList<>();
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+
+
+        Cursor cursor = db.rawQuery("select * from unite order by nom;", null);
+        if(cursor.getCount()==0){
+            db.execSQL("INSERT INTO unite VALUES(1, \"Grammes\", \"g\");");
+            db.execSQL("INSERT INTO unite VALUES(2, \"millilitres\", \"mL\");");
+            db.execSQL("INSERT INTO unite VALUES(3, \"Tasses\", \"tasses\");");
+            db.execSQL("INSERT INTO unite VALUES(4, \"Sans unité\", \"\");");
+            cursor = db.rawQuery("select * from unite order by nom;", null);
+        }
+
+        while(cursor.moveToNext()){
+            retour.add(new Unite(cursor.getInt(0),cursor.getString(1), cursor.getString(2)));
+
+        }
+        cursor.close();
+        db.close();
+        return retour;
+    }
+
+    public Unite getUniteById(int id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from unite where id=" + id + ";", null);
+        Log.d("QUERY", "getIngredientByNm: select * from unite where id=" + id + ";");
+        cursor.moveToFirst();
+        if(cursor.getCount()==0){return null;}
+        Unite retour=new Unite(cursor.getInt(0),cursor.getString(1), cursor.getString(2));
+        cursor.close();
+        db.close();
+        return retour;
+    }
+
+    public boolean addUnite(Unite unite){
+
+        System.out.println();
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from unite where nom = \""+unite.getName()+"\"", null);
+        cursor.moveToNext();
+        if (cursor.getCount()==0){
+            Log.d("cursor", "addUnite: null");
+            SQLiteDatabase db2 = helper.getWritableDatabase();
+            ContentValues row = new ContentValues();
+
+            row.put("nom", unite.getName());
+            row.put("symbole", unite.getSymbol());
+
+            db2.insert("unite", null, row);
+
+            db2.close();
+
+            cursor.close();
+            db.close();
+
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+
+    }
 
 }

@@ -69,7 +69,7 @@ public class AddIngredientActivity extends Activity {
 
         ingredients= dbm.getAllIngredient();
         for (Ingredient i :ingredients) {
-            listIngredients.add(i.getNom()+" : "+i.getQuantite());
+            listIngredients.add(i.getNom()/*+" : "+i.getQuantite()*/);
         }
 
         adapterListViewIngredients = new ArrayAdapter<String>(AddIngredientActivity.this, android.R.layout.simple_list_item_1, listIngredients);
@@ -108,7 +108,7 @@ public class AddIngredientActivity extends Activity {
                                         if(userInput.getText().toString().length()!=0){
                                             resultat = userInput.getText().toString();
 
-                                            Ingredient retour = new Ingredient(tv, temp.getPrix(), Integer.parseInt(resultat));
+                                            Ingredient retour = new Ingredient(tv, temp.getPrix(), Float.parseFloat(resultat),temp.getUnite());
                                             //Toast.makeText(getApplicationContext(), retour.toString(), Toast.LENGTH_SHORT).show();
                                             Bundle data = new Bundle();
                                             data.putString("ingredient", new Gson().toJson(retour));
