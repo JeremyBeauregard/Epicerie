@@ -10,15 +10,13 @@
         android:layout_height="wrap_content"
         android:text="Ajouter un ingrédient à la liste"
         android:id="@+id/buttonAjouterIngredient"
-        android:textColor="#446d61"
-        android:backgroundTint="@color/courseActivityText" />
+        android:textColor="#446d61" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Prix : "
-        android:textColor="@color/courseActivityText"
         android:id="@+id/textViewPrix" />
 
     <ListView
@@ -33,6 +31,5 @@
         android:text="Ajouter à mes provisions"
         android:id="@+id/buttonAjouterAuFrigo"
         android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/courseActivityText"
         android:textColor="#446d61" />
 </LinearLayout>

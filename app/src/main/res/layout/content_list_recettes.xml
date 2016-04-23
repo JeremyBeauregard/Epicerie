@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/recetteActivityBG"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.ingredient.ListFrigoActivity"
@@ -59,9 +60,12 @@
         android:layout_height="wrap_content"
         android:text="Recettes faisables uniquement"
         android:id="@+id/switchcomplete"
+        android:layout_marginBottom="29dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="52dp" />
+        android:layout_toRightOf="@+id/textViewValeur"
+        android:layout_toEndOf="@+id/textViewValeur"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp" />
 
 
 </RelativeLayout>
