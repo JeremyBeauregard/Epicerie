@@ -14,4 +14,9 @@
     <color name="black">#309600</color>
     <color name="bleuClair">#0073ff</color>
 
+    <color name="courseActivityText">#e6ffe6</color>
+    <color name="recetteActivityText">#f8e8fc</color>
+    <color name="calendrierActivityText">#efffd1</color>
+
+
 </resources>

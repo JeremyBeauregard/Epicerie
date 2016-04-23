@@ -2,19 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@color/coursesMain">
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ajouter un ingrédient à la liste"
-        android:id="@+id/buttonAjouterIngredient" />
+        android:id="@+id/buttonAjouterIngredient"
+        android:textColor="#446d61"
+        android:backgroundTint="@color/courseActivityText" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Prix : "
+        android:textColor="@color/courseActivityText"
         android:id="@+id/textViewPrix" />
 
     <ListView
@@ -28,5 +32,7 @@
         android:layout_height="wrap_content"
         android:text="Ajouter à mes provisions"
         android:id="@+id/buttonAjouterAuFrigo"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/courseActivityText"
+        android:textColor="#446d61" />
 </LinearLayout>
