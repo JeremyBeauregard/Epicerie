@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,7 +31,7 @@ public class ListRecettesActivity extends AppCompatActivity {
     private ArrayList<Recette> recettes;
     private RecetteListAdapter adapterListViewRecettes;
     LinearLayout buttonRechercherRecetteEnLigne;
-    Switch switchcomplete;
+    SwitchCompat switchcomplete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class ListRecettesActivity extends AppCompatActivity {
         dbm = new DataBaseManager(getApplicationContext());
 
         listViewRecettes = (ListView) findViewById(R.id.listRecettes);
-        switchcomplete=(Switch)findViewById(R.id.switchcomplete);
+        switchcomplete=(SwitchCompat) findViewById(R.id.switchcomplete);
         switchcomplete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
