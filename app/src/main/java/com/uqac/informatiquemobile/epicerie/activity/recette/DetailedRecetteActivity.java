@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uqac.informatiquemobile.epicerie.adapter.IngredientListAdapter;
 import com.uqac.informatiquemobile.epicerie.R;
+import com.uqac.informatiquemobile.epicerie.adapter.IngredientListAdapter;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 import com.uqac.informatiquemobile.epicerie.metier.Nourriture;
@@ -27,12 +27,12 @@ public class DetailedRecetteActivity extends Activity {
     private ListView listViewIngredients;
     private TextView textViewName;
     private TextView textViewDesc;
-    private Button buttonMod;
-    private Button buttonDel;
+    private LinearLayout buttonMod;
+    private LinearLayout buttonDel;
     private ArrayList<Nourriture> ingredients;
     private IngredientListAdapter adapter;
     private Recette recette;
-    private Button buttonConsume;
+    private LinearLayout buttonConsume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +87,16 @@ public class DetailedRecetteActivity extends Activity {
             }
         });
 
+
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private Recette displayinfo(int id){
@@ -96,9 +106,9 @@ public class DetailedRecetteActivity extends Activity {
         textViewName = (TextView) findViewById(R.id.textViewName);
         textViewDesc=(TextView) findViewById(R.id.textViewDesc);
 
-        buttonMod = (Button) findViewById(R.id.buttonMod);
-        buttonDel = (Button) findViewById(R.id.buttonDel);
-        buttonConsume=(Button)findViewById(R.id.buttonConsumeIngredients);
+        buttonMod = (LinearLayout) findViewById(R.id.buttonMod);
+        buttonDel = (LinearLayout) findViewById(R.id.buttonDel);
+        buttonConsume=(LinearLayout)findViewById(R.id.buttonConsumeIngredients);
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
 
         textViewName.setText(recette.getNom());

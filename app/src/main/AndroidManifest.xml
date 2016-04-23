@@ -42,7 +42,11 @@
         <activity android:name=".activity.recette.ListRecettesActivity"></activity>
         <activity android:name=".activity.recette.RechercheActivity"></activity>
         <activity android:name=".activity.recette.AfficherRecetteRecherche"></activity>
-        <activity android:name=".activity.recette.DetailedRecetteActivity"></activity>
+        <activity android:name=".activity.recette.DetailedRecetteActivity"
+
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity android:name=".activity.calendrier.PlanifierRepasActivity"></activity>
         <activity android:name=".activity.recette.SelectRecetteActivity"></activity>
         <activity android:name=".activity.calendrier.RepasPlanifiesActivity"></activity>

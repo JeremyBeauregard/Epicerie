@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content" android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="10dp">
+    android:layout_width="fill_parent">
 
     <TableRow android:layout_width="fill_parent"
         android:id="@+id/TableRow01"
@@ -19,6 +15,8 @@
             android:gravity="left"
             android:layout_weight="1"
             android:typeface="monospace"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             />
     </TableRow>
 
@@ -32,7 +30,9 @@
             android:layout_height="wrap_content"
             android:text="Quantité"
             android:layout_weight="1"
-            android:height="20sp" />
+            android:height="20sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
 
         <TextView android:layout_height="wrap_content"
             android:layout_width="fill_parent"
@@ -41,7 +41,9 @@
             android:gravity="right"
             android:id="@+id/pu"
             android:text="Prix Unitaire"
-            android:height="20sp" />
+            android:height="20sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
     </TableRow>
 
 </TableLayout>
