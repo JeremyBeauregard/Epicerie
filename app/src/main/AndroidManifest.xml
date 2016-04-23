@@ -39,7 +39,10 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.recette.CreateRecetteActivity"></activity>
         <activity android:name=".activity.ingredient.AddIngredientActivity"></activity>
-        <activity android:name=".activity.recette.ListRecettesActivity"></activity>
+        <activity android:name=".activity.recette.ListRecettesActivity"
+            android:label="Mes recettes"
+            android:theme="@style/Recettes"
+            android:icon="@mipmap/pizza"></activity>
         <activity android:name=".activity.recette.RechercheActivity"></activity>
         <activity android:name=".activity.recette.AfficherRecetteRecherche"></activity>
         <activity android:name=".activity.recette.DetailedRecetteActivity"

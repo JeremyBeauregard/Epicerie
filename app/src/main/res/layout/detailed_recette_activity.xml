@@ -48,7 +48,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="61dp"
+            android:layout_height="60dp"
             android:id="@+id/buttonConsumeIngredients"
             android:background="#090"
             android:clickable="true">

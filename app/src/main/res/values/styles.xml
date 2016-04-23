@@ -33,4 +33,68 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+
+
+
+
+    <style name="Recettes" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">@color/recettesMain</item>
+        <item name="colorPrimaryDark">@color/recettesMain</item>
+        <item name="colorAccent">@color/recettesMain</item>
+
+    </style>
+
+    <style name="Recettes.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Recettes.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+
+
+    <style name="Courses" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">@color/coursesMain</item>
+        <item name="colorPrimaryDark">@color/coursesMain</item>
+        <item name="colorAccent">@color/coursesMain</item>
+
+    </style>
+
+    <style name="Courses.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Courses.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+
+
+
+
+    <style name="Calendrier" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">@color/calendrierMain</item>
+        <item name="colorPrimaryDark">@color/calendrierMain</item>
+        <item name="colorAccent">@color/calendrierMain</item>
+
+    </style>
+
+    <style name="Calendrier.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Calendrier.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+
+
+
+
+
 </resources>

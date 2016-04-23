@@ -11,5 +11,7 @@
     <color name="recettesMain">#bb00ff</color>
     <color name="calendrierMain">#309600</color>
     <color name="coursesMain">#00a79c</color>
+    <color name="black">#309600</color>
+    <color name="bleuClair">#0073ff</color>
 
 </resources>
