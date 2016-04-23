@@ -39,7 +39,7 @@ public class ListFrigoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //getApplicationContext().get
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +84,7 @@ public class ListFrigoActivity extends AppCompatActivity {
 
 
 
-                int val = 0;
+                float val = 0;
 
                 for (Ingredient in:listIngredients) {
                     System.out.println(in.getPrixTotal());
@@ -102,7 +102,7 @@ public class ListFrigoActivity extends AppCompatActivity {
 
 
         textViewValeurIngredients = (TextView)findViewById(R.id.textViewValeur);
-        int val = 0;
+        float val = 0;
         for (Ingredient i:listIngredients) {
             System.out.println(i.getPrixTotal());
             val = val +i.getPrixTotal();
@@ -136,10 +136,19 @@ public class ListFrigoActivity extends AppCompatActivity {
 
         for (Ingredient i :ingredients) {
             listIngredients.add(i);
+            //Toast.makeText(getApplicationContext(), ""+i.getQuantite(), Toast.LENGTH_SHORT).show();
 
         }
 
         adapterListViewIngredients.notifyDataSetChanged();
+        float val = 0;
+
+        for (Ingredient in:listIngredients) {
+            System.out.println(in.getPrixTotal());
+            val = val +in.getPrixTotal();
+        }
+
+        textViewValeurIngredients.setText(String.valueOf((double) val / 100));
 
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -159,6 +168,7 @@ public class ListFrigoActivity extends AppCompatActivity {
                 }
                 Ingredient ingredientAjout = new Gson().fromJson(jsonIngredient, Ingredient.class);
                 System.out.println("WOLOLO");
+
                 dbm.addIngredientFrigo(ingredientAjout);
 
 

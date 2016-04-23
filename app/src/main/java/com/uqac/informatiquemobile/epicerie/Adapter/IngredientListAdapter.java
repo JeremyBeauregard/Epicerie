@@ -54,11 +54,11 @@ public class IngredientListAdapter extends ArrayAdapter<Ingredient> {
             }
 
             if (ttq != null) {
-                ttq.setText(""+p.getQuantite());
+                ttq.setText(""+p.getQuantite()+" "+p.getUnite().getSymbol());
 
                 if(changeColors){
                     dbm=new DataBaseManager(getContext());
-                    int dispo=dbm.ingIsAvailable(p);
+                    float dispo=dbm.ingIsAvailable(p);
                     if (dispo==0){
 
                         tr1.setBackgroundResource(R.color.missing);
