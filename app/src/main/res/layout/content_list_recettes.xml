@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/recetteActivityBG"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.ingredient.ListFrigoActivity"
@@ -21,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/buttonRechercherRecette"
-        android:background="@color/bleuClair"
+        android:background="@color/rechercheLigne"
         android:clickable="true">
 
         <ImageView
@@ -54,6 +55,17 @@
         android:layout_toRightOf="@+id/textViewLabelValeur"
         android:layout_toEndOf="@+id/textViewLabelValeur" />
 
+    <android.support.v7.widget.SwitchCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recettes faisables uniquement"
+        android:id="@+id/switchcomplete"
+        android:layout_marginBottom="29dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textViewValeur"
+        android:layout_toEndOf="@+id/textViewValeur"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp" />
 
 
 </RelativeLayout>

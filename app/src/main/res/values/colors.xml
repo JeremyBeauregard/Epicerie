@@ -13,10 +13,12 @@
     <color name="coursesMain">#00a79c</color>
     <color name="black">#309600</color>
     <color name="bleuClair">#0073ff</color>
+    <color name="rechercheLigne">#4b0066</color>
 
-    <color name="courseActivityText">#e6ffe6</color>
-    <color name="recetteActivityText">#f8e8fc</color>
-    <color name="calendrierActivityText">#efffd1</color>
+    <color name="frigoActivityBG">#fff2e6</color>
+    <color name="courseActivityBG">#e6ffe6</color>
+    <color name="recetteActivityBG">#f8e8fc</color>
+    <color name="calendrierActivityBG">#efffd1</color>
 
 
 </resources>

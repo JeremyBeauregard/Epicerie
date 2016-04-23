@@ -78,7 +78,7 @@ public class IngredientListAdapter extends ArrayAdapter<Ingredient> {
             }
 
             if (ttp != null) {
-                ttp.setText(""+p.getPrix());
+                ttp.setText("prix unitaire : "+p.getPrix());
             }
         }
 

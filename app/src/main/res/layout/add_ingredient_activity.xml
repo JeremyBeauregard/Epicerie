@@ -17,31 +17,47 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mes Ingrédients"
+            android:id="@+id/AddTitle"
+            android:textColor="@color/abc_background_cache_hint_selector_material_dark" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/AddTitle"
+            android:id="@+id/tmpLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Valeur de mes ingrédients : "
+                android:id="@+id/textViewTitreRecette"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="valeur"
+                android:id="@+id/textView3"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/textViewTitreRecette"
+                android:layout_toEndOf="@+id/textViewTitreRecette" />
+        </LinearLayout>
+
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/listView2"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textViewTitreRecette" />
+            android:layout_below="@+id/tmpLayout" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Valeur de mes ingrédients : "
-            android:id="@+id/textViewTitreRecette"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="valeur"
-            android:id="@+id/textView3"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/textViewTitreRecette"
-            android:layout_toEndOf="@+id/textViewTitreRecette" />
     </RelativeLayout>
 </LinearLayout>
