@@ -51,7 +51,7 @@ public class CreateIngredientActivity extends Activity {
         editTextPrixIngredient = (EditText)findViewById(R.id.editTextPrixIngredient);
         boutonAjouterIngredient = (LinearLayout)findViewById(R.id.boutonAjouter);
 
-        spinnerUnite=(Spinner)findViewById(R.id.spinnerUnite);
+        spinnerUnite=(Spinner)findViewById(R.id.spinnerUnites);
         dbm=new DataBaseManager(getApplicationContext());
         listUnites=dbm.getAllUnites();
 

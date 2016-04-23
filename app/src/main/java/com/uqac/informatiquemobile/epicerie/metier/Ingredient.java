@@ -51,6 +51,12 @@ public class Ingredient extends Nourriture {
 
 
     }
+    public Ingredient(String nom, int prixUnitaire, float quantite, Unite unite) {
+        super(nom,quantite);
+        setPrix(prixUnitaire);
+        setUnite(unite);
+    }
+
 
 
 

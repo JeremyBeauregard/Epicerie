@@ -51,12 +51,9 @@ public class DataBaseManager {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from ingredient inner join frigo on frigo.idIngredient=ingredient.id order by nom;", null);
         while(cursor.moveToNext()){
-            Unite unite;
+            Unite unite=getUniteById(cursor.getInt(3));
 
-            Cursor cursorUnite=db.rawQuery("select * from unite where id="+ cursor.getInt(3)+";",null);
-            cursorUnite.moveToFirst();
-            if(cursorUnite.getCount()==0){unite=null;}
-            unite=new Unite(cursorUnite.getInt(0),cursorUnite.getString(1),cursorUnite.getString(2));
+
             retour.add(new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getFloat(5),unite));
             System.out.println(cursor.getString(1)+ cursor.getInt(2)+cursor.getInt(3));
         }
@@ -76,12 +73,8 @@ public class DataBaseManager {
         Log.d("QUERY", "getIngredientByNm: select * from ingredient where nom=\"" + nom + "\";");
         cursor.moveToFirst();
         if(cursor.getCount()==0){return null;}
-        Unite unite;
+        Unite unite=getUniteById(cursor.getInt(3));
 
-        Cursor cursorUnite=db.rawQuery("select * from unite where id="+ cursor.getInt(3)+";",null);
-        cursorUnite.moveToFirst();
-        if(cursorUnite.getCount()==0){return null;}
-        unite=new Unite(cursorUnite.getInt(0),cursorUnite.getString(1),cursorUnite.getString(2));
         Ingredient retour=new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), unite);
         cursor.close();
         db.close();
@@ -589,7 +582,7 @@ public class DataBaseManager {
         if(cursor.getCount()==0){
             db.execSQL("INSERT INTO unite VALUES(1, \"Grammes\", \"g\");");
             db.execSQL("INSERT INTO unite VALUES(2, \"millilitres\", \"mL\");");
-            db.execSQL("INSERT INTO unite VALUES(3, \"Tasses\", \"tasses_\");");
+            db.execSQL("INSERT INTO unite VALUES(3, \"Tasses\", \"tasses\");");
             db.execSQL("INSERT INTO unite VALUES(4, \"Sans unité\", \"\");");
             cursor = db.rawQuery("select * from unite order by nom;", null);
         }

@@ -115,7 +115,7 @@ public class CreateRecetteActivity extends Activity {
                     jsonIngredient = null;
                 }
                 Ingredient ingredientAjout = new Gson().fromJson(jsonIngredient, Ingredient.class);
-                Gson g = new Gson();
+
 
                 if(ingredientAjout.getQuantite()!=0){
                     ArrayList<String> listnomIng=new ArrayList<String>();

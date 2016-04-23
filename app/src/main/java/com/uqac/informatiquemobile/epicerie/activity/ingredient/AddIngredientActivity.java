@@ -108,7 +108,7 @@ public class AddIngredientActivity extends Activity {
                                         if(userInput.getText().toString().length()!=0){
                                             resultat = userInput.getText().toString();
 
-                                            Ingredient retour = new Ingredient(tv, temp.getPrix(), Float.parseFloat(resultat));
+                                            Ingredient retour = new Ingredient(tv, temp.getPrix(), Float.parseFloat(resultat),temp.getUnite());
                                             //Toast.makeText(getApplicationContext(), retour.toString(), Toast.LENGTH_SHORT).show();
                                             Bundle data = new Bundle();
                                             data.putString("ingredient", new Gson().toJson(retour));
