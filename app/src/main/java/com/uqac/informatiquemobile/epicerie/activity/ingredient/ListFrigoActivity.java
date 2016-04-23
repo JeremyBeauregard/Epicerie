@@ -91,7 +91,7 @@ public class ListFrigoActivity extends AppCompatActivity {
                     val = val +in.getPrixTotal();
                 }
 
-                textViewValeurIngredients.setText(String.valueOf((double) val / 100));
+                textViewValeurIngredients.setText(String.valueOf((double) val / 100)+"$");
 
                 return true;
             }
@@ -108,7 +108,7 @@ public class ListFrigoActivity extends AppCompatActivity {
             val = val +i.getPrixTotal();
         }
 
-        textViewValeurIngredients.setText(String.valueOf((double)val/100));
+        textViewValeurIngredients.setText(String.valueOf((double)val/100)+"$");
 
 
 
@@ -148,7 +148,7 @@ public class ListFrigoActivity extends AppCompatActivity {
             val = val +in.getPrixTotal();
         }
 
-        textViewValeurIngredients.setText(String.valueOf((double) val / 100));
+        textViewValeurIngredients.setText(String.valueOf((double) val / 100)+"$");
 
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
