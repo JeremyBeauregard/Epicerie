@@ -15,6 +15,7 @@ import com.uqac.informatiquemobile.epicerie.adapter.RepasListAdapter;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Recette;
 import com.uqac.informatiquemobile.epicerie.metier.Repas;
+import com.uqac.informatiquemobile.epicerie.service.DateRecetteService;
 
 import java.util.ArrayList;
 
@@ -62,9 +63,11 @@ public class RepasPlanifiesActivity extends Activity {
 
             }
         });
-        /*System.out.println("Lancement service...");
-        Intent i = new Intent(getApplicationContext(), DataBaseManager.class);
-        startService(i);*/
+
+
+
+        System.out.println("Lancement service...");
+        startService(new Intent(RepasPlanifiesActivity.this, DateRecetteService.class));
 
 
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,7 +25,8 @@ public class SelectRecetteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_list_recettes);
         ListView lv = (ListView) findViewById(R.id.listRecettes);
-        ((Button)findViewById(R.id.buttonRechercherRecette)).setEnabled(false);
+        LinearLayout recherche = (LinearLayout)findViewById(R.id.buttonRechercherRecette);
+        recherche.setVisibility(View.INVISIBLE);
 
 
         DataBaseManager dbm =new DataBaseManager(getApplicationContext());

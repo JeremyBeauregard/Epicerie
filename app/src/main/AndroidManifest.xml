@@ -59,7 +59,7 @@
 
         </activity>
 
-        <service android:enabled="true" android:name=".service.DateRecetteService" />
+        <service android:enabled="true" android:name=".service.DateRecetteService"></service>
 
 
     </application>

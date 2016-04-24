@@ -549,6 +549,7 @@ public class DataBaseManager {
         Cursor cursor = db.rawQuery("select * from repas;", null);
         while(cursor.moveToNext()){
 
+            int id = cursor.getInt(0);
             Recette r = this.getRecetteById(cursor.getInt(1));
             String stringDate = cursor.getString(2);
             System.out.println("DATE STRING = "+stringDate);
@@ -563,7 +564,7 @@ public class DataBaseManager {
 
 
 
-            retour.add(new Repas(r,date));
+            retour.add(new Repas(id,r,date));
             //System.out.println(Integer.parseInt(tabDate[2]));
             System.out.println("Date : "+date);
 
@@ -646,5 +647,15 @@ public class DataBaseManager {
 
 
     }
+
+
+
+    public void supprimerRepas(int id){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.execSQL("DELETE FROM repas WHERE id="+id+";");
+        db.close();
+    }
+
+
 
 }
