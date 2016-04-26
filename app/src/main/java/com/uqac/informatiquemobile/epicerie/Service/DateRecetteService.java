@@ -37,7 +37,7 @@ public class DateRecetteService extends Service {
     private void queueRunnable() {
         // 600000 : cada 10 minutos, comprueba si hay nuevas notificaciones y actualiza la
         // notification BAR
-        mHandler.postDelayed(updateRunnable, 5000);
+        mHandler.postDelayed(updateRunnable, 30000);
 
     }
 
