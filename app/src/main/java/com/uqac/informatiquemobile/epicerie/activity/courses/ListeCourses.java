@@ -2,14 +2,12 @@ package com.uqac.informatiquemobile.epicerie.activity.courses;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
@@ -43,22 +41,11 @@ public class ListeCourses extends Activity {
         setContentView(R.layout.liste_courses_activity);
 
         dbm = new DataBaseManager(getApplicationContext());
-
-        //////////////////////////////////////////////////
-
-        ingredients = new ArrayList<Ingredient>();
-        /*ingredients.put("Baguette", new Ingredient("Baguette", 50, 3));
-        ingredients.put("Tomate", new Ingredient("Tomate", 25, 3));
-        ingredients.put("Patate",new Ingredient("Patate", 10, 3));*/
-
-        //////////////////////////////////////////////////
-
+        ingredients = dbm.getAllIngredientsCourses();
         textViewPrix = (TextView)findViewById(R.id.textViewPrix);
         textViewPrix.setText("Prix : 0,00$");
-
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
-        //listViewIngredients.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        //titres = new ArrayList(ingredients.keySet());
+
 
         adapter = new IngredientListAdapter(getApplicationContext(), R.layout.item_list_row, ingredients, false);
         listViewIngredients.setAdapter(adapter);
@@ -67,15 +54,14 @@ public class ListeCourses extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //Toast.makeText(getApplicationContext(), "-"+nom+"-", Toast.LENGTH_SHORT).show();
+
                 Ingredient selectedIngredient = ingredients.get(position);
-                //Toast.makeText(getApplicationContext(), selectedIngredient.toString(), Toast.LENGTH_SHORT).show();
+
                 if (selectedIngredients.contains(selectedIngredient)) {
                     selectedIngredients.remove(selectedIngredient);
                     total-=selectedIngredient.getPrixTotal();
                 } else {
                     selectedIngredients.add(selectedIngredient);
-                    //Toast.makeText(getApplicationContext(), selectedIngredient.getNom(), Toast.LENGTH_SHORT).show();
                     total+=selectedIngredient.getPrixTotal();
                 }
                 prixTotal = "Prix : "+(double)total/100 + "$";
@@ -92,16 +78,13 @@ public class ListeCourses extends Activity {
 
                     dbm.addIngredientFrigo(i);
 
-                    for (int x = 0; x < ingredients.size(); x++) {
+                    dbm.supprimerIngredientCourses(i.getId());
+                    ingredients.remove(i);
 
-                        if (i.getNom().equals(ingredients.get(x))) {
-                            //titres.remove(x);
-                        } else {
-                            //Toast.makeText(getApplicationContext(), i.getNom().toString() + (titres.get(x).toString()), Toast.LENGTH_SHORT).show();
-                        }
-                    }
                 }
-                //Toast.makeText(getApplicationContext(), titres.toString(), Toast.LENGTH_SHORT).show();
+
+                selectedIngredients = new ArrayList<Ingredient>();
+
 
                 adapter.notifyDataSetChanged();
 
@@ -124,9 +107,6 @@ public class ListeCourses extends Activity {
 
 
 
-
-
-
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
     }
@@ -146,91 +126,24 @@ public class ListeCourses extends Activity {
 
                 String jsonIngredient;
 
-                SharedPreferences sp = getSharedPreferences("listeCourses", BIND_AUTO_CREATE);
-
-                String jsonIngredient2 = sp.getString("ingredients", null);
-
-                if (jsonIngredient2==null||ingredients == null){
-                    //Toast.makeText(getApplicationContext(), "VIDE", Toast.LENGTH_SHORT).show();
-                    ingredients = new ArrayList<>();
-                    System.out.println("vide");
-                } else {
-                    System.out.println(jsonIngredient2);
-                    //Toast.makeText(getApplicationContext(), jsonIngredient2, Toast.LENGTH_SHORT).show();
-                    ingredients = new Gson().fromJson(jsonIngredient2, ArrayList.class);
-                    System.out.println("non vide");
-                    System.out.println("ingredient : "+jsonIngredient2.toString());
-                }
-
                 Bundle extras = data.getExtras();
                 if (extras != null) {
                     jsonIngredient = extras.getString("ingredient");
-                    //Toast.makeText(getApplicationContext(), jsonIngredient, Toast.LENGTH_SHORT).show();
+
                 } else {
                     jsonIngredient = null;
                 }
+
                 Ingredient ingredientAjout = new Gson().fromJson(jsonIngredient, Ingredient.class);
-                //Gson g = new Gson();
-
-                //titres.add(ingredientAjout.getNom() /*+ " : " + ingredientAjout.getQuantite()*/);
-                Toast.makeText(getApplicationContext(), ingredientAjout.toString(), Toast.LENGTH_SHORT).show();
                 ingredients.add(ingredientAjout);
-                Toast.makeText(getApplicationContext(), ingredients.toString(), Toast.LENGTH_SHORT).show();
-
                 adapter.notifyDataSetChanged();
-
                 listViewIngredients.setAdapter(adapter);
-                Toast.makeText(getApplicationContext(), "RESULT", Toast.LENGTH_SHORT).show();
+
+                dbm.addIngredientCourses(ingredientAjout);
+
 
             }
         }
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        SharedPreferences sharedPreferences = getSharedPreferences("ingredients", BIND_AUTO_CREATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        String ing = new Gson().toJson(ingredients);
-
-        editor.putString("ingredients", ing);
-        Toast.makeText(getApplicationContext(), "ing = "+ing, Toast.LENGTH_SHORT).show();
-        editor.commit();
-
-
-        Toast.makeText(getApplicationContext(), "pref = "+sharedPreferences.getString("ingredients", null), Toast.LENGTH_SHORT).show();
-
-
-
-
-
-
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        /*SharedPreferences sp = getSharedPreferences("ingredients", BIND_AUTO_CREATE);
-
-        String jsonIngredient = sp.getString("ingredients", null);
-
-        if (jsonIngredient==null&&ingredients.isEmpty()){
-            //Toast.makeText(getApplicationContext(), "VIDE", Toast.LENGTH_SHORT).show();
-//            ingredients = new ArrayList<>();
-            System.out.println("vide");
-        } else {
-            //Toast.makeText(getApplicationContext(), jsonIngredient, Toast.LENGTH_SHORT).show();
-            ingredients = new Gson().fromJson(jsonIngredient, ArrayList.class);
-            System.out.println("non vide");
-        }
-
-        Toast.makeText(getApplicationContext(), "RESUME", Toast.LENGTH_SHORT).show();*/
-
 
     }
 

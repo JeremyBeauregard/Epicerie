@@ -22,8 +22,7 @@ public class SimpleSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL("create table frigo (idIngredient integer, quantite float)");
         db.execSQL("create table repas (id integer primary key autoincrement, idRecette integer, dateRepas varchar(50))");
         db.execSQL("create table unite (id integer primary key autoincrement, nom text, symbole text)");
-
-
+        db.execSQL("create table courses (idIngredient int, quantite float)");
     }
 
 

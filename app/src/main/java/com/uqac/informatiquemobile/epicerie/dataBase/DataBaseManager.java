@@ -658,4 +658,73 @@ public class DataBaseManager {
 
 
 
+
+
+
+    public void supprimerIngredientCourses(String nom){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from courses inner join ingredient on courses.idIngredient = ingredient.id where nom =\""+nom+"\"", null);
+        cursor.moveToNext();
+        int id = cursor.getInt(0);
+        cursor.close();
+        db.close();
+        this.supprimerIngredientCourses(id);
+    }
+
+    /**
+     * Methode qui permet de supprimer un ingredient.
+     * @param id ID de l'ingredient a supprimer.
+     */
+    public void supprimerIngredientCourses(int id){
+        SQLiteDatabase db2 = helper.getWritableDatabase();
+        db2.execSQL("delete from courses where idIngredient="+id);
+        db2.close();
+    }
+
+
+
+    public void addIngredientCourses(Ingredient ingredient){
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        db.execSQL("insert into courses values("+ingredient.getId()+", "+ingredient.getQuantite()+")");
+
+        db.close();
+
+    }
+
+
+    public Ingredient getIngredientCoursesById(int id){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from ingredient inner join courses on courses.idIngredient=ingredient.id inner join unite on unite.id = ingredient.idUnite where idIngredient=" + id + ";", null);
+        //Log.d("QUERY", "getIngredientByNm: select * from frigo where id=" + id + ";");
+        cursor.moveToFirst();
+        if(cursor.getCount()==0){return null;}
+        Ingredient retour=new Ingredient(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getFloat(5), this.getUniteById(cursor.getInt(6)));
+        cursor.close();
+        db.close();
+        return retour;
+    }
+
+
+    public ArrayList<Ingredient> getAllIngredientsCourses(){
+        ArrayList<Ingredient> retour = new ArrayList<>();
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from ingredient inner join courses on courses.idIngredient = ingredient.id order by nom;", null);
+        while(cursor.moveToNext()){
+            retour.add(this.getIngredientCoursesById(cursor.getInt(0)));
+        }
+        cursor.close();
+        db.close();
+        return retour;
+    }
+
+
+
+
+
+
+
+
 }
