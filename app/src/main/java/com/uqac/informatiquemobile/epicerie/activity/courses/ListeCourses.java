@@ -3,6 +3,7 @@ package com.uqac.informatiquemobile.epicerie.activity.courses;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by paull on 29/03/2016.
  */
-public class ListeCourses extends Activity {
+public class ListeCourses extends AppCompatActivity {
 
     private DataBaseManager dbm;
     private ListView listViewIngredients;
