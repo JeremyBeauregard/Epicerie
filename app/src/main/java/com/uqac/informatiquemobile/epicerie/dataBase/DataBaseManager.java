@@ -685,11 +685,52 @@ public class DataBaseManager {
 
     public void addIngredientCourses(Ingredient ingredient){
 
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from  ingredient i inner join courses f on f.idIngredient = i.id where nom = \""+ingredient.getNom()+"\"", null);
+        Cursor addIngredient = db.rawQuery("select * from  ingredient where nom = \""+ingredient.getNom()+"\"", null);
 
-        db.execSQL("insert into courses values("+ingredient.getId()+", "+ingredient.getQuantite()+")");
+        cursor.moveToNext();
+        if (cursor.getCount()==0){
 
-        db.close();
+
+
+            addIngredient.moveToFirst();
+            int idIngredient = addIngredient.getInt(0);
+            addIngredient.close();
+
+            SQLiteDatabase db3 = helper.getWritableDatabase();
+            ContentValues row2 = new ContentValues();
+
+            row2.put("idIngredient", idIngredient);
+            row2.put("quantite", ingredient.getQuantite());
+            db3.insert("courses", null, row2);
+
+            System.out.println("ajout ingredient inexistant");
+
+
+
+
+        } else {
+            Log.d("cursor", "addIngredient: not null");
+            //cursor.moveToNext();
+
+            float qtte = cursor.getInt(5);
+            int id = cursor.getInt(0);
+
+
+            ContentValues row = new ContentValues();
+            float u = (qtte+ingredient.getQuantite());
+            row.put("quantite", u);
+            Log.d("qtte", "addIngredient: "+u);
+            SQLiteDatabase db2 = helper.getWritableDatabase();
+            int ok = db2.update("courses", row, "idIngredient=\""+id+"\"",null);
+            //Log.d("ok", "addIngredient: "+ok);
+            db2.close();
+
+            System.out.println("ajout ingredient existant");
+
+
+        }
 
     }
 

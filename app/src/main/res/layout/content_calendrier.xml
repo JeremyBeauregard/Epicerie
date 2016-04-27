@@ -18,7 +18,7 @@
         android:text="Planifier un repas"
         android:id="@+id/buttonOuvrirPlanification"
         android:textColor="@color/calendrierActivityBG"
-        android:backgroundTint="@color/calendrierMain" />
+        android:background="@color/calendrierMain" />
 
     <ListView
         android:layout_width="match_parent"

@@ -1,19 +1,19 @@
 package com.uqac.informatiquemobile.epicerie.activity.courses;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.uqac.informatiquemobile.epicerie.R;
 import com.uqac.informatiquemobile.epicerie.activity.ingredient.AddIngredientActivity;
-import com.uqac.informatiquemobile.epicerie.adapter.IngredientListAdapter;
+import com.uqac.informatiquemobile.epicerie.adapter.IngredientCoursesAdapter;
 import com.uqac.informatiquemobile.epicerie.dataBase.DataBaseManager;
 import com.uqac.informatiquemobile.epicerie.metier.Ingredient;
 
@@ -29,9 +29,10 @@ public class ListeCourses extends AppCompatActivity {
     private Button ajouterAuFrigo;
     private Button ajouterIngredient;
     private ArrayList<Ingredient> ingredients;
-    private IngredientListAdapter adapter;
+    private IngredientCoursesAdapter adapter;
     private int total = 0;
     TextView textViewPrix;
+    CheckBox cb;
     String prixTotal;
 
     private ArrayList<Ingredient> selectedIngredients = new ArrayList<>();
@@ -48,7 +49,7 @@ public class ListeCourses extends AppCompatActivity {
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
 
 
-        adapter = new IngredientListAdapter(getApplicationContext(), R.layout.item_list_row, ingredients, false);
+        adapter = new IngredientCoursesAdapter(getApplicationContext(), R.layout.item_list_courses, ingredients);
         listViewIngredients.setAdapter(adapter);
 
         listViewIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,17 +57,23 @@ public class ListeCourses extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                Ingredient selectedIngredient = ingredients.get(position);
+
+            Ingredient selectedIngredient = ingredients.get(position);
 
                 if (selectedIngredients.contains(selectedIngredient)) {
                     selectedIngredients.remove(selectedIngredient);
+                    adapter.cb.get(position).setChecked(false);
                     total-=selectedIngredient.getPrixTotal();
                 } else {
                     selectedIngredients.add(selectedIngredient);
+                    adapter.cb.get(position).setChecked(true);
                     total+=selectedIngredient.getPrixTotal();
                 }
                 prixTotal = "Prix : "+(double)total/100 + "$";
                 textViewPrix.setText(prixTotal);
+
+
+
             }
         });
 
@@ -79,15 +86,22 @@ public class ListeCourses extends AppCompatActivity {
 
                     dbm.addIngredientFrigo(i);
 
+                    total-=i.getPrixTotal();
+
                     dbm.supprimerIngredientCourses(i.getId());
                     ingredients.remove(i);
 
                 }
 
+
+                prixTotal = "Prix : "+(double)total/100 + "$";
+                textViewPrix.setText(prixTotal);
+
                 selectedIngredients = new ArrayList<Ingredient>();
 
 
-                adapter.notifyDataSetChanged();
+                adapter = new IngredientCoursesAdapter(getApplicationContext(), R.layout.item_list_courses, ingredients);
+                listViewIngredients.setAdapter(adapter);
 
 
 
@@ -136,16 +150,30 @@ public class ListeCourses extends AppCompatActivity {
                 }
 
                 Ingredient ingredientAjout = new Gson().fromJson(jsonIngredient, Ingredient.class);
-                ingredients.add(ingredientAjout);
+                //ingredients.add(ingredientAjout);
+                dbm.addIngredientCourses(ingredientAjout);
+                ingredients = dbm.getAllIngredientsCourses();
                 adapter.notifyDataSetChanged();
                 listViewIngredients.setAdapter(adapter);
 
-                dbm.addIngredientCourses(ingredientAjout);
 
 
             }
         }
 
+        for (CheckBox c:adapter.cb) {
+            c.setChecked(false);
+        }
+
+        adapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ingredients = dbm.getAllIngredientsCourses();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
