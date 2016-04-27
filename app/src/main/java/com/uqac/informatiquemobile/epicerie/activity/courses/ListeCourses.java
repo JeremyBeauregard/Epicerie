@@ -165,7 +165,8 @@ public class ListeCourses extends AppCompatActivity {
             c.setChecked(false);
         }
 
-        adapter.notifyDataSetChanged();
+        adapter = new IngredientCoursesAdapter(getApplicationContext(), R.layout.item_list_courses, ingredients);
+        listViewIngredients.setAdapter(adapter);
 
     }
 
