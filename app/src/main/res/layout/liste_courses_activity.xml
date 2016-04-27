@@ -1,35 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
-    android:background="@color/coursesMain">
+    android:fitsSystemWindows="true"
+    tools:context=".activity.courses.ListeCourses"
+    app:statusBarBackground="@color/coursesMain"
+    app:theme="@style/Courses">
 
-    <Button
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ajouter un ingrédient à la liste"
-        android:id="@+id/buttonAjouterIngredient"
-        android:textColor="#446d61" />
+        android:theme="@style/Courses.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Courses.PopupOverlay"
+            android:theme="@style/Courses" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Prix : "
-        android:id="@+id/textViewPrix" />
+    </android.support.design.widget.AppBarLayout>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="372dp"
-        android:id="@+id/listViewIngredients"
-        android:layout_weight="0.92" />
+    <include layout="@layout/content_list_courses" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ajouter à mes provisions"
-        android:id="@+id/buttonAjouterAuFrigo"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#446d61" />
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

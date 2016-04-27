@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/calendrierMain">
+    android:fitsSystemWindows="true"
+    tools:context=".activity.calendrier.RepasPlanifiesActivity"
+    app:statusBarBackground="@color/calendrierMain"
+    app:theme="@style/Calendrier">
 
-    <Button
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Planifier un repas"
-        android:id="@+id/buttonOuvrirPlanification"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#165815" />
+        android:theme="@style/Calendrier.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Calendrier.PopupOverlay"
+            android:theme="@style/Calendrier" />
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listViewRepasPlanifies"
-        android:layout_gravity="center_horizontal" />
+    </android.support.design.widget.AppBarLayout>
 
-</LinearLayout>
+    <include layout="@layout/content_calendrier" />
+
+</android.support.design.widget.CoordinatorLayout>

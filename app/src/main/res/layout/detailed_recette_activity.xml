@@ -67,7 +67,7 @@
                 android:layout_height="fill_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Je viens d&apos;effectuer la recette"
-                android:id="@+id/textView5"
+                android:id="@+id/textViewConsume"
                 android:textColor="#FFF"
                 android:textAlignment="center"
                 android:layout_weight="20"

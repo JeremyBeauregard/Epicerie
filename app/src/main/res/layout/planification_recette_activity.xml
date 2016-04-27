@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@color/calendrierActivityBG">
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,14 +17,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Planifier"
-        android:id="@+id/buttonPlanifier" />
+        android:id="@+id/buttonPlanifier"
+        android:backgroundTint="@color/calendrierMain"
+        android:textColor="@color/calendrierActivityBG" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Selectionner une recette"
         android:id="@+id/buttonSelection"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/calendrierMain"
+        android:textColor="@color/calendrierActivityBG" />
 
     <DatePicker
         android:layout_width="wrap_content"

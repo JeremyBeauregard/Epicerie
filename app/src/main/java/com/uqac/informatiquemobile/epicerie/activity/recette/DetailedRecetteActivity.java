@@ -33,6 +33,8 @@ public class DetailedRecetteActivity extends Activity {
     private IngredientListAdapter adapter;
     private Recette recette;
     private LinearLayout buttonConsume;
+    private TextView textConsume;
+    private boolean complete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +42,17 @@ public class DetailedRecetteActivity extends Activity {
 
         setContentView(R.layout.detailed_recette_activity);
 
+
+
+
         int id = getIntent().getExtras().getInt("id");
         recette=displayinfo(id);
+        if(dbm.recetteIsAvailable(recette)!=0){
+            textConsume.setText("Ajouter les ingrédients manquants à la liste de courses");
+            complete=false;
+        }else{
+            complete=true;
+                    }
 
         buttonMod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +84,7 @@ public class DetailedRecetteActivity extends Activity {
         buttonConsume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dbm.recetteIsAvailable(recette)==0){
+                if(complete){
                     for (Nourriture ingredient:recette.getComposition()) {
                         if(ingredient instanceof Ingredient){
                             dbm.supprimerIngredientFrigo((Ingredient)ingredient, ingredient.getQuantite());
@@ -83,7 +94,23 @@ public class DetailedRecetteActivity extends Activity {
 
                     }
                 }else{
-                    Toast.makeText(getApplicationContext(), "Vous n'avez pas les ingrédients nécessaires", Toast.LENGTH_SHORT).show();
+                    float manquant;
+                    for (Nourriture ingredient :ingredients) {
+                        if(ingredient instanceof Ingredient){
+                            float dispo=dbm.ingIsAvailable((Ingredient)ingredient);
+                            if(dispo==0){
+                                manquant= ingredient.getQuantite();
+                                dbm.addIngredientCourses(new Ingredient(ingredient.getId(),ingredient.getNom(),ingredient.getPrix(),manquant));
+
+                            }else if(dispo>0){
+                                manquant=dispo;
+                                dbm.addIngredientCourses(new Ingredient(ingredient.getId(),ingredient.getNom(),ingredient.getPrix(),manquant));
+                            }
+
+                        }
+
+                    }
+                    Toast.makeText(getApplicationContext(), "Ingredients ajoutés à la liste de courses", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -111,6 +138,7 @@ public class DetailedRecetteActivity extends Activity {
         buttonDel = (LinearLayout) findViewById(R.id.buttonDel);
         buttonConsume=(LinearLayout)findViewById(R.id.buttonConsumeIngredients);
         listViewIngredients = (ListView)findViewById(R.id.listViewIngredients);
+        textConsume=(TextView) findViewById(R.id.textViewConsume);
 
         textViewName.setText(recette.getNom());
         //textViewDesc.setText("composition.size : "+recette.getComposition().size()+" \nmissing : "+dbm.recetteIsAvailable(recette));
